@@ -9,13 +9,20 @@ import java.util.List;
  * @author Guangming Mao
  */
 public class Issue {
-    public List<IssueItem> issues;
+    public int _id;
     public int number;
     public Date time;
+    public List<IssueItem> issues;
 
     public Issue() {
-        issues = new ArrayList<IssueItem>();
         number = -1;
         time = new Date();
+        issues = new ArrayList<IssueItem>();
+    }
+
+    public Issue(int number, Date time, List<IssueItem> issues) {
+        this.number = number;
+        this.time = time;
+        this.issues = issues;
     }
 }
