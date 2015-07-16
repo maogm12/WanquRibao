@@ -1,28 +1,25 @@
 package com.maogm.wanquribao.Module;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import com.google.gson.annotations.SerializedName;
+import com.orm.SugarRecord;
 
 /**
- * Issue
  * @author Guangming Mao
  */
-public class Issue {
-    public int _id;
+public class Issue extends SugarRecord<Issue> {
+    public String date;
+    @SerializedName("created_at")
+    public int createdAt;
     public int number;
-    public Date time;
-    public List<IssueItem> issues;
+    public String summary;
 
     public Issue() {
-        number = -1;
-        time = new Date();
-        issues = new ArrayList<IssueItem>();
     }
 
-    public Issue(int number, Date time, List<IssueItem> issues) {
+    public Issue(String date, int createdAt, int number, String summary) {
+        this.date = date;
+        this.createdAt = createdAt;
         this.number = number;
-        this.time = time;
-        this.issues = issues;
+        this.summary = summary;
     }
 }

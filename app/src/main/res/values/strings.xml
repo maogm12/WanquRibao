@@ -1,15 +1,13 @@
 <resources>
     <string name="app_name">湾区日报</string>
 
-    <string name="title_section_issue">日报</string>
-    <string name="title_section_past_issues">往期</string>
-    <string name="title_section_knowledge">知识碎片</string>
+    <string name="title_section_latest">最新一期</string>
+    <string name="title_section_past">往期文章</string>
+    <string name="title_section_random">随机文章</string>
     <string name="title_section_about">关于</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <string name="action_share">分享</string>
-
-    <string name="action_settings">设置</string>
 </resources>
