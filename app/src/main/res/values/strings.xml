@@ -10,4 +10,11 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <string name="action_share">分享</string>
+
+    <string name="btn_share">分享</string>
+    <string name="btn_comment">简评</string>
+    <string name="btn_original">原链</string>
+    <string name="btn_easy_read">易读</string>
+
+    <string name="issue_number_invalid">issue 期数不存在</string>
 </resources>
