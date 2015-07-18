@@ -1,11 +1,19 @@
 package com.maogm.wanquribao;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
+import android.widget.BaseAdapter;
+import android.widget.Button;
+import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Response;
@@ -32,6 +40,9 @@ public class IssueFragment extends Fragment implements Response.Listener<IssueRe
 
     private int number = -1;
     private List<Post> posts;
+    private ListView listPost;
+    private PostAdapter postAdapter;
+    private SwipeRefreshLayout swipeView;
 
     /**
      * Returns a new instance of this fragment for the given issue number.
@@ -54,19 +65,72 @@ public class IssueFragment extends Fragment implements Response.Listener<IssueRe
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_main, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_post_list, container, false);
+
+        // list
+        listPost = (ListView) rootView.findViewById(R.id.post_list);
+        postAdapter = new PostAdapter();
+        listPost.setAdapter(postAdapter);
+        listPost.setOnScrollListener(new AbsListView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(AbsListView view, int scrollState) {
+            }
+
+            int mPosition = 0;
+            int mOffset = 0;
+
+            @Override
+            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+                if (swipeView == null) {
+                    return;
+                }
+
+                int position = listPost.getFirstVisiblePosition();
+                View v = listPost.getChildAt(position);
+                int offset = (v == null) ? 0 : v.getTop();
+
+                // disable swipe view when scrolled down
+                if (mPosition < position || mPosition == position && mOffset < offset) {
+                    swipeView.setEnabled(false);
+                } else {
+                    swipeView.setEnabled(true);
+                }
+            }
+        });
+
+        // swipeView
+        swipeView = (SwipeRefreshLayout) rootView.findViewById(R.id.swipe);
+        swipeView.setColorSchemeResources(R.color.main);
+        swipeView.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                swipeView.setRefreshing(true);
+                Log.d("Swipe", "Refreshing number " + number);
+                requestIssue();
+            }
+        });
         return rootView;
     }
 
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        this.number = getArguments().getInt(ISSUE_NUMBER);
+        number = getArguments().getInt(ISSUE_NUMBER);
+        requestIssue();
+    }
 
-        String path = Constant.baseUri + Constant.latestUri;
+    private void requestIssue() {
+        // request issue
+        String path = Constant.baseUrl + Constant.issueUrl;
+        if (number < 0) {
+            path += "/latest";
+        } else {
+            path += "/" + String.valueOf(number);
+        }
         Map<String, String> headers = new HashMap<>();
         GsonRequest<IssueResult> requester = new GsonRequest<>(path, IssueResult.class,
                 headers, this, this);
+        ((MainActivity)getActivity()).AddRequest(requester);
     }
 
     @Override
@@ -76,16 +140,135 @@ public class IssueFragment extends Fragment implements Response.Listener<IssueRe
 
     @Override
     public void onErrorResponse(VolleyError error) {
-
+        swipeView.setRefreshing(false);
+        Toast.makeText(getActivity(), R.string.network_error, Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void onResponse(IssueResult response) {
+        swipeView.setRefreshing(false);
         if (response.code == 2) {
             Toast.makeText(getActivity(), R.string.issue_number_invalid, Toast.LENGTH_SHORT).show();
             return;
         }
 
         this.posts = response.data.posts;
+        if (postAdapter != null) {
+            postAdapter.notifyDataSetChanged();
+        }
+    }
+
+    public void openUrl(String url) {
+        if (url == null) {
+            return;
+        }
+
+        Intent webViewIntent = new Intent(getActivity(), WebViewActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putString(Constant.KEY_URL, url);
+        webViewIntent.putExtras(bundle);
+        startActivity(webViewIntent);
+    }
+
+    public void openHtml(String html) {
+        if (html == null) {
+            return;
+        }
+
+        Intent webViewIntent = new Intent(getActivity(), WebViewActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putString(Constant.KEY_HTML, html);
+        webViewIntent.putExtras(bundle);
+        startActivity(webViewIntent);
+    }
+
+    class PostAdapter extends BaseAdapter {
+
+        @Override
+        public int getCount() {
+            if (posts == null) {
+                return 0;
+            }
+            return posts.size();
+        }
+
+        @Override
+        public Object getItem(int position) {
+            if (posts == null) {
+                return null;
+            }
+            return posts.get(position);
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return position;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            ViewHolder holder = null;
+            if (convertView == null) {
+                holder = new ViewHolder();
+                LayoutInflater inflater = LayoutInflater.from(getActivity());
+                convertView = inflater.inflate(R.layout.list_item_post, null);
+
+                holder.tvTitle = (TextView) convertView.findViewById(R.id.tv_title);
+                holder.tvDomain = (TextView) convertView.findViewById(R.id.tv_domain);
+                holder.tvSummary = (TextView) convertView.findViewById(R.id.tv_summary);
+                holder.btnShare = (Button) convertView.findViewById(R.id.btn_share);
+                holder.btnComment = (Button) convertView.findViewById(R.id.btn_comment);
+                holder.btnOriginal = (Button) convertView.findViewById(R.id.btn_original);
+                holder.btnEasyRead = (Button) convertView.findViewById(R.id.btn_easy_read);
+                convertView.setTag(holder);
+            } else {
+                holder = (ViewHolder) convertView.getTag();
+            }
+
+            // set value
+            final Post post = (Post) getItem(position);
+            if (post != null) {
+                holder.tvTitle.setText(post.title);
+                holder.tvDomain.setText(post.urlDomain);
+                holder.tvSummary.setText(post.summary);
+
+                // @todo share
+
+                // comment
+                holder.btnComment.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        openUrl(Constant.wanquRootUrl + "/" + post.slug);
+                    }
+                });
+
+                // original
+                holder.btnOriginal.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        openUrl(post.url);
+                    }
+                });
+
+                // easy easy
+                holder.btnEasyRead.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        openHtml(post.readableArticle);
+                    }
+                });
+            }
+            return convertView;
+        }
+
+        private class ViewHolder {
+            TextView tvTitle;
+            TextView tvDomain;
+            TextView tvSummary;
+            Button btnShare;
+            Button btnComment;
+            Button btnOriginal;
+            Button btnEasyRead;
+        }
     }
 }

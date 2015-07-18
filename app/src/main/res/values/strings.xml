@@ -6,8 +6,8 @@
     <string name="title_section_random">随机文章</string>
     <string name="title_section_about">关于</string>
 
-    <string name="navigation_drawer_open">Open navigation drawer</string>
-    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="navigation_drawer_open">打开侧边栏</string>
+    <string name="navigation_drawer_close">关闭侧边栏</string>
 
     <string name="action_share">分享</string>
 
@@ -17,4 +17,7 @@
     <string name="btn_easy_read">易读</string>
 
     <string name="issue_number_invalid">issue 期数不存在</string>
+    <string name="network_error">请检查网络连接</string>
+
+    <string name="title_activity_web_view">WebViewActivity</string>
 </resources>

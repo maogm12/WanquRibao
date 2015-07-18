@@ -11,6 +11,10 @@ import android.support.v7.widget.ShareActionProvider;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.Volley;
+
 
 public class MainActivity extends ActionBarActivity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks {
@@ -27,6 +31,8 @@ public class MainActivity extends ActionBarActivity
 
     private ShareActionProvider mShareActionProvider;
 
+    RequestQueue newRequestQueue;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,6 +46,9 @@ public class MainActivity extends ActionBarActivity
         mNavigationDrawerFragment.setUp(
                 R.id.navigation_drawer,
                 (DrawerLayout) findViewById(R.id.drawer_layout));
+
+        // queue
+        newRequestQueue = Volley.newRequestQueue(this);
     }
 
     @Override
@@ -59,6 +68,14 @@ public class MainActivity extends ActionBarActivity
         if (title != null) {
             mTitle = title;
         }
+    }
+
+    public void AddRequest(Request request) {
+        if (request == null) {
+            return;
+        }
+
+        newRequestQueue.add(request);
     }
 
     public void restoreActionBar() {
@@ -83,7 +100,7 @@ public class MainActivity extends ActionBarActivity
 
             // Fetch and store ShareActionProvider
             mShareActionProvider = (ShareActionProvider) MenuItemCompat.getActionProvider(item);
-            mShareActionProvider.setShareIntent(getShareIntent());
+            setShareIntent(getShareIntent());
 
             return true;
         }

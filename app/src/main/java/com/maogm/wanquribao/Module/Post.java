@@ -1,14 +1,13 @@
 package com.maogm.wanquribao.Module;
 
 import com.google.gson.annotations.SerializedName;
-import com.orm.SugarRecord;
 
 import java.util.List;
 
 /**
  * @author Guangming Mao
  */
-public class Post extends SugarRecord<Post> {
+public class Post {
     @SerializedName("url_domain")
     public String urlDomain;
     public String picture;
@@ -17,7 +16,7 @@ public class Post extends SugarRecord<Post> {
     @SerializedName("readable_title")
     public String readableTitle;
     @SerializedName("created_at")
-    public int createdAt;
+    public long createdAt;
     public String title;
     public int id;
     public String content;
@@ -32,7 +31,7 @@ public class Post extends SugarRecord<Post> {
     }
 
     public Post(String urlDomain, String picture, List<String> tags, String url, String readableTitle,
-                int createdAt, String title, int id, String content, int issueId, String summary,
+                long createdAt, String title, int id, String content, int issueId, String summary,
                 String slug, String readableArticle) {
         this.urlDomain = urlDomain;
         this.picture = picture;

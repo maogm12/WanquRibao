@@ -7,5 +7,5 @@ import java.util.List;
  */
 public class IssueWrapper {
     public String date;
-    public List<Issue> posts;
+    public List<Post> posts;
 }
