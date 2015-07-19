@@ -14,10 +14,11 @@ import android.view.MenuItem;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
+import com.maogm.wanquribao.Listener.OnShareListener;
 
 
 public class MainActivity extends ActionBarActivity
-        implements NavigationDrawerFragment.NavigationDrawerCallbacks, OnShareListener {
+        implements NavigationDrawerFragment.NavigationDrawerCallbacks, OnShareListener, IssuesFragment.OnIssueSelectedListener {
 
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
@@ -30,8 +31,11 @@ public class MainActivity extends ActionBarActivity
     private CharSequence mTitle;
 
     private ShareActionProvider mShareActionProvider;
+    private Intent defaultShareIntent;
 
     RequestQueue newRequestQueue;
+
+    private MenuItem shareItem;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,27 +62,73 @@ public class MainActivity extends ActionBarActivity
         switch (position) {
             case 0:
                 // latest issue
+                clearBackStack();
                 IssueFragment issueFragment = IssueFragment.newInstance();
                 issueFragment.setOnShareListner(this);
                 fragmentManager.beginTransaction()
                         .replace(R.id.container, issueFragment)
                         .commit();
+                if (shareItem != null) {
+                    shareItem.setVisible(true);
+                }
                 break;
             case 1:
-                // recent posts
+                clearBackStack();
+                IssuesFragment issuesFragment = IssuesFragment.newInstance();
+                issuesFragment.setOnIssueSelectedListener(this);
+                fragmentManager.beginTransaction()
+                        .replace(R.id.container, issuesFragment)
+                        .commit();
+                if (shareItem != null) {
+                    shareItem.setVisible(false);
+                }
                 break;
             case 2:
                 // random post
+                clearBackStack();
                 RandomPostFragment randomPostFragment = new RandomPostFragment();
                 randomPostFragment.setOnShareListener(this);
                 fragmentManager.beginTransaction()
                         .replace(R.id.container, randomPostFragment)
                         .commit();
+                if (shareItem != null) {
+                    shareItem.setVisible(true);
+                }
                 break;
             case 3:
                 // about
+                clearBackStack();
+                if (shareItem != null) {
+                    shareItem.setVisible(true);
+                }
                 break;
         }
+    }
+
+    private void clearBackStack() {
+        FragmentManager manager = getSupportFragmentManager();
+        if (manager.getBackStackEntryCount() > 0) {
+            FragmentManager.BackStackEntry first = manager.getBackStackEntryAt(0);
+            manager.popBackStack(first.getId(), FragmentManager.POP_BACK_STACK_INCLUSIVE);
+        }
+    }
+
+    /**
+     * Open a issue
+     * @param number issue number of the issue
+     */
+    public void openIssue(int number) {
+        if (number < 0) {
+            number = -1;
+        }
+
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        IssueFragment issueFragment = IssueFragment.newInstance(number);
+        issueFragment.setOnShareListner(this);
+        fragmentManager.beginTransaction()
+                .replace(R.id.container, issueFragment)
+                .addToBackStack(null)
+                .commit();
     }
 
     public void AddRequest(Request request) {
@@ -114,11 +164,11 @@ public class MainActivity extends ActionBarActivity
             restoreActionBar();
 
             // Locate MenuItem with ShareActionProvider
-            MenuItem item = menu.findItem(R.id.action_share);
+            shareItem = menu.findItem(R.id.action_share);
 
             // Fetch and store ShareActionProvider
-            mShareActionProvider = (ShareActionProvider) MenuItemCompat.getActionProvider(item);
-            setShareIntent(getShareIntent());
+            mShareActionProvider = (ShareActionProvider) MenuItemCompat.getActionProvider(shareItem);
+            setShareIntent(getDefaultShareIntent());
 
             return true;
         }
@@ -127,9 +177,15 @@ public class MainActivity extends ActionBarActivity
     }
 
     // Call to update the share intent
-    private void setShareIntent(Intent shareIntent) {
+    public void setShareIntent(Intent shareIntent) {
         if (mShareActionProvider != null) {
             mShareActionProvider.setShareIntent(shareIntent);
+        }
+    }
+
+    public void restoreShareIntent() {
+        if (mShareActionProvider != null) {
+            mShareActionProvider.setShareIntent(getDefaultShareIntent());
         }
     }
 
@@ -147,13 +203,21 @@ public class MainActivity extends ActionBarActivity
         return super.onOptionsItemSelected(item);
     }
 
-    private Intent getShareIntent() {
-        Intent sendIntent = new Intent();
-        sendIntent.setAction(Intent.ACTION_SEND);
-        sendIntent.putExtra(Intent.EXTRA_SUBJECT, "湾区日报");
-        sendIntent.putExtra(Intent.EXTRA_TEXT, "http://wanqu.co/issues/246");
-        sendIntent.setType("text/plain");
-        return sendIntent;
+    private Intent getDefaultShareIntent() {
+        if (defaultShareIntent != null) {
+            return defaultShareIntent;
+        }
+
+        defaultShareIntent = new Intent();
+        defaultShareIntent.setAction(Intent.ACTION_SEND);
+        defaultShareIntent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.share_me));
+        StringBuilder sb = new StringBuilder();
+        sb.append(getString(R.string.recommend_app))
+                .append(getString(R.string.app_desc))
+                .append(getString(R.string.via_app, Constant.playUrl));
+        defaultShareIntent.putExtra(Intent.EXTRA_TEXT, sb.toString());
+        defaultShareIntent.setType("text/plain");
+        return defaultShareIntent;
     }
 
     public void shareText(String subject, String body) {
@@ -161,7 +225,7 @@ public class MainActivity extends ActionBarActivity
         sharingIntent.setType("text/plain");
         sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, subject);
         sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, body);
-        startActivity(Intent.createChooser(sharingIntent, getResources().getString(R.string.share_using)));
+        startActivity(Intent.createChooser(sharingIntent, getResources().getString(R.string.share_me)));
     }
 
 }

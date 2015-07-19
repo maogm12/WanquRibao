@@ -4,7 +4,7 @@
     <filters>
       <filter>
         <option name="logLevel" value="verbose" />
-        <option name="logMessagePattern" value="^(?!Choreographer|dalvikvm-heap|OpenGLRenderer).*$" />
+        <option name="logMessagePattern" value="^(?!OpenGLRenderer)" />
         <option name="logTagPattern" value="" />
         <option name="name" value="wanqu" />
         <option name="packageNamePattern" value="com.maogm.wanquribao" />
@@ -35,6 +35,68 @@
   <component name="CreatePatchCommitExecutor">
     <option name="PATCH_PATH" value="" />
   </component>
+  <component name="DockManager">
+    <window id="1">
+      <content type="file-editors">
+        <state>
+          <leaf>
+            <file leaf-file-name="Issue.java" pinned="false" current-in-tab="false">
+              <entry file="file://$PROJECT_DIR$/app/src/main/java/com/maogm/wanquribao/Module/Issue.java">
+                <provider selected="true" editor-type-id="text-editor">
+                  <state vertical-scroll-proportion="0.0">
+                    <caret line="22" column="31" selection-start-line="22" selection-start-column="31" selection-end-line="22" selection-end-column="31" />
+                    <folding />
+                  </state>
+                </provider>
+              </entry>
+            </file>
+            <file leaf-file-name="IssuesFragment.java" pinned="false" current-in-tab="true">
+              <entry file="file://$PROJECT_DIR$/app/src/main/java/com/maogm/wanquribao/IssuesFragment.java">
+                <provider selected="true" editor-type-id="text-editor">
+                  <state vertical-scroll-proportion="0.7784343">
+                    <caret line="242" column="28" selection-start-line="242" selection-start-column="28" selection-end-line="242" selection-end-column="28" />
+                    <folding>
+                      <element signature="imports" expanded="true" />
+                      <element signature="e#1330#1331#0" expanded="true" />
+                      <element signature="e#1373#1374#0" expanded="true" />
+                      <element signature="e#1479#1480#0" expanded="true" />
+                      <element signature="e#1529#1530#0" expanded="true" />
+                      <element signature="e#3064#3524#0" expanded="true" />
+                      <element signature="e#3523#3524#0" expanded="true" />
+                      <element signature="e#3717#3933#0" expanded="true" />
+                      <element signature="e#3932#3933#0" expanded="true" />
+                      <element signature="e#4033#4071#0" expanded="true" />
+                      <element signature="e#4337#4478#0" expanded="true" />
+                      <element signature="e#4477#4478#0" expanded="true" />
+                      <element signature="e#5492#5514#0" expanded="true" />
+                      <element signature="e#5833#5850#0" expanded="true" />
+                      <element signature="e#6636#6637#0" expanded="true" />
+                      <element signature="e#6701#6702#0" expanded="true" />
+                      <element signature="e#6766#6767#0" expanded="true" />
+                      <element signature="e#6838#6839#0" expanded="true" />
+                      <element signature="e#6903#6904#0" expanded="true" />
+                      <element signature="e#6942#6943#0" expanded="true" />
+                      <element signature="e#7782#7841#0" expanded="true" />
+                    </folding>
+                  </state>
+                </provider>
+              </entry>
+            </file>
+            <file leaf-file-name="LayoutInflater.java" pinned="false" current-in-tab="false">
+              <entry file="file://$USER_HOME$/lib/android/sdk/sources/android-21/android/view/LayoutInflater.java">
+                <provider selected="true" editor-type-id="text-editor">
+                  <state vertical-scroll-proportion="0.0">
+                    <caret line="363" column="16" selection-start-line="363" selection-start-column="16" selection-end-line="363" selection-end-column="16" />
+                    <folding />
+                  </state>
+                </provider>
+              </entry>
+            </file>
+          </leaf>
+        </state>
+      </content>
+    </window>
+  </component>
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="ExternalProjectsManager">
     <system id="GRADLE">
@@ -48,48 +110,108 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="IssueFragment.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="IssueFragment.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/maogm/wanquribao/IssueFragment.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.75139356">
-              <caret line="124" column="29" selection-start-line="124" selection-start-column="17" selection-end-line="124" selection-end-column="29" />
+            <state vertical-scroll-proportion="-19.444445">
+              <caret line="203" column="0" selection-start-line="203" selection-start-column="0" selection-end-line="220" selection-end-column="5" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#3904#3944#0" expanded="true" />
-                <element signature="e#4641#4663#0" expanded="true" />
-                <element signature="e#4881#4910#0" expanded="true" />
-                <element signature="e#5386#5419#0" expanded="true" />
-                <element signature="e#8924#9827#0" expanded="true" />
-                <element signature="e#9190#9220#0" expanded="true" />
-                <element signature="e#9510#9538#0" expanded="true" />
-                <element signature="e#9826#9827#0" expanded="true" />
-                <element signature="e#9911#10133#0" expanded="true" />
-                <element signature="e#10132#10133#0" expanded="true" />
-                <element signature="e#10219#10410#0" expanded="true" />
-                <element signature="e#10409#10410#0" expanded="true" />
-                <element signature="e#10497#10701#0" expanded="true" />
-                <element signature="e#10700#10701#0" expanded="true" />
+                <element signature="e#1913#1914#0" expanded="true" />
+                <element signature="e#1951#1952#0" expanded="true" />
+                <element signature="e#4092#4132#0" expanded="true" />
+                <element signature="e#4279#4420#0" expanded="true" />
+                <element signature="e#4419#4420#0" expanded="true" />
+                <element signature="e#5548#5565#0" expanded="true" />
+                <element signature="e#6065#6082#0" expanded="true" />
+                <element signature="e#6520#6542#0" expanded="true" />
+                <element signature="e#6878#6895#0" expanded="true" />
+                <element signature="e#7401#7429#0" expanded="true" />
+                <element signature="e#7498#7560#0" expanded="true" />
+                <element signature="e#7586#7631#0" expanded="true" />
+                <element signature="e#8374#8407#0" expanded="true" />
+                <element signature="e#12178#12208#0" expanded="true" />
+                <element signature="e#12498#12526#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Fragment.java" pinned="false" current-in-tab="false">
-        <entry file="jar://$USER_HOME$/lib/android/sdk/extras/android/m2repository/com/android/support/support-v4/21.0.0/support-v4-21.0.0-sources.jar!/android/support/v4/app/Fragment.java">
+      <file leaf-file-name="RandomPostFragment.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/maogm/wanquribao/RandomPostFragment.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.37444544">
+              <caret line="201" column="37" selection-start-line="201" selection-start-column="37" selection-end-line="201" selection-end-column="37" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#1614#1615#0" expanded="true" />
+                <element signature="e#1661#1662#0" expanded="true" />
+                <element signature="e#2903#2933#0" expanded="true" />
+                <element signature="e#3221#3249#0" expanded="true" />
+                <element signature="e#5179#5201#0" expanded="true" />
+                <element signature="e#6183#6205#0" expanded="true" />
+                <element signature="e#6467#6484#0" expanded="true" />
+                <element signature="e#6702#6719#0" expanded="true" />
+                <element signature="e#7079#7112#0" expanded="true" />
+                <element signature="e#8207#8235#0" expanded="true" />
+                <element signature="e#8304#8366#0" expanded="true" />
+                <element signature="e#8392#8437#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="fragment_post_list.xml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_post_list.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-1.5517242">
+              <caret line="3" column="40" selection-start-line="3" selection-start-column="40" selection-end-line="3" selection-end-column="40" />
+              <folding />
+            </state>
+          </provider>
+          <provider editor-type-id="android-designer">
+            <state />
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="colors.xml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/res/values/colors.xml">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="1051" column="16" selection-start-line="1051" selection-start-column="16" selection-end-line="1051" selection-end-column="16" />
+              <caret line="4" column="42" selection-start-line="4" selection-start-column="42" selection-end-line="4" selection-end-column="42" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Issue.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/maogm/wanquribao/Module/Issue.java">
+      <file leaf-file-name="strings.xml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/res/values/strings.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-4.4444447">
+              <caret line="8" column="0" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Constant.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/maogm/wanquribao/Constant.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="19" column="25" selection-start-line="19" selection-start-column="25" selection-end-line="19" selection-end-column="25" />
+              <caret line="11" column="53" selection-start-line="11" selection-start-column="53" selection-end-line="11" selection-end-column="53" />
               <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="IssueWrapper.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/maogm/wanquribao/Module/IssueWrapper.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="13" column="1" selection-start-line="13" selection-start-column="1" selection-end-line="13" selection-end-column="1" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -97,44 +219,28 @@
       <file leaf-file-name="MainActivity.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/maogm/wanquribao/MainActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="59" column="31" selection-start-line="59" selection-start-column="31" selection-end-line="59" selection-end-column="31" />
+            <state vertical-scroll-proportion="-25.74074">
+              <caret line="210" column="0" selection-start-line="210" selection-start-column="0" selection-end-line="219" selection-end-column="34" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#5702#5748#0" expanded="true" />
+                <element signature="e#7327#7355#0" expanded="true" />
+                <element signature="e#7424#7457#0" expanded="true" />
+                <element signature="e#7483#7511#0" expanded="true" />
+                <element signature="e#7537#7582#0" expanded="true" />
+                <element signature="e#8139#8182#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="AndroidManifest.xml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
+      <file leaf-file-name="NavigationDrawerFragment.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/maogm/wanquribao/NavigationDrawerFragment.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="6" column="4" selection-start-line="6" selection-start-column="4" selection-end-line="6" selection-end-column="4" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="NetworkUtil.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/maogm/wanquribao/Utils/NetworkUtil.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="14" column="43" selection-start-line="14" selection-start-column="22" selection-end-line="14" selection-end-column="43" />
+            <state vertical-scroll-proportion="-19.074074">
+              <caret line="233" column="33" selection-start-line="233" selection-start-column="33" selection-end-line="233" selection-end-column="33" />
               <folding>
-                <element signature="imports" expanded="true" />
+                <element signature="e#10150#10167#0" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="OnShareListener.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/maogm/wanquribao/OnShareListener.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="8" column="0" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
-              <folding />
             </state>
           </provider>
         </entry>
@@ -146,8 +252,8 @@
       <list>
         <option value="layoutResourceFile_vertical" />
         <option value="resourceFile" />
-        <option value="Interface" />
         <option value="Class" />
+        <option value="Interface" />
       </list>
     </option>
   </component>
@@ -1493,10 +1599,7 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/app/src/main/res/drawable/actionbar_background.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/fragment_navigation_drawer.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/drawable/listitem_selected.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/values/colors.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/drawable/listitem.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/values/styles.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/maogm/wanquribao/ContentFetcher.java" />
@@ -1512,35 +1615,41 @@
         <option value="$PROJECT_DIR$/app/src/main/res/menu/main.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/menu/global.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/drawable/drawer_background.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/maogm/wanquribao/Module/Issue.java" />
         <option value="$PROJECT_DIR$/app/build.gradle" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/maogm/wanquribao/Requester/IssueRequest.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/maogm/wanquribao/Requester/GsonRequest.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/maogm/wanquribao/GsonRequest.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/maogm/wanquribao/Module/Result.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/maogm/wanquribao/Module/IssueResult.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/maogm/wanquribao/NavigationDrawerFragment.java" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/list_item_issue.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/drawable/shape_circle.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_web_view.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/drawable/shape_button_outline.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/maogm/wanquribao/WebViewActivity.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/maogm/wanquribao/Module/IssueWrapper.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/maogm/wanquribao/Module/PostModel.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/maogm/wanquribao/IssueListFragment.java" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/list_item_post.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/values/dimens.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/fragment_random_post.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/fragment_post_list.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/maogm/wanquribao/Sharer.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/maogm/wanquribao/Constant.java" />
         <option value="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/maogm/wanquribao/Utils/NetworkUtil.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/maogm/wanquribao/MainActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/maogm/wanquribao/Module/Post.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/maogm/wanquribao/RandomPostFragment.java" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/fragment_issue_list.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/list_item_post.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/list_item_issue.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/maogm/wanquribao/Module/PostWrapper.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/maogm/wanquribao/Module/IssueWrapper.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/maogm/wanquribao/Module/IssuesResult.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/maogm/wanquribao/Constant.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/maogm/wanquribao/Listener/OnIssueSelectedListener.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/maogm/wanquribao/Module/Issue.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/maogm/wanquribao/NavigationDrawerFragment.java" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/fragment_post_list.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/values/colors.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/maogm/wanquribao/MainActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/values/strings.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/maogm/wanquribao/IssueFragment.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/maogm/wanquribao/RandomPostFragment.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/maogm/wanquribao/IssuesFragment.java" />
       </list>
     </option>
   </component>
@@ -1605,28 +1714,6 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="AndroidView">
-        <subPane>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="WanquRibao" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Gradle Scripts" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidBuildScriptsGroupNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="WanquRibao" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
-            </PATH_ELEMENT>
-          </PATH>
-        </subPane>
-      </pane>
-      <pane id="Scope" />
-      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -1789,6 +1876,36 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="res" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="drawable" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="WanquRibao" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="WanquRibao" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
               <option name="myItemId" value="java" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
@@ -1882,10 +1999,66 @@
               <option name="myItemId" value="src" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="wanquribao" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Listener" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="WanquRibao" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="WanquRibao" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
           </PATH>
         </subPane>
       </pane>
       <pane id="Scratches" />
+      <pane id="PackagesPane" />
+      <pane id="Scope" />
+      <pane id="AndroidView">
+        <subPane>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="WanquRibao" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Gradle Scripts" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidBuildScriptsGroupNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="WanquRibao" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -1915,16 +2088,17 @@
       <recent name="com.maogm.wanquribao.Module" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/app/src/main/res/layout" />
       <recent name="$PROJECT_DIR$/app/src/main/res/drawable" />
     </key>
     <key name="android.template.packageName">
       <recent name="com.maogm.wanquribao" />
     </key>
-    <key name="android.template.parentActivityClass">
-      <recent name="" />
-    </key>
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
       <recent name="com.maogm.wanquribao" />
+    </key>
+    <key name="android.template.parentActivityClass">
+      <recent name="" />
     </key>
   </component>
   <component name="RunManager" selected="Android Application.app">
@@ -2166,22 +2340,22 @@
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Preview" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3846154" sideWeight="0.5" order="14" side_tool="false" content_ui="tabs" x="1280" y="-527" width="1080" height="757" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32876712" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32846716" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Captures" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.35148793" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.35148793" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="true" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="10" side_tool="true" content_ui="tabs" />
       <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.12015721" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
-      <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.46546882" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
+      <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.46546882" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.28805396" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.28805396" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32846716" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
@@ -2205,7 +2379,7 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="37" />
+      <option name="time" value="40" />
     </breakpoint-manager>
     <watches-manager>
       <configuration name="app">
@@ -2214,170 +2388,6 @@
     </watches-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$USER_HOME$/.gradle/wrapper/dists/gradle-2.2.1-all/c64ydeuardnfqctvr1gm30w53/gradle-2.2.1/src/core/org/gradle/api/artifacts/dsl/RepositoryHandler.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-3.5618556">
-          <caret line="122" column="28" selection-start-line="122" selection-start-column="28" selection-end-line="122" selection-end-column="28" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/settings.gradle">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/menu/global.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.09287926">
-          <caret line="2" column="0" selection-start-line="2" selection-start-column="0" selection-end-line="3" selection-end-column="69" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/menu/main.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.32507738">
-          <caret line="7" column="0" selection-start-line="7" selection-start-column="0" selection-end-line="8" selection-end-column="69" />
-          <folding>
-            <element signature="e#258#280#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/drawer_background.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.16693164">
-          <caret line="7" column="11" selection-start-line="7" selection-start-column="11" selection-end-line="7" selection-end-column="11" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/build.gradle">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.7818792">
-          <caret line="26" column="48" selection-start-line="26" selection-start-column="48" selection-end-line="26" selection-end-column="48" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/build.gradle">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="19" column="0" selection-start-line="19" selection-start-column="0" selection-end-line="19" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.mcxiaoke.volley/library/1.0.17/27eba5b8491214f575d42a883b60dc91d7e8ab08/library-1.0.17-sources.jar!/com/android/volley/Request.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="37" column="22" selection-start-line="37" selection-start-column="22" selection-end-line="37" selection-end-column="22" />
-          <folding>
-            <element signature="e#0#20331#0" expanded="false" />
-            <element signature="imports" expanded="false" />
-            <element signature="e#4813#4814#0" expanded="false" />
-            <element signature="e#4843#4844#0" expanded="false" />
-            <element signature="e#5264#5265#0" expanded="false" />
-            <element signature="e#5291#5292#0" expanded="false" />
-            <element signature="e#5444#5445#0" expanded="false" />
-            <element signature="e#5481#5482#0" expanded="false" />
-            <element signature="e#5614#5615#0" expanded="false" />
-            <element signature="e#5660#5661#0" expanded="false" />
-            <element signature="e#8714#8715#0" expanded="false" />
-            <element signature="e#8781#8782#0" expanded="false" />
-            <element signature="e#8911#8912#0" expanded="false" />
-            <element signature="e#8935#8936#0" expanded="false" />
-            <element signature="e#9034#9035#0" expanded="false" />
-            <element signature="e#9068#9069#0" expanded="false" />
-            <element signature="e#9201#9202#0" expanded="false" />
-            <element signature="e#9240#9241#0" expanded="false" />
-            <element signature="e#9368#9369#0" expanded="false" />
-            <element signature="e#9399#9400#0" expanded="false" />
-            <element signature="e#9836#9837#0" expanded="false" />
-            <element signature="e#9870#9871#0" expanded="false" />
-            <element signature="e#9984#9985#0" expanded="false" />
-            <element signature="e#10016#10017#0" expanded="false" />
-            <element signature="e#10122#10123#0" expanded="false" />
-            <element signature="e#10154#10155#0" expanded="false" />
-            <element signature="e#11756#11757#0" expanded="false" />
-            <element signature="e#11798#11799#0" expanded="false" />
-            <element signature="e#11938#11939#0" expanded="false" />
-            <element signature="e#11981#11982#0" expanded="false" />
-            <element signature="e#13826#13827#0" expanded="false" />
-            <element signature="e#13872#13873#0" expanded="false" />
-            <element signature="e#15981#15982#0" expanded="false" />
-            <element signature="e#16016#16017#0" expanded="false" />
-            <element signature="e#16387#16388#0" expanded="false" />
-            <element signature="e#16425#16426#0" expanded="false" />
-            <element signature="e#16757#16758#0" expanded="false" />
-            <element signature="e#16812#16813#0" expanded="false" />
-            <element signature="e#16942#16943#0" expanded="false" />
-            <element signature="e#16977#16978#0" expanded="false" />
-            <element signature="e#17185#17186#0" expanded="false" />
-            <element signature="e#17226#17227#0" expanded="false" />
-            <element signature="e#17363#17364#0" expanded="false" />
-            <element signature="e#17404#17405#0" expanded="false" />
-            <element signature="e#18276#18277#0" expanded="false" />
-            <element signature="e#18310#18311#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable-mdpi/ic_navigation_drawer.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable-mdpi/ic_drawer.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable-hdpi/ic_drawer.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable-hdpi/drawer_shadow.9.png">
-      <provider selected="true" editor-type-id="ninepatcheditor">
-        <state />
-      </provider>
-      <provider editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="jar://$PROJECT_DIR$/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.0/jars/classes.jar!/android/support/v7/internal/widget/ActivityChooserModel.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.29933774">
-          <caret line="84" column="16" selection-start-line="84" selection-start-column="16" selection-end-line="84" selection-end-column="16" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$PROJECT_DIR$/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.0/jars/classes.jar!/android/support/v7/widget/ShareActionProvider.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.48145697">
-          <caret line="93" column="22" selection-start-line="93" selection-start-column="22" selection-end-line="93" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/values/colors.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="2" column="30" selection-start-line="2" selection-start-column="24" selection-end-line="2" selection-end-column="30" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable-hdpi/icon_exit_white.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable-xxhdpi/icon_quoteleft.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
     <entry file="file://$USER_HOME$/lib/android/sdk/sources/android-21/android/os/BaseBundle.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.33314317">
@@ -2395,22 +2405,6 @@
       </provider>
       <provider editor-type-id="android-designer">
         <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/maogm/wanquribao/NavigationDrawerFragment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="151" column="34" selection-start-line="151" selection-start-column="34" selection-end-line="151" selection-end-column="34" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/lib/android/sdk/sources/android-21/android/widget/AbsListView.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="6053" column="16" selection-start-line="6053" selection-start-column="16" selection-end-line="6053" selection-end-column="16" />
-          <folding />
-        </state>
       </provider>
     </entry>
     <entry file="file://$USER_HOME$/lib/android/sdk/sources/android-21/java/lang/Object.java">
@@ -2462,20 +2456,12 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/maogm/wanquribao/Module/IssueWrapper.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="9" column="22" selection-start-line="9" selection-start-column="22" selection-end-line="9" selection-end-column="22" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/maogm/wanquribao/Module/PostModel.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="69" column="29" selection-start-line="69" selection-start-column="29" selection-end-line="69" selection-end-column="29" />
           <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="imports" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -2506,34 +2492,12 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="50" column="27" selection-start-line="50" selection-start-column="19" selection-end-line="50" selection-end-column="27" />
           <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="imports" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/list_item_post.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-3.1034484">
-          <caret line="6" column="36" selection-start-line="6" selection-start-column="36" selection-end-line="6" selection-end-column="36" />
-          <folding />
-        </state>
-      </provider>
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_post_list.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.07218479">
-          <caret line="5" column="28" selection-start-line="5" selection-start-column="28" selection-end-line="5" selection-end-column="28" />
-          <folding />
-        </state>
-      </provider>
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/maogm/wanquribao/OnShareListener.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/maogm/wanquribao/Listener/OnShareListener.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="8" column="0" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
@@ -2554,7 +2518,7 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="14" column="43" selection-start-line="14" selection-start-column="22" selection-end-line="14" selection-end-column="43" />
           <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="imports" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -2563,10 +2527,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.5790251">
           <caret line="197" column="16" selection-start-line="197" selection-start-column="16" selection-end-line="197" selection-end-column="16" />
-          <folding>
-            <element signature="e#6079#6080#0" expanded="false" />
-            <element signature="e#6136#6137#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -2575,17 +2535,9 @@
         <state vertical-scroll-proportion="0.3593839">
           <caret line="54" column="34" selection-start-line="54" selection-start-column="34" selection-end-line="54" selection-end-column="34" />
           <folding>
-            <element signature="e#1523#1524#0" expanded="true" />
-            <element signature="e#1568#1569#0" expanded="true" />
+            <element signature="e#1523#1524#0" expanded="false" />
+            <element signature="e#1568#1569#0" expanded="false" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/maogm/wanquribao/Constant.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0855676">
-          <caret line="10" column="31" selection-start-line="10" selection-start-column="31" selection-end-line="10" selection-end-column="31" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -2610,28 +2562,6 @@
         <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/maogm/wanquribao/MainActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="59" column="31" selection-start-line="59" selection-start-column="31" selection-end-line="59" selection-end-column="31" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#5702#5748#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$PROJECT_DIR$/app/build/intermediates/exploded-aar/com.github.satyan/sugar/1.3/jars/classes.jar!/com/orm/SugarRecord.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.9369231">
-          <caret line="90" column="9" selection-start-line="90" selection-start-column="9" selection-end-line="90" selection-end-column="9" />
-          <folding>
-            <element signature="e#1895#1896#0" expanded="true" />
-            <element signature="e#1970#1971#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/maogm/wanquribao/Module/Post.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -2640,10 +2570,98 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/values/strings.xml">
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_issue_list.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.41538462">
-          <caret line="18" column="44" selection-start-line="18" selection-start-column="44" selection-end-line="18" selection-end-column="44" />
+        <state vertical-scroll-proportion="0.17324351">
+          <caret line="12" column="47" selection-start-line="12" selection-start-column="47" selection-end-line="12" selection-end-column="47" />
+          <folding />
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/listitem.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.03422704">
+          <caret line="4" column="11" selection-start-line="4" selection-start-column="11" selection-end-line="4" selection-end-column="11" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/list_item_post.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.53416747">
+          <caret line="37" column="39" selection-start-line="37" selection-start-column="39" selection-end-line="37" selection-end-column="39" />
+          <folding>
+            <element signature="e#294#320#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/lib/android/sdk/sources/android-21/android/content/res/Resources.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.58984596">
+          <caret line="388" column="69" selection-start-line="388" selection-start-column="69" selection-end-line="388" selection-end-column="69" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$USER_HOME$/lib/android/sdk/extras/android/m2repository/com/android/support/support-v4/21.0.0/support-v4-21.0.0-sources.jar!/android/support/v4/app/Fragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.34169996">
+          <caret line="653" column="33" selection-start-line="653" selection-start-column="33" selection-end-line="653" selection-end-column="33" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/lib/android/sdk/sources/android-21/android/view/LayoutInflater.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="363" column="16" selection-start-line="363" selection-start-column="16" selection-end-line="363" selection-end-column="16" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/build/generated/source/r/debug/com/maogm/wanquribao/R.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.34615386">
+          <caret line="1482" column="32" selection-start-line="1482" selection-start-column="32" selection-end-line="1482" selection-end-column="32" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/maogm/wanquribao/Module/PostWrapper.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="9" column="22" selection-start-line="9" selection-start-column="22" selection-end-line="9" selection-end-column="22" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/lib/android/sdk/sources/android-21/android/database/sqlite/SQLiteQueryBuilder.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.73917747">
+          <caret line="227" column="46" selection-start-line="227" selection-start-column="46" selection-end-line="227" selection-end-column="46" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/lib/android/sdk/sources/android-21/android/database/sqlite/SQLiteDatabase.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.43073592">
+          <caret line="1159" column="51" selection-start-line="1159" selection-start-column="51" selection-end-line="1159" selection-end-column="51" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$PROJECT_DIR$/app/build/intermediates/exploded-aar/com.github.satyan/sugar/1.3/jars/classes.jar!/com/orm/SugarRecord.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.5507246">
+          <caret line="216" column="37" selection-start-line="216" selection-start-column="37" selection-end-line="216" selection-end-column="37" />
           <folding />
         </state>
       </provider>
@@ -2651,49 +2669,216 @@
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/maogm/wanquribao/Module/Issue.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="19" column="25" selection-start-line="19" selection-start-column="25" selection-end-line="19" selection-end-column="25" />
+          <caret line="22" column="31" selection-start-line="22" selection-start-column="31" selection-end-line="22" selection-end-column="31" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/maogm/wanquribao/RandomPostFragment.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/maogm/wanquribao/Module/IssuesResult.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.79545456">
-          <caret line="67" column="5" selection-start-line="67" selection-start-column="5" selection-end-line="67" selection-end-column="5" />
+        <state vertical-scroll-proportion="0.16233766">
+          <caret line="10" column="0" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/maogm/wanquribao/Constant.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="11" column="53" selection-start-line="11" selection-start-column="53" selection-end-line="11" selection-end-column="53" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/lib/android/sdk/sources/android-21/android/widget/AbsListView.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.2034632">
+          <caret line="1020" column="16" selection-start-line="1020" selection-start-column="16" selection-end-line="1020" selection-end-column="16" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/list_item_issue.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.28873917">
+          <caret line="20" column="41" selection-start-line="20" selection-start-column="41" selection-end-line="20" selection-end-column="41" />
+          <folding />
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/maogm/wanquribao/Module/IssueWrapper.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="13" column="1" selection-start-line="13" selection-start-column="1" selection-end-line="13" selection-end-column="1" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="jar://$USER_HOME$/lib/android/sdk/extras/android/m2repository/com/android/support/support-v4/21.0.0/support-v4-21.0.0-sources.jar!/android/support/v4/app/Fragment.java">
+    <entry file="jar://$USER_HOME$/lib/android/sdk/extras/android/m2repository/com/android/support/support-v4/21.0.0/support-v4-21.0.0-sources.jar!/android/support/v4/widget/SwipeRefreshLayout.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.22626442">
+          <caret line="337" column="51" selection-start-line="337" selection-start-column="51" selection-end-line="337" selection-end-column="51" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/lib/android/sdk/sources/android-21/android/view/View.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.3327418">
+          <caret line="16683" column="19" selection-start-line="16683" selection-start-column="19" selection-end-line="16683" selection-end-column="19" />
+          <folding>
+            <element signature="e#645901#645902#0" expanded="false" />
+            <element signature="e#645962#645963#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/lib/android/sdk/platforms/android-21/data/res/values/colors.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.4449515">
+          <caret line="58" column="25" selection-start-line="58" selection-start-column="25" selection-end-line="58" selection-end-column="25" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_post_list.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-1.5517242">
+          <caret line="3" column="40" selection-start-line="3" selection-start-column="40" selection-end-line="3" selection-end-column="40" />
+          <folding />
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/values/colors.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="1051" column="16" selection-start-line="1051" selection-start-column="16" selection-end-line="1051" selection-end-column="16" />
+          <caret line="4" column="42" selection-start-line="4" selection-start-column="42" selection-end-line="4" selection-end-column="42" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/lib/android/sdk/sources/android-21/android/view/MenuItem.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.6921029">
+          <caret line="402" column="31" selection-start-line="402" selection-start-column="31" selection-end-line="402" selection-end-column="31" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/maogm/wanquribao/NavigationDrawerFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-19.074074">
+          <caret line="233" column="33" selection-start-line="233" selection-start-column="33" selection-end-line="233" selection-end-column="33" />
+          <folding>
+            <element signature="e#10150#10167#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/maogm/wanquribao/MainActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-25.74074">
+          <caret line="210" column="0" selection-start-line="210" selection-start-column="0" selection-end-line="219" selection-end-column="34" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#7327#7355#0" expanded="true" />
+            <element signature="e#7424#7457#0" expanded="true" />
+            <element signature="e#7483#7511#0" expanded="true" />
+            <element signature="e#7537#7582#0" expanded="true" />
+            <element signature="e#8139#8182#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/values/strings.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-4.4444447">
+          <caret line="8" column="0" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/maogm/wanquribao/IssueFragment.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.75139356">
-          <caret line="124" column="29" selection-start-line="124" selection-start-column="17" selection-end-line="124" selection-end-column="29" />
+        <state vertical-scroll-proportion="-19.444445">
+          <caret line="203" column="0" selection-start-line="203" selection-start-column="0" selection-end-line="220" selection-end-column="5" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#3904#3944#0" expanded="true" />
-            <element signature="e#4641#4663#0" expanded="true" />
-            <element signature="e#4881#4910#0" expanded="true" />
-            <element signature="e#5386#5419#0" expanded="true" />
-            <element signature="e#8924#9827#0" expanded="true" />
-            <element signature="e#9190#9220#0" expanded="true" />
-            <element signature="e#9510#9538#0" expanded="true" />
-            <element signature="e#9826#9827#0" expanded="true" />
-            <element signature="e#9911#10133#0" expanded="true" />
-            <element signature="e#10132#10133#0" expanded="true" />
-            <element signature="e#10219#10410#0" expanded="true" />
-            <element signature="e#10409#10410#0" expanded="true" />
-            <element signature="e#10497#10701#0" expanded="true" />
-            <element signature="e#10700#10701#0" expanded="true" />
+            <element signature="e#1913#1914#0" expanded="true" />
+            <element signature="e#1951#1952#0" expanded="true" />
+            <element signature="e#4092#4132#0" expanded="true" />
+            <element signature="e#4279#4420#0" expanded="true" />
+            <element signature="e#4419#4420#0" expanded="true" />
+            <element signature="e#5548#5565#0" expanded="true" />
+            <element signature="e#6065#6082#0" expanded="true" />
+            <element signature="e#6520#6542#0" expanded="true" />
+            <element signature="e#6878#6895#0" expanded="true" />
+            <element signature="e#7401#7429#0" expanded="true" />
+            <element signature="e#7498#7560#0" expanded="true" />
+            <element signature="e#7586#7631#0" expanded="true" />
+            <element signature="e#8374#8407#0" expanded="true" />
+            <element signature="e#12178#12208#0" expanded="true" />
+            <element signature="e#12498#12526#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/maogm/wanquribao/RandomPostFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.37444544">
+          <caret line="201" column="37" selection-start-line="201" selection-start-column="37" selection-end-line="201" selection-end-column="37" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#1614#1615#0" expanded="true" />
+            <element signature="e#1661#1662#0" expanded="true" />
+            <element signature="e#2903#2933#0" expanded="true" />
+            <element signature="e#3221#3249#0" expanded="true" />
+            <element signature="e#5179#5201#0" expanded="true" />
+            <element signature="e#6183#6205#0" expanded="true" />
+            <element signature="e#6467#6484#0" expanded="true" />
+            <element signature="e#6702#6719#0" expanded="true" />
+            <element signature="e#7079#7112#0" expanded="true" />
+            <element signature="e#8207#8235#0" expanded="true" />
+            <element signature="e#8304#8366#0" expanded="true" />
+            <element signature="e#8392#8437#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/maogm/wanquribao/IssuesFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.7784343">
+          <caret line="242" column="28" selection-start-line="242" selection-start-column="28" selection-end-line="242" selection-end-column="28" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#1330#1331#0" expanded="true" />
+            <element signature="e#1373#1374#0" expanded="true" />
+            <element signature="e#1479#1480#0" expanded="true" />
+            <element signature="e#1529#1530#0" expanded="true" />
+            <element signature="e#3064#3524#0" expanded="true" />
+            <element signature="e#3523#3524#0" expanded="true" />
+            <element signature="e#3717#3933#0" expanded="true" />
+            <element signature="e#3932#3933#0" expanded="true" />
+            <element signature="e#4033#4071#0" expanded="true" />
+            <element signature="e#4337#4478#0" expanded="true" />
+            <element signature="e#4477#4478#0" expanded="true" />
+            <element signature="e#5492#5514#0" expanded="true" />
+            <element signature="e#5833#5850#0" expanded="true" />
+            <element signature="e#6636#6637#0" expanded="true" />
+            <element signature="e#6701#6702#0" expanded="true" />
+            <element signature="e#6766#6767#0" expanded="true" />
+            <element signature="e#6838#6839#0" expanded="true" />
+            <element signature="e#6903#6904#0" expanded="true" />
+            <element signature="e#6942#6943#0" expanded="true" />
+            <element signature="e#7782#7841#0" expanded="true" />
           </folding>
         </state>
       </provider>

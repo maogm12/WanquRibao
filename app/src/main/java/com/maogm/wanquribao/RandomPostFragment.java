@@ -14,8 +14,9 @@ import android.widget.Toast;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.maogm.wanquribao.Listener.OnShareListener;
 import com.maogm.wanquribao.Module.IssueResult;
-import com.maogm.wanquribao.Module.IssueWrapper;
+import com.maogm.wanquribao.Module.PostWrapper;
 import com.maogm.wanquribao.Module.Post;
 import com.maogm.wanquribao.Module.PostModel;
 import com.maogm.wanquribao.Utils.NetworkUtil;
@@ -183,13 +184,9 @@ public class RandomPostFragment extends Fragment implements Response.Listener<Is
 
     @Override
     public void onResponse(IssueResult response) {
-        if (response.code == 2) {
-            Toast.makeText(getActivity(), R.string.issue_number_invalid, Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-        if (response.data == null) {
-            Log.e(TAG, "no data received");
+        if (response == null || response.code == 2 || response.data == null) {
+            Log.d(TAG, "no post got");
+            Toast.makeText(getActivity(), R.string.no_issue, Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -200,9 +197,12 @@ public class RandomPostFragment extends Fragment implements Response.Listener<Is
         } else {
             onPostFetched(response.data.posts.get(0));
         }
+
+        // set intern
+        ((MainActivity)getActivity()).setShareIntent(getShareIntent(response.data));
     }
 
-    private void updateTitle(IssueWrapper data) {
+    private void updateTitle(PostWrapper data) {
         if (data == null) {
             return;
         }
@@ -211,7 +211,7 @@ public class RandomPostFragment extends Fragment implements Response.Listener<Is
         ((MainActivity)getActivity()).updateTitle(String.format(Locale.getDefault(), pattern, data.date, data.number));
     }
 
-    private void savePosts(IssueWrapper data) {
+    private void savePosts(PostWrapper data) {
         if (data == null) {
             return;
         }
@@ -231,9 +231,28 @@ public class RandomPostFragment extends Fragment implements Response.Listener<Is
             return;
         }
 
+        fetchedPost = post;
         tvTitle.setText(post.title);
         tvUrlDomain.setText(post.urlDomain);
         tvSummary.setText(post.summary);
+    }
+
+    private Intent getShareIntent(PostWrapper data) {
+        if (data == null) {
+            return null;
+        }
+
+        Intent intent = new Intent();
+        intent.setAction(Intent.ACTION_SEND);
+        intent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.share_me));
+        StringBuilder sb = new StringBuilder();
+        sb.append(getString(R.string.title_pattern_long, data.date, data.number))
+                .append(getString(R.string.via_app, Constant.playUrl))
+                .append(Constant.wanquRootUrl).append(Constant.issuesUrl)
+                .append("/").append(data.number);
+        intent.putExtra(Intent.EXTRA_TEXT, sb.toString());
+        intent.setType("text/plain");
+        return intent;
     }
 
     /**
@@ -241,10 +260,6 @@ public class RandomPostFragment extends Fragment implements Response.Listener<Is
      * @param listener the OnShareListener
      */
     public void setOnShareListener(OnShareListener listener) {
-        if (listener == null) {
-            return;
-        }
-
         shareListener = listener;
     }
 

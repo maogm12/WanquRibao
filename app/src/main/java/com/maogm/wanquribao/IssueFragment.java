@@ -17,12 +17,16 @@ import android.widget.Toast;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.maogm.wanquribao.Listener.OnShareListener;
 import com.maogm.wanquribao.Module.IssueResult;
-import com.maogm.wanquribao.Module.IssueWrapper;
 import com.maogm.wanquribao.Module.Post;
 import com.maogm.wanquribao.Module.PostModel;
+import com.maogm.wanquribao.Module.PostWrapper;
+import com.maogm.wanquribao.Utils.NetworkUtil;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -119,23 +123,62 @@ public class IssueFragment extends Fragment implements Response.Listener<IssueRe
         requestIssue();
 
         // set title
-        ((MainActivity)getActivity()).updateTitle(getString(R.string.title_section_latest));
+        if (number == -1) {
+            ((MainActivity) getActivity()).updateTitle(getString(R.string.title_section_latest));
+        }
     }
 
     private void requestIssue() {
-        swipeView.setRefreshing(true);
+        // call setRefreshing directly will not trigger the animation
+        swipeView.post(new Runnable() {
+            @Override
+            public void run() {
+                swipeView.setRefreshing(true);
+            }
+        });
 
-        // request issue
-        String path = Constant.baseUrl + Constant.issueUrl;
-        if (number < 0) {
-            path += "/latest";
+        // connected to internet
+        if (NetworkUtil.getConnectivityStatus(getActivity()) != NetworkUtil.TYPE_NOT_CONNECTED) {
+            // request issue
+            String path = Constant.baseUrl + Constant.issueUrl;
+            if (number < 0) {
+                path += "/latest";
+            } else {
+                path += "/" + String.valueOf(number);
+            }
+
+            Log.d(TAG, "netword connected, request link: " + path);
+            Map<String, String> headers = new HashMap<>();
+            GsonRequest<IssueResult> requester = new GsonRequest<>(path, IssueResult.class,
+                    headers, this, this);
+            ((MainActivity) getActivity()).AddRequest(requester);
         } else {
-            path += "/" + String.valueOf(number);
+            // get from local storage
+            Log.d(TAG, "network not connected, request from local db");
+            if (number < 0) {
+                Iterator<PostModel> biggestId = PostModel.findAsIterator(PostModel.class, null, null, null, "number desc");
+                if (!biggestId.hasNext()) {
+                    Log.d(TAG, "no post");
+                    Toast.makeText(getActivity(), R.string.no_issue, Toast.LENGTH_SHORT).show();
+                    return;
+                } else {
+                    number = biggestId.next().number;
+                    Log.d(TAG, "the biggest id is " + number);
+                }
+            }
+
+            List<PostModel> postModels = PostModel.find(PostModel.class, "number = ?", String.valueOf(number));
+            if (postModels.isEmpty()) {
+                Log.d(TAG, "no such post [number: " + number + "]");
+                Toast.makeText(getActivity(), R.string.no_issue, Toast.LENGTH_SHORT).show();
+            } else {
+                List<Post> posts = new ArrayList<>();
+                for (PostModel model: postModels) {
+                    posts.add(model.getPost());
+                }
+                onPostsRequest(posts);
+            }
         }
-        Map<String, String> headers = new HashMap<>();
-        GsonRequest<IssueResult> requester = new GsonRequest<>(path, IssueResult.class,
-                headers, this, this);
-        ((MainActivity)getActivity()).AddRequest(requester);
     }
 
     @Override
@@ -147,18 +190,46 @@ public class IssueFragment extends Fragment implements Response.Listener<IssueRe
     @Override
     public void onResponse(IssueResult response) {
         swipeView.setRefreshing(false);
-        if (response.code == 2) {
-            Toast.makeText(getActivity(), R.string.issue_number_invalid, Toast.LENGTH_SHORT).show();
+        if (response == null || response.code == 2 || response.data == null || response.data.posts.isEmpty()) {
+            Log.e(TAG, "no posts got");
+            Toast.makeText(getActivity(), R.string.no_issue, Toast.LENGTH_SHORT).show();
             return;
         }
 
+        onPostsRequest(response.data.posts);
         updateTitle(response);
         savePosts(response);
+        ((MainActivity)getActivity()).setShareIntent(getShareIntent(response.data));
+    }
 
-        this.posts = response.data.posts;
+    private Intent getShareIntent(PostWrapper data) {
+        if (data == null) {
+            return null;
+        }
+
+        Intent intent = new Intent();
+        intent.setAction(Intent.ACTION_SEND);
+        intent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.share_me));
+        StringBuilder sb = new StringBuilder();
+        sb.append(getString(R.string.title_pattern_long, data.date, data.number))
+                .append(getString(R.string.via_app, Constant.playUrl))
+                .append(Constant.wanquRootUrl).append(Constant.issuesUrl)
+                .append("/").append(data.number);
+        intent.putExtra(Intent.EXTRA_TEXT, sb.toString());
+        intent.setType("text/plain");
+        return intent;
+    }
+
+    private void onPostsRequest(List<Post> posts) {
+        if (posts == null) {
+            return;
+        }
+
+        this.posts = posts;
         if (postAdapter != null) {
             postAdapter.notifyDataSetChanged();
         }
+        Log.d(TAG, "posts refreshed");
     }
 
     private void updateTitle(IssueResult response) {
@@ -166,7 +237,7 @@ public class IssueFragment extends Fragment implements Response.Listener<IssueRe
             return;
         }
 
-        IssueWrapper wrapper = response.data;
+        PostWrapper wrapper = response.data;
         String pattern = getString(R.string.title_pattern);
         ((MainActivity)getActivity()).updateTitle(String.format(Locale.getDefault(), pattern, wrapper.date, wrapper.number));
     }

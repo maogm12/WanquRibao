@@ -11,7 +11,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="5dp"
-        android:text="无聊乏味的前端工程师"
+        android:text="======================"
         android:textColor="@android:color/black"
         android:textSize="@dimen/title_size" />
 
@@ -20,7 +20,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="5dp"
-        android:text="Domain"
+        android:text="=========="
         android:textColor="@android:color/darker_gray"
         android:textSize="14sp" />
 
@@ -29,7 +29,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="5dp"
-        android:text="summary"
+        android:text="======================================================================"
         android:textSize="16sp" />
 
     <LinearLayout

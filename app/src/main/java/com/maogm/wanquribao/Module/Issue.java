@@ -9,7 +9,7 @@ import com.orm.SugarRecord;
 public class Issue extends SugarRecord<Issue> {
     public String date;
     @SerializedName("created_at")
-    public int createdAt;
+    public long createdAt;
     public int number;
     public String summary;
 
