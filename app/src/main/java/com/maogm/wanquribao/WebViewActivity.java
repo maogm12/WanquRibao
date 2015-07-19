@@ -7,13 +7,17 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
+import android.webkit.WebChromeClient;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.ImageButton;
 
 import com.maogm.wanquribao.Utils.Constant;
 
 public class WebViewActivity extends Activity {
     private static final String TAG = "WebViewActivity";
+
+    private AnimatingProgressBar progressBar;
 
     private WebView webView;
     private String shareSubject;
@@ -35,7 +39,21 @@ public class WebViewActivity extends Activity {
             actionBar.hide();
         }
 
+        progressBar = (AnimatingProgressBar) findViewById(R.id.progress);
+        // progressBar.getProgressDrawable().setColorFilter(Color.RED, PorterDuff.Mode.SRC_IN);
+
         webView = (WebView) findViewById(R.id.fullscreen_content);
+        webView.setWebChromeClient(new WebChromeClient());
+        webView.setWebViewClient(new WebViewClient() {
+            @Override
+            public void onPageFinished(WebView view, String url) {
+                super.onPageFinished(view, url);
+                progressBar.setProgress(100);
+                progressBar.setVisibility(View.INVISIBLE);
+            }
+        });
+        webView.getSettings().setJavaScriptEnabled(true);
+
         ImageButton ibtnShare = (ImageButton) findViewById(R.id.btn_share);
         ImageButton ibtnExit = (ImageButton) findViewById(R.id.btn_exit);
 
@@ -47,11 +65,17 @@ public class WebViewActivity extends Activity {
             }
         });
 
-
         // share
         ibtnShare.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (shareBody == null) {
+                    StringBuilder sb = new StringBuilder();
+                    sb.append(getString(R.string.recommend_app))
+                            .append(getString(R.string.app_desc))
+                            .append(getString(R.string.via_app, Constant.playUrl));
+                    shareBody = sb.toString();
+                }
                 shareText(shareSubject, shareBody);
             }
         });
@@ -60,6 +84,8 @@ public class WebViewActivity extends Activity {
     @Override
     protected void onResume() {
         super.onResume();
+
+        progressBar.setProgress(90);
 
         // load data
         Bundle bundle = getIntent().getExtras();

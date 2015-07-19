@@ -1,6 +1,10 @@
 package com.maogm.wanquribao.Module;
 
+import android.content.Context;
+
 import com.google.gson.annotations.SerializedName;
+import com.maogm.wanquribao.R;
+import com.maogm.wanquribao.Utils.Constant;
 
 import java.util.List;
 
@@ -47,4 +51,9 @@ public class Post {
         this.slug = slug;
         this.readableArticle = readableArticle;
     }
+
+    public String getShareBody(Context context) {
+        return readableTitle + context.getString(R.string.via_app, Constant.playUrl) + url;
+    }
+
 }

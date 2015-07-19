@@ -103,7 +103,7 @@ public class RandomPostFragment extends Fragment implements Response.Listener<Is
             @Override
             public void onClick(View v) {
                 if (fetchedPost != null) {
-                    openUrl(Constant.wanquRootUrl + "/" + fetchedPost.slug);
+                    openUrl(Constant.wanquRootUrl + "/" + fetchedPost.slug, null, fetchedPost.getShareBody(getActivity()));
                 }
             }
         });
@@ -113,7 +113,7 @@ public class RandomPostFragment extends Fragment implements Response.Listener<Is
             @Override
             public void onClick(View v) {
                 if (fetchedPost != null) {
-                    openUrl(fetchedPost.url);
+                    openUrl(fetchedPost.url, null, fetchedPost.getShareBody(getActivity()));
                 }
             }
         });
@@ -123,7 +123,7 @@ public class RandomPostFragment extends Fragment implements Response.Listener<Is
             @Override
             public void onClick(View v) {
                 if (fetchedPost != null) {
-                    openHtml(fetchedPost.readableArticle);
+                    openHtml(fetchedPost.readableArticle, null, fetchedPost.getShareBody(getActivity()));
                 }
             }
         });
@@ -212,19 +212,24 @@ public class RandomPostFragment extends Fragment implements Response.Listener<Is
         ((MainActivity)getActivity()).updateTitle(String.format(Locale.getDefault(), pattern, data.date, data.number));
     }
 
-    private void savePosts(PostWrapper data) {
+    private void savePosts(final PostWrapper data) {
         if (data == null) {
             return;
         }
 
-        for (int i = 0; i < data.posts.size(); ++i) {
-            Post post = data.posts.get(i);
-            if (!PostModel.find(PostModel.class, "id = ?", String.valueOf(post.id)).isEmpty()) {
-                continue;
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                for (int i = 0; i < data.posts.size(); ++i) {
+                    Post post = data.posts.get(i);
+                    if (!PostModel.find(PostModel.class, "post_id = ?", String.valueOf(post.id)).isEmpty()) {
+                        continue;
+                    }
+                    PostModel model = new PostModel(post, data.date, data.number);
+                    model.save();
+                }
             }
-            PostModel model = new PostModel(post, data.date, data.number);
-            model.save();
-        }
+        }).run();
     }
 
     public void onPostFetched(Post post) {
@@ -264,7 +269,7 @@ public class RandomPostFragment extends Fragment implements Response.Listener<Is
         shareListener = listener;
     }
 
-    public void openUrl(String url) {
+    public void openUrl(String url, String subject, String body) {
         if (url == null) {
             return;
         }
@@ -272,11 +277,20 @@ public class RandomPostFragment extends Fragment implements Response.Listener<Is
         Intent webViewIntent = new Intent(getActivity(), WebViewActivity.class);
         Bundle bundle = new Bundle();
         bundle.putString(Constant.KEY_URL, url);
+
+        if (subject == null) {
+            subject = getString(R.string.share_link);
+        }
+        bundle.putString(Constant.KEY_SHARE_SUBJECT, subject);
+        if (body != null) {
+            bundle.putString(Constant.KEY_SHARE_BODY, body + getString(R.string.via_app, Constant.playUrl) + url);
+        }
+
         webViewIntent.putExtras(bundle);
         startActivity(webViewIntent);
     }
 
-    public void openHtml(String html) {
+    public void openHtml(String html, String subject, String body) {
         if (html == null) {
             return;
         }
@@ -284,6 +298,14 @@ public class RandomPostFragment extends Fragment implements Response.Listener<Is
         Intent webViewIntent = new Intent(getActivity(), WebViewActivity.class);
         Bundle bundle = new Bundle();
         bundle.putString(Constant.KEY_HTML, html);
+        if (subject == null) {
+            subject = getString(R.string.share_link);
+        }
+        bundle.putString(Constant.KEY_SHARE_SUBJECT, subject);
+        if (body != null) {
+            bundle.putString(Constant.KEY_SHARE_BODY, body);
+        }
+
         webViewIntent.putExtras(bundle);
         startActivity(webViewIntent);
     }

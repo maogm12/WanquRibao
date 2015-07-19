@@ -21,7 +21,7 @@ public class PostModel extends SugarRecord<PostModel> {
     public String readableTitle;
     public long createdAt;
     public String title;
-    public int id;
+    public int postId;
     public String content;
     public int issueId;
     public String summary;
@@ -43,7 +43,7 @@ public class PostModel extends SugarRecord<PostModel> {
         this.readableTitle = readableTitle;
         this.createdAt = createdAt;
         this.title = title;
-        this.id = id;
+        this.postId = id;
         this.content = content;
         this.issueId = issueId;
         this.summary = summary;
@@ -75,7 +75,7 @@ public class PostModel extends SugarRecord<PostModel> {
         this.readableTitle = post.readableTitle;
         this.createdAt = post.createdAt;
         this.title = post.title;
-        this.id = post.id;
+        this.postId = post.id;
         this.content = post.content;
         this.issueId = post.issueId;
         this.summary = post.summary;
@@ -89,7 +89,7 @@ public class PostModel extends SugarRecord<PostModel> {
         Collections.addAll(tags, arrTags);
 
         return new Post(this.urlDomain, this.picture, tags, this.url, this.readableTitle,
-                this.createdAt, this.title, this.id, this.content, this.issueId, this.summary,
+                this.createdAt, this.title, this.postId, this.content, this.issueId, this.summary,
                 this.slug, this.readableArticle);
     }
 }

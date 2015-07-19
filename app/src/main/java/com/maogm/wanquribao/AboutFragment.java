@@ -73,6 +73,12 @@ public class AboutFragment extends PreferenceFragment {
         Intent webViewIntent = new Intent(getActivity(), WebViewActivity.class);
         Bundle bundle = new Bundle();
         bundle.putString(Constant.KEY_URL, url);
+        bundle.putString(Constant.KEY_SHARE_SUBJECT, getString(R.string.share_me));
+        StringBuffer sb = new StringBuffer();
+        sb.append(getString(R.string.recommend_app))
+                .append(getString(R.string.app_desc))
+                .append(getString(R.string.via_app, Constant.playUrl));
+        bundle.putString(Constant.KEY_SHARE_BODY, sb.toString());
         webViewIntent.putExtras(bundle);
         startActivity(webViewIntent);
     }

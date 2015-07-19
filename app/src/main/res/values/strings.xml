@@ -23,13 +23,14 @@
     <string name="network_error">请求错误，请检查网络连接</string>
     <string name="no_issue">找不到日报 T_T</string>
 
-    <string name="title_activity_web_view">WebViewActivity</string>
+    <string name="title_activity_web_view">浏览器</string>
 
     <string name="random_post">刷出好文章</string>
 
     <string name="recommend_app">推荐【湾区日报】 Android App. </string>
     <string name="share_me">分享湾区日报</string>
     <string name="share_post">分享日报</string>
+    <string name="share_link">分享链接</string>
     <string name="via_app">(via 湾区日报: %1$s)</string>
 
     <string name="number_pattern">第%2$d期</string>

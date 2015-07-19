@@ -21,7 +21,6 @@ import com.maogm.wanquribao.Listener.OnShareListener;
 import com.maogm.wanquribao.Module.IssueResult;
 import com.maogm.wanquribao.Module.Post;
 import com.maogm.wanquribao.Module.PostModel;
-import com.maogm.wanquribao.Module.PostWrapper;
 import com.maogm.wanquribao.Utils.Constant;
 import com.maogm.wanquribao.Utils.NetworkUtil;
 
@@ -29,7 +28,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -157,14 +155,20 @@ public class IssueFragment extends Fragment implements Response.Listener<IssueRe
             // get from local storage
             Log.d(TAG, "network not connected, request from local db");
             if (number < 0) {
-                Iterator<PostModel> biggestId = PostModel.findAsIterator(PostModel.class, null, null, null, "number desc");
+                Iterator<PostModel> biggestId = PostModel.findAsIterator(PostModel.class, null, (String[])null, (String)null, "number desc", (String)null);
                 if (!biggestId.hasNext()) {
                     Log.d(TAG, "no post");
                     Toast.makeText(getActivity(), R.string.no_issue, Toast.LENGTH_SHORT).show();
+                    swipeView.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            swipeView.setRefreshing(false);
+                        }
+                    });
                     return;
                 } else {
                     number = biggestId.next().number;
-                    Log.d(TAG, "the biggest id is " + number);
+                    Log.d(TAG, "the biggest postId is " + number);
                 }
             }
 
@@ -172,7 +176,22 @@ public class IssueFragment extends Fragment implements Response.Listener<IssueRe
             if (postModels.isEmpty()) {
                 Log.d(TAG, "no such post [number: " + number + "]");
                 Toast.makeText(getActivity(), R.string.no_issue, Toast.LENGTH_SHORT).show();
+                swipeView.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        swipeView.setRefreshing(false);
+                    }
+                });
             } else {
+                // update title
+                String date = postModels.get(0).date;
+                int number = postModels.get(0).number;
+                updateTitle(date, number);
+
+                // share intent
+                ((MainActivity)getActivity()).setShareIntent(getShareIntent(date, number));
+
+                // update posts
                 List<Post> posts = new ArrayList<>();
                 for (PostModel model: postModels) {
                     posts.add(model.getPost());
@@ -198,13 +217,13 @@ public class IssueFragment extends Fragment implements Response.Listener<IssueRe
         }
 
         onPostsRequest(response.data.posts);
-        updateTitle(response);
+        updateTitle(response.data.date, response.data.number);
         savePosts(response);
-        ((MainActivity)getActivity()).setShareIntent(getShareIntent(response.data));
+        ((MainActivity)getActivity()).setShareIntent(getShareIntent(response.data.date, response.data.number));
     }
 
-    private Intent getShareIntent(PostWrapper data) {
-        if (data == null) {
+    private Intent getShareIntent(String date, int number) {
+        if (date == null) {
             return null;
         }
 
@@ -212,10 +231,10 @@ public class IssueFragment extends Fragment implements Response.Listener<IssueRe
         intent.setAction(Intent.ACTION_SEND);
         intent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.share_me));
         StringBuilder sb = new StringBuilder();
-        sb.append(getString(R.string.title_pattern_long, data.date, data.number))
+        sb.append(getString(R.string.title_pattern_long, date, number))
                 .append(getString(R.string.via_app, Constant.playUrl))
                 .append(Constant.wanquRootUrl).append(Constant.issuesUrl)
-                .append("/").append(data.number);
+                .append("/").append(number);
         intent.putExtra(Intent.EXTRA_TEXT, sb.toString());
         intent.setType("text/plain");
         return intent;
@@ -226,6 +245,13 @@ public class IssueFragment extends Fragment implements Response.Listener<IssueRe
             return;
         }
 
+        swipeView.post(new Runnable() {
+            @Override
+            public void run() {
+                swipeView.setRefreshing(false);
+            }
+        });
+
         this.posts = posts;
         if (postAdapter != null) {
             postAdapter.notifyDataSetChanged();
@@ -233,28 +259,34 @@ public class IssueFragment extends Fragment implements Response.Listener<IssueRe
         Log.d(TAG, "posts refreshed");
     }
 
-    private void updateTitle(IssueResult response) {
-        if (response == null || response.data == null) {
-            return;
+    private void updateTitle(String date, int number) {
+        String title;
+        if (date == null || number < 0) {
+            title = getString(R.string.app_name);
+        } else {
+            title = getString(R.string.title_pattern, date, number);
         }
-
-        PostWrapper wrapper = response.data;
-        String pattern = getString(R.string.title_pattern);
-        ((MainActivity)getActivity()).updateTitle(String.format(Locale.getDefault(), pattern, wrapper.date, wrapper.number));
+        ((MainActivity)getActivity()).updateTitle(title);
     }
 
-    private void savePosts(IssueResult response) {
+    private void savePosts(final IssueResult response) {
         if (response == null) {
             return;
         }
-        for (int i = 0; i < response.data.posts.size(); ++i) {
-            Post post = response.data.posts.get(i);
-            if (!PostModel.find(PostModel.class, "id = ?", String.valueOf(post.id)).isEmpty()) {
-                continue;
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                for (int i = 0; i < response.data.posts.size(); ++i) {
+                    Post post = response.data.posts.get(i);
+                    if (!PostModel.find(PostModel.class, "post_id = ?", String.valueOf(post.id)).isEmpty()) {
+                        continue;
+                    }
+                    PostModel model = new PostModel(post, response.data.date, response.data.number);
+                    model.save();
+                }
             }
-            PostModel model = new PostModel(post, response.data.date, response.data.number);
-            model.save();
-        }
+        }).run();
     }
 
     public void setOnShareListner(OnShareListener listener) {
@@ -265,7 +297,7 @@ public class IssueFragment extends Fragment implements Response.Listener<IssueRe
         shareListener = listener;
     }
 
-    public void openUrl(String url, String title) {
+    public void openUrl(String url, String subject, String body) {
         if (url == null) {
             return;
         }
@@ -273,15 +305,18 @@ public class IssueFragment extends Fragment implements Response.Listener<IssueRe
         Intent webViewIntent = new Intent(getActivity(), WebViewActivity.class);
         Bundle bundle = new Bundle();
         bundle.putString(Constant.KEY_URL, url);
-        bundle.putString(Constant.KEY_SHARE_SUBJECT, getString(R.string.share_post));
-        if (title != null) {
-            bundle.putString(Constant.KEY_SHARE_BODY, title);
+        if (subject == null) {
+            subject = getString(R.string.share_link);
+        }
+        bundle.putString(Constant.KEY_SHARE_SUBJECT, subject);
+        if (body != null) {
+            bundle.putString(Constant.KEY_SHARE_BODY, body);
         }
         webViewIntent.putExtras(bundle);
         startActivity(webViewIntent);
     }
 
-    public void openHtml(String html) {
+    public void openHtml(String html, String subject, String body) {
         if (html == null) {
             return;
         }
@@ -289,6 +324,13 @@ public class IssueFragment extends Fragment implements Response.Listener<IssueRe
         Intent webViewIntent = new Intent(getActivity(), WebViewActivity.class);
         Bundle bundle = new Bundle();
         bundle.putString(Constant.KEY_HTML, html);
+        if (subject == null) {
+            subject = getString(R.string.share_link);
+        }
+        bundle.putString(Constant.KEY_SHARE_SUBJECT, subject);
+        if (body != null) {
+            bundle.putString(Constant.KEY_SHARE_BODY, body);
+        }
         webViewIntent.putExtras(bundle);
         startActivity(webViewIntent);
     }
@@ -368,7 +410,7 @@ public class IssueFragment extends Fragment implements Response.Listener<IssueRe
                 holder.btnComment.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        openUrl(Constant.wanquRootUrl + "/" + post.slug, post.readableTitle);
+                        openUrl(Constant.wanquRootUrl + "/" + post.slug, null, post.getShareBody(getActivity()));
                     }
                 });
 
@@ -376,7 +418,7 @@ public class IssueFragment extends Fragment implements Response.Listener<IssueRe
                 holder.btnOriginal.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        openUrl(post.url, post.readableTitle);
+                        openUrl(post.url, null, post.getShareBody(getActivity()));
                     }
                 });
 
@@ -384,7 +426,7 @@ public class IssueFragment extends Fragment implements Response.Listener<IssueRe
                 holder.btnEasyRead.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        openHtml(post.readableArticle);
+                        openHtml(post.readableArticle, null, post.getShareBody(getActivity()));
                     }
                 });
             }

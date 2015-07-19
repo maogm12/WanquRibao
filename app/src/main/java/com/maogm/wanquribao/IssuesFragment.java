@@ -179,9 +179,21 @@ public class IssuesFragment extends Fragment implements Response.Listener<Issues
         onIssuesRequested(response.data.issues);
     }
 
-    private void onIssuesRequested(List<Issue> issues) {
+    private void onIssuesRequested(final List<Issue> issues) {
         if (issues == null) {
             return;
+        }
+
+        // stop the animation
+        swipeView.post(new Runnable() {
+            @Override
+            public void run() {
+                swipeView.setRefreshing(false);
+            }
+        });
+
+        if (issues.isEmpty()) {
+            Toast.makeText(getActivity(), R.string.no_issue, Toast.LENGTH_SHORT).show();
         }
 
         this.issues = issues;
@@ -190,14 +202,19 @@ public class IssuesFragment extends Fragment implements Response.Listener<Issues
         }
 
         // save issues
-        for (int i = 0; i < issues.size(); ++i) {
-            Issue issue = issues.get(i);
-            if (!Issue.find(Issue.class, "number = ?", String.valueOf(issue.number)).isEmpty()) {
-                continue;
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                for (int i = 0; i < issues.size(); ++i) {
+                    Issue issue = issues.get(i);
+                    if (!Issue.find(Issue.class, "number = ?", String.valueOf(issue.number)).isEmpty()) {
+                        continue;
+                    }
+                    issue.save();
+                }
+                Log.d(TAG, "issued saved");
             }
-            issue.save();
-        }
-        Log.d(TAG, "issued saved");
+        }).run();
     }
 
     class IssueAdapter extends BaseAdapter {
