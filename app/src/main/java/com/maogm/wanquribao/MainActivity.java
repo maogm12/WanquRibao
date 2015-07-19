@@ -17,7 +17,7 @@ import com.android.volley.toolbox.Volley;
 
 
 public class MainActivity extends ActionBarActivity
-        implements NavigationDrawerFragment.NavigationDrawerCallbacks {
+        implements NavigationDrawerFragment.NavigationDrawerCallbacks, OnShareListener {
 
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
@@ -57,16 +57,27 @@ public class MainActivity extends ActionBarActivity
         FragmentManager fragmentManager = getSupportFragmentManager();
         switch (position) {
             case 0:
+                // latest issue
+                IssueFragment issueFragment = IssueFragment.newInstance();
+                issueFragment.setOnShareListner(this);
                 fragmentManager.beginTransaction()
-                        .replace(R.id.container, IssueFragment.newInstance())
+                        .replace(R.id.container, issueFragment)
                         .commit();
                 break;
-        }
-    }
-
-    public void SetTitle(String title) {
-        if (title != null) {
-            mTitle = title;
+            case 1:
+                // recent posts
+                break;
+            case 2:
+                // random post
+                RandomPostFragment randomPostFragment = new RandomPostFragment();
+                randomPostFragment.setOnShareListener(this);
+                fragmentManager.beginTransaction()
+                        .replace(R.id.container, randomPostFragment)
+                        .commit();
+                break;
+            case 3:
+                // about
+                break;
         }
     }
 
@@ -76,6 +87,13 @@ public class MainActivity extends ActionBarActivity
         }
 
         newRequestQueue.add(request);
+    }
+
+    public void updateTitle(String title) {
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
+        actionBar.setDisplayShowTitleEnabled(true);
+        actionBar.setTitle(title);
     }
 
     public void restoreActionBar() {
@@ -136,6 +154,14 @@ public class MainActivity extends ActionBarActivity
         sendIntent.putExtra(Intent.EXTRA_TEXT, "http://wanqu.co/issues/246");
         sendIntent.setType("text/plain");
         return sendIntent;
+    }
+
+    public void shareText(String subject, String body) {
+        Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
+        sharingIntent.setType("text/plain");
+        sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, subject);
+        sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, body);
+        startActivity(Intent.createChooser(sharingIntent, getResources().getString(R.string.share_using)));
     }
 
 }

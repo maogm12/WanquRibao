@@ -1,6 +1,5 @@
 package com.maogm.wanquribao;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -19,10 +18,13 @@ import android.widget.Toast;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.maogm.wanquribao.Module.IssueResult;
+import com.maogm.wanquribao.Module.IssueWrapper;
 import com.maogm.wanquribao.Module.Post;
+import com.maogm.wanquribao.Module.PostModel;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -30,10 +32,7 @@ import java.util.Map;
  * @author Guangming Mao
  */
 public class IssueFragment extends Fragment implements Response.Listener<IssueResult>, Response.ErrorListener {
-    /**
-     * The fragment argument representing the section number for this
-     * fragment.
-     */
+
     private static final String TAG = "IssueFragment";
 
     private static final String ISSUE_NUMBER = "issue_number";
@@ -43,6 +42,8 @@ public class IssueFragment extends Fragment implements Response.Listener<IssueRe
     private ListView listPost;
     private PostAdapter postAdapter;
     private SwipeRefreshLayout swipeView;
+
+    private OnShareListener shareListener;
 
     /**
      * Returns a new instance of this fragment for the given issue number.
@@ -65,10 +66,14 @@ public class IssueFragment extends Fragment implements Response.Listener<IssueRe
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_post_list, container, false);
+        return inflater.inflate(R.layout.fragment_post_list, container, false);
+    }
 
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
         // list
-        listPost = (ListView) rootView.findViewById(R.id.post_list);
+        listPost = (ListView) view.findViewById(R.id.post_list);
         postAdapter = new PostAdapter();
         listPost.setAdapter(postAdapter);
         listPost.setOnScrollListener(new AbsListView.OnScrollListener() {
@@ -99,27 +104,27 @@ public class IssueFragment extends Fragment implements Response.Listener<IssueRe
         });
 
         // swipeView
-        swipeView = (SwipeRefreshLayout) rootView.findViewById(R.id.swipe);
+        swipeView = (SwipeRefreshLayout) view.findViewById(R.id.swipe);
         swipeView.setColorSchemeResources(R.color.main);
         swipeView.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                swipeView.setRefreshing(true);
                 Log.d("Swipe", "Refreshing number " + number);
                 requestIssue();
             }
         });
-        return rootView;
-    }
 
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
+        // get the issue number to request
         number = getArguments().getInt(ISSUE_NUMBER);
         requestIssue();
+
+        // set title
+        ((MainActivity)getActivity()).updateTitle(getString(R.string.title_section_latest));
     }
 
     private void requestIssue() {
+        swipeView.setRefreshing(true);
+
         // request issue
         String path = Constant.baseUrl + Constant.issueUrl;
         if (number < 0) {
@@ -131,11 +136,6 @@ public class IssueFragment extends Fragment implements Response.Listener<IssueRe
         GsonRequest<IssueResult> requester = new GsonRequest<>(path, IssueResult.class,
                 headers, this, this);
         ((MainActivity)getActivity()).AddRequest(requester);
-    }
-
-    @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
     }
 
     @Override
@@ -152,10 +152,45 @@ public class IssueFragment extends Fragment implements Response.Listener<IssueRe
             return;
         }
 
+        updateTitle(response);
+        savePosts(response);
+
         this.posts = response.data.posts;
         if (postAdapter != null) {
             postAdapter.notifyDataSetChanged();
         }
+    }
+
+    private void updateTitle(IssueResult response) {
+        if (response == null || response.data == null) {
+            return;
+        }
+
+        IssueWrapper wrapper = response.data;
+        String pattern = getString(R.string.title_pattern);
+        ((MainActivity)getActivity()).updateTitle(String.format(Locale.getDefault(), pattern, wrapper.date, wrapper.number));
+    }
+
+    private void savePosts(IssueResult response) {
+        if (response == null) {
+            return;
+        }
+        for (int i = 0; i < response.data.posts.size(); ++i) {
+            Post post = response.data.posts.get(i);
+            if (!PostModel.find(PostModel.class, "id = ?", String.valueOf(post.id)).isEmpty()) {
+                continue;
+            }
+            PostModel model = new PostModel(post, response.data.date, response.data.number);
+            model.save();
+        }
+    }
+
+    public void setOnShareListner(OnShareListener listener) {
+        if (listener == null) {
+            return;
+        }
+
+        shareListener = listener;
     }
 
     public void openUrl(String url) {
@@ -227,12 +262,31 @@ public class IssueFragment extends Fragment implements Response.Listener<IssueRe
 
             // set value
             final Post post = (Post) getItem(position);
+
             if (post != null) {
                 holder.tvTitle.setText(post.title);
                 holder.tvDomain.setText(post.urlDomain);
                 holder.tvSummary.setText(post.summary);
 
-                // @todo share
+                //  share
+                holder.btnShare.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (shareListener == null) {
+                            return;
+                        }
+
+                        String subject = getString(R.string.share_post);
+                        String link = Constant.wanquRootUrl + "/p/" + String.valueOf(post.issueId);
+                        StringBuffer sb = new StringBuffer();
+                        sb.append("【").append(post.title).append("】")
+                                .append("(via ").append(getString(R.string.app_name))
+                                .append(": ").append(Constant.playUrl)
+                                .append(") ").append(link);
+                        String body = sb.toString();
+                        shareListener.shareText(subject, body);
+                    }
+                });
 
                 // comment
                 holder.btnComment.setOnClickListener(new View.OnClickListener() {

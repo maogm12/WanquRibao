@@ -7,5 +7,6 @@ import java.util.List;
  */
 public class IssueWrapper {
     public String date;
+    public int number;
     public List<Post> posts;
 }

@@ -11,6 +11,9 @@ import java.util.List;
  * @author Guangming Mao
  */
 public class PostModel extends SugarRecord<PostModel> {
+    public String date;
+    public int number;
+
     public String urlDomain;
     public String picture;
     public String tags;
@@ -28,9 +31,11 @@ public class PostModel extends SugarRecord<PostModel> {
     public PostModel() {
     }
 
-    public PostModel(String urlDomain, String picture, String tags, String url, String readableTitle,
-                     long createdAt, String title, int id, String content, int issueId, String summary,
-                     String slug, String readableArticle) {
+    public PostModel(String date, int number, String urlDomain, String picture, String tags, String url,
+                     String readableTitle, long createdAt, String title, int id, String content,
+                     int issueId, String summary, String slug, String readableArticle) {
+        this.date = date;
+        this.number = number;
         this.urlDomain = urlDomain;
         this.picture = picture;
         this.tags = tags;
@@ -46,7 +51,7 @@ public class PostModel extends SugarRecord<PostModel> {
         this.readableArticle = readableArticle;
     }
 
-    public PostModel(Post post) {
+    public PostModel(Post post, String date, int number) {
         // build the tags
         String tags = "";
         if (post.tags != null) {
@@ -61,6 +66,8 @@ public class PostModel extends SugarRecord<PostModel> {
             tags = new String(sb);
         }
 
+        this.date = date;
+        this.number = number;
         this.urlDomain = post.urlDomain;
         this.picture = post.picture;
         this.tags = tags;
