@@ -53,7 +53,7 @@ public class NavigationDrawerFragment extends Fragment {
     private ListView mDrawerListView;
     private View mFragmentContainerView;
 
-    private int mCurrentSelectedPosition = 0;
+    private int mCurrentSelectedPosition = -1;
     private boolean mFromSavedInstanceState;
     private boolean mUserLearnedDrawer;
 
@@ -106,7 +106,7 @@ public class NavigationDrawerFragment extends Fragment {
                         getString(R.string.title_section_random),
                         getString(R.string.title_section_about),
                 }));
-        mDrawerListView.setItemChecked(mCurrentSelectedPosition, true);
+        mDrawerListView.setItemChecked(0, true);
         return mDrawerListView;
     }
 
@@ -189,6 +189,7 @@ public class NavigationDrawerFragment extends Fragment {
     }
 
     private void selectItem(int position) {
+        boolean needChangeContent = mCurrentSelectedPosition != position;
         mCurrentSelectedPosition = position;
         if (mDrawerListView != null) {
             mDrawerListView.setItemChecked(position, true);
@@ -196,7 +197,7 @@ public class NavigationDrawerFragment extends Fragment {
         if (mDrawerLayout != null) {
             mDrawerLayout.closeDrawer(mFragmentContainerView);
         }
-        if (mCallbacks != null) {
+        if (mCallbacks != null && needChangeContent) {
             mCallbacks.onNavigationDrawerItemSelected(position);
         }
     }

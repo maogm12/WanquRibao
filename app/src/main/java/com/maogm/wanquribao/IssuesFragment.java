@@ -127,7 +127,9 @@ public class IssuesFragment extends Fragment implements Response.Listener<Issues
         requestIssues();
 
         // set title
-        ((MainActivity)getActivity()).updateTitle(getString(R.string.title_section_past));
+        if (isAdded()) {
+            ((MainActivity) getActivity()).updateTitle(getString(R.string.title_section_past));
+        }
     }
 
     public void setOnIssueSelectedListener(OnIssueSelectedListener listener) {
@@ -135,6 +137,10 @@ public class IssuesFragment extends Fragment implements Response.Listener<Issues
     }
 
     private void requestIssues() {
+        if (swipeView == null || swipeView.isRefreshing()) {
+            return;
+        }
+
         // call setRefreshing directly will not trigger the animation
         swipeView.post(new Runnable() {
             @Override
@@ -164,7 +170,9 @@ public class IssuesFragment extends Fragment implements Response.Listener<Issues
     public void onErrorResponse(VolleyError error) {
         swipeView.setRefreshing(false);
         Log.e(TAG, "request error: " + error.getMessage());
-        Toast.makeText(getActivity(), R.string.network_error, Toast.LENGTH_SHORT).show();
+        if (getActivity() != null) {
+            Toast.makeText(getActivity(), R.string.network_error, Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override
@@ -172,7 +180,9 @@ public class IssuesFragment extends Fragment implements Response.Listener<Issues
         swipeView.setRefreshing(false);
         if (response.code == 2 || response.data == null || response.data.issues.isEmpty()) {
             Log.e(TAG, "no issues got");
-            Toast.makeText(getActivity(), R.string.no_issue, Toast.LENGTH_SHORT).show();
+            if (isAdded()) {
+                Toast.makeText(getActivity(), R.string.no_issue, Toast.LENGTH_SHORT).show();
+            }
             return;
         }
 

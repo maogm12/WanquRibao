@@ -78,7 +78,7 @@ public class MainActivity extends ActionBarActivity
                 setShareItemVisible(false);
                 break;
             case 2:
-                // random post]
+                // random post
                 RandomPostFragment randomPostFragment = new RandomPostFragment();
                 randomPostFragment.setOnShareListener(this);
                 fragmentManager.beginTransaction()
@@ -109,11 +109,11 @@ public class MainActivity extends ActionBarActivity
         FragmentManager fragmentManager = getFragmentManager();
         IssueFragment issueFragment = IssueFragment.newInstance(number);
         issueFragment.setOnShareListner(this);
+        setShareItemVisible(true);
         fragmentManager.beginTransaction()
                 .replace(R.id.container, issueFragment)
                 .addToBackStack(null)
                 .commit();
-        setShareItemVisible(true);
     }
 
     public void setShareItemVisible(boolean canShare) {

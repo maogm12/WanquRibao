@@ -77,6 +77,14 @@ public class IssueFragment extends Fragment implements Response.Listener<IssueRe
     public void onViewCreated(View view, Bundle savedInstanceState) {
         // list
         listPost = (ListView) view.findViewById(R.id.post_list);
+        // swipeView
+        swipeView = (SwipeRefreshLayout) view.findViewById(R.id.swipe);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
         postAdapter = new PostAdapter();
         listPost.setAdapter(postAdapter);
         listPost.setOnScrollListener(new AbsListView.OnScrollListener() {
@@ -107,7 +115,6 @@ public class IssueFragment extends Fragment implements Response.Listener<IssueRe
         });
 
         // swipeView
-        swipeView = (SwipeRefreshLayout) view.findViewById(R.id.swipe);
         swipeView.setColorSchemeResources(R.color.main);
         swipeView.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -128,6 +135,11 @@ public class IssueFragment extends Fragment implements Response.Listener<IssueRe
     }
 
     private void requestIssue() {
+        if (swipeView == null || swipeView.isRefreshing()) {
+            // refreshing
+            return;
+        }
+
         // call setRefreshing directly will not trigger the animation
         swipeView.post(new Runnable() {
             @Override
@@ -266,6 +278,7 @@ public class IssueFragment extends Fragment implements Response.Listener<IssueRe
         } else {
             title = getString(R.string.title_pattern, date, number);
         }
+
         ((MainActivity)getActivity()).updateTitle(title);
     }
 

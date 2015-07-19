@@ -27,7 +27,13 @@ public class AboutFragment extends PreferenceFragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         ((MainActivity)getActivity()).restoreShareIntent();
+    }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        // bind link or email to preference
         bindPreferenceWithUrl(Constant.KEY_OFFICIAL_SITE, Constant.LINK_OFFICIAL_SITE);
         bindPreferenceWithUrl(Constant.KEY_ABOUT_WANQU, Constant.LINK_ABOUT_WANQU);
         bindPreferenceWithUrl(Constant.KEY_WEIBO, Constant.LINK_WEIBO);
@@ -39,6 +45,11 @@ public class AboutFragment extends PreferenceFragment {
 
         bindPreferenceWithEmail(Constant.KEY_WANQU_EMAIL, Constant.WANQU_EMAIL);
         bindPreferenceWithEmail(Constant.KEY_MY_EMAIL, Constant.MY_EMAIL);
+
+        // update title
+        if (isAdded()) {
+            ((MainActivity)getActivity()).updateTitle(getString( R.string.title_section_about));
+        }
     }
 
     private void bindPreferenceWithUrl(String key, String url) {

@@ -6,7 +6,8 @@ package com.maogm.wanquribao.Utils;
  */
 public class Constant {
     public static final String wanquRootUrl = "http://wanqu.co";
-    public static final String baseUrl = "http://192.168.1.105:8034";
+    //    public static final String baseUrl = "http://192.168.1.105:8034"
+    public static final String baseUrl = "http://api.wanqu.co/api/v1";
     public static final String issueUrl = "/issue";
     public static final String randomPostUrl = "/posts/random";
     public static final String issuesUrl = "/issues";
