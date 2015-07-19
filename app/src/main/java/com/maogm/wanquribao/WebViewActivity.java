@@ -2,6 +2,7 @@ package com.maogm.wanquribao;
 
 import android.app.ActionBar;
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -9,11 +10,14 @@ import android.view.WindowManager;
 import android.webkit.WebView;
 import android.widget.ImageButton;
 
+import com.maogm.wanquribao.Utils.Constant;
+
 public class WebViewActivity extends Activity {
     private static final String TAG = "WebViewActivity";
 
     private WebView webView;
-    private ImageButton ibtnShare;
+    private String shareSubject;
+    private String shareBody;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,7 +36,7 @@ public class WebViewActivity extends Activity {
         }
 
         webView = (WebView) findViewById(R.id.fullscreen_content);
-        ibtnShare = (ImageButton) findViewById(R.id.btn_share);
+        ImageButton ibtnShare = (ImageButton) findViewById(R.id.btn_share);
         ImageButton ibtnExit = (ImageButton) findViewById(R.id.btn_exit);
 
         // exit
@@ -44,7 +48,13 @@ public class WebViewActivity extends Activity {
         });
 
 
-        // @todo share
+        // share
+        ibtnShare.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                shareText(shareSubject, shareBody);
+            }
+        });
     }
 
     @Override
@@ -53,6 +63,11 @@ public class WebViewActivity extends Activity {
 
         // load data
         Bundle bundle = getIntent().getExtras();
+
+        // share
+        shareSubject = bundle.getString(Constant.KEY_SHARE_SUBJECT);
+        shareBody = bundle.getString(Constant.KEY_SHARE_BODY);
+
         String html = bundle.getString(Constant.KEY_HTML);
         if (html != null) {
             setContent(html);
@@ -96,5 +111,13 @@ public class WebViewActivity extends Activity {
         Log.i(TAG, "load data from url" + url);
         webView.stopLoading();
         webView.loadUrl(url);
+    }
+
+    public void shareText(String subject, String body) {
+        Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
+        sharingIntent.setType("text/plain");
+        sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, subject);
+        sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, body);
+        startActivity(Intent.createChooser(sharingIntent, getResources().getString(R.string.share_me)));
     }
 }

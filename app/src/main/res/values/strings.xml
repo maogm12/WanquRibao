@@ -34,4 +34,33 @@
 
     <string name="number_pattern">第%2$d期</string>
 
+    <string name="web">WEB</string>
+    <string name="web_desc">每天精选 5 条英文链接，你每天的灵感来源。欢迎发邮件投稿、提意见、提交 bug。</string>
+    <string name="official_site">官方网站</string>
+    <string name="official_site_link">wanqu.co</string>
+    <string name="about_wanqu">关于湾区日报</string>
+    <string name="about_wanqu_link">wanqu.co/about</string>
+    <string name="wanqu_email">湾区日报邮箱</string>
+    <string name="wanqu_email_value">hi@wanqu.co</string>
+
+    <string name="social">SOCIAL</string>
+    <string name="social_desc">关注我们的社交帐号，参与互动。</string>
+    <string name="weibo">微博</string>
+    <string name="weibo_account">\@湾区日报BayArea</string>
+    <string name="weichat">微信</string>
+    <string name="weichat_account">wanquribao</string>
+    <string name="twitter">Twitter</string>
+    <string name="twitter_account">\@wanquribao</string>
+    <string name="facebook">Facebook</string>
+    <string name="facebook_account">湾区日报</string>
+
+    <string name="about_me">关于本软件</string>
+    <string name="author">本人</string>
+    <string name="blog_link">maogm.com</string>
+    <string name="my_weibo_account">游冥客</string>
+    <string name="my_email">我的邮箱</string>
+    <string name="my_email_value">maogm12@gmail.com</string>
+
+    <string name="send_email">发送邮件</string>
+
 </resources>

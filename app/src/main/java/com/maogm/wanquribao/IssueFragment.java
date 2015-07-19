@@ -1,8 +1,8 @@
 package com.maogm.wanquribao;
 
+import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -22,6 +22,7 @@ import com.maogm.wanquribao.Module.IssueResult;
 import com.maogm.wanquribao.Module.Post;
 import com.maogm.wanquribao.Module.PostModel;
 import com.maogm.wanquribao.Module.PostWrapper;
+import com.maogm.wanquribao.Utils.Constant;
 import com.maogm.wanquribao.Utils.NetworkUtil;
 
 import java.util.ArrayList;
@@ -264,7 +265,7 @@ public class IssueFragment extends Fragment implements Response.Listener<IssueRe
         shareListener = listener;
     }
 
-    public void openUrl(String url) {
+    public void openUrl(String url, String title) {
         if (url == null) {
             return;
         }
@@ -272,6 +273,10 @@ public class IssueFragment extends Fragment implements Response.Listener<IssueRe
         Intent webViewIntent = new Intent(getActivity(), WebViewActivity.class);
         Bundle bundle = new Bundle();
         bundle.putString(Constant.KEY_URL, url);
+        bundle.putString(Constant.KEY_SHARE_SUBJECT, getString(R.string.share_post));
+        if (title != null) {
+            bundle.putString(Constant.KEY_SHARE_BODY, title);
+        }
         webViewIntent.putExtras(bundle);
         startActivity(webViewIntent);
     }
@@ -363,7 +368,7 @@ public class IssueFragment extends Fragment implements Response.Listener<IssueRe
                 holder.btnComment.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        openUrl(Constant.wanquRootUrl + "/" + post.slug);
+                        openUrl(Constant.wanquRootUrl + "/" + post.slug, post.readableTitle);
                     }
                 });
 
@@ -371,7 +376,7 @@ public class IssueFragment extends Fragment implements Response.Listener<IssueRe
                 holder.btnOriginal.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        openUrl(post.url);
+                        openUrl(post.url, post.readableTitle);
                     }
                 });
 

@@ -16,6 +16,13 @@
     <shared>
       <config />
     </shared>
+    <layouts>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/menu/global.xml">
+        <config>
+          <theme>@android:style/Theme.Material.Light</theme>
+        </config>
+      </layout>
+    </layouts>
   </component>
   <component name="AndroidLogFilters">
     <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="wanqu" />
@@ -50,33 +57,33 @@
                 </provider>
               </entry>
             </file>
-            <file leaf-file-name="IssuesFragment.java" pinned="false" current-in-tab="true">
+            <file leaf-file-name="IssuesFragment.java" pinned="false" current-in-tab="false">
               <entry file="file://$PROJECT_DIR$/app/src/main/java/com/maogm/wanquribao/IssuesFragment.java">
                 <provider selected="true" editor-type-id="text-editor">
-                  <state vertical-scroll-proportion="0.7784343">
-                    <caret line="242" column="28" selection-start-line="242" selection-start-column="28" selection-end-line="242" selection-end-column="28" />
+                  <state vertical-scroll-proportion="0.0">
+                    <caret line="59" column="0" selection-start-line="59" selection-start-column="0" selection-end-line="59" selection-end-column="0" />
                     <folding>
                       <element signature="imports" expanded="true" />
-                      <element signature="e#1330#1331#0" expanded="true" />
-                      <element signature="e#1373#1374#0" expanded="true" />
-                      <element signature="e#1479#1480#0" expanded="true" />
-                      <element signature="e#1529#1530#0" expanded="true" />
-                      <element signature="e#3064#3524#0" expanded="true" />
-                      <element signature="e#3523#3524#0" expanded="true" />
-                      <element signature="e#3717#3933#0" expanded="true" />
-                      <element signature="e#3932#3933#0" expanded="true" />
-                      <element signature="e#4033#4071#0" expanded="true" />
-                      <element signature="e#4337#4478#0" expanded="true" />
-                      <element signature="e#4477#4478#0" expanded="true" />
-                      <element signature="e#5492#5514#0" expanded="true" />
-                      <element signature="e#5833#5850#0" expanded="true" />
-                      <element signature="e#6636#6637#0" expanded="true" />
-                      <element signature="e#6701#6702#0" expanded="true" />
-                      <element signature="e#6766#6767#0" expanded="true" />
-                      <element signature="e#6838#6839#0" expanded="true" />
-                      <element signature="e#6903#6904#0" expanded="true" />
-                      <element signature="e#6942#6943#0" expanded="true" />
-                      <element signature="e#7782#7841#0" expanded="true" />
+                      <element signature="e#1392#1393#0" expanded="true" />
+                      <element signature="e#1435#1436#0" expanded="true" />
+                      <element signature="e#1704#1705#0" expanded="true" />
+                      <element signature="e#1754#1755#0" expanded="true" />
+                      <element signature="e#3289#3749#0" expanded="true" />
+                      <element signature="e#3748#3749#0" expanded="true" />
+                      <element signature="e#3942#4158#0" expanded="true" />
+                      <element signature="e#4157#4158#0" expanded="true" />
+                      <element signature="e#4258#4296#0" expanded="true" />
+                      <element signature="e#4562#4703#0" expanded="true" />
+                      <element signature="e#4702#4703#0" expanded="true" />
+                      <element signature="e#5717#5739#0" expanded="true" />
+                      <element signature="e#6058#6075#0" expanded="true" />
+                      <element signature="e#6861#6862#0" expanded="true" />
+                      <element signature="e#6926#6927#0" expanded="true" />
+                      <element signature="e#6991#6992#0" expanded="true" />
+                      <element signature="e#7063#7064#0" expanded="true" />
+                      <element signature="e#7128#7129#0" expanded="true" />
+                      <element signature="e#7167#7168#0" expanded="true" />
+                      <element signature="e#8007#8066#0" expanded="true" />
                     </folding>
                   </state>
                 </provider>
@@ -88,6 +95,30 @@
                   <state vertical-scroll-proportion="0.0">
                     <caret line="363" column="16" selection-start-line="363" selection-start-column="16" selection-end-line="363" selection-end-column="16" />
                     <folding />
+                  </state>
+                </provider>
+              </entry>
+            </file>
+            <file leaf-file-name="strings.xml" pinned="false" current-in-tab="false">
+              <entry file="file://$PROJECT_DIR$/app/src/main/res/values/strings.xml">
+                <provider selected="true" editor-type-id="text-editor">
+                  <state vertical-scroll-proportion="-16.851852">
+                    <caret line="59" column="48" selection-start-line="59" selection-start-column="48" selection-end-line="59" selection-end-column="48" />
+                    <folding />
+                  </state>
+                </provider>
+              </entry>
+            </file>
+            <file leaf-file-name="about.xml" pinned="false" current-in-tab="true">
+              <entry file="file://$PROJECT_DIR$/app/src/main/res/xml/about.xml">
+                <provider selected="true" editor-type-id="text-editor">
+                  <state vertical-scroll-proportion="0.6233383">
+                    <caret line="57" column="19" selection-start-line="57" selection-start-column="19" selection-end-line="57" selection-end-column="19" />
+                    <folding>
+                      <element signature="e#1696#1715#0" expanded="true" />
+                      <element signature="e#1801#1816#0" expanded="true" />
+                      <element signature="e#1845#1871#0" expanded="true" />
+                    </folding>
                   </state>
                 </provider>
               </entry>
@@ -113,104 +144,68 @@
       <file leaf-file-name="IssueFragment.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/maogm/wanquribao/IssueFragment.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-19.444445">
-              <caret line="203" column="0" selection-start-line="203" selection-start-column="0" selection-end-line="220" selection-end-column="5" />
+            <state vertical-scroll-proportion="-57.25926">
+              <caret line="378" column="60" selection-start-line="378" selection-start-column="60" selection-end-line="378" selection-end-column="60" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#1913#1914#0" expanded="true" />
-                <element signature="e#1951#1952#0" expanded="true" />
-                <element signature="e#4092#4132#0" expanded="true" />
-                <element signature="e#4279#4420#0" expanded="true" />
-                <element signature="e#4419#4420#0" expanded="true" />
-                <element signature="e#5548#5565#0" expanded="true" />
-                <element signature="e#6065#6082#0" expanded="true" />
-                <element signature="e#6520#6542#0" expanded="true" />
-                <element signature="e#6878#6895#0" expanded="true" />
-                <element signature="e#7401#7429#0" expanded="true" />
-                <element signature="e#7498#7560#0" expanded="true" />
-                <element signature="e#7586#7631#0" expanded="true" />
-                <element signature="e#8374#8407#0" expanded="true" />
-                <element signature="e#12178#12208#0" expanded="true" />
-                <element signature="e#12498#12526#0" expanded="true" />
+                <element signature="e#1946#1947#0" expanded="true" />
+                <element signature="e#1984#1985#0" expanded="true" />
+                <element signature="e#3672#3895#0" expanded="true" />
+                <element signature="e#3894#3895#0" expanded="true" />
+                <element signature="e#4125#4165#0" expanded="true" />
+                <element signature="e#4312#4453#0" expanded="true" />
+                <element signature="e#4452#4453#0" expanded="true" />
+                <element signature="e#5581#5598#0" expanded="true" />
+                <element signature="e#6098#6115#0" expanded="true" />
+                <element signature="e#6553#6575#0" expanded="true" />
+                <element signature="e#6911#6928#0" expanded="true" />
+                <element signature="e#7434#7462#0" expanded="true" />
+                <element signature="e#7531#7593#0" expanded="true" />
+                <element signature="e#7619#7664#0" expanded="true" />
+                <element signature="e#8407#8440#0" expanded="true" />
+                <element signature="e#9573#9603#0" expanded="true" />
+                <element signature="e#12412#12442#0" expanded="true" />
+                <element signature="e#12732#12760#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="RandomPostFragment.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="RandomPostFragment.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/maogm/wanquribao/RandomPostFragment.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.37444544">
-              <caret line="201" column="37" selection-start-line="201" selection-start-column="37" selection-end-line="201" selection-end-column="37" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="22" column="38" selection-start-line="22" selection-start-column="38" selection-end-line="22" selection-end-column="38" />
               <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#1614#1615#0" expanded="true" />
-                <element signature="e#1661#1662#0" expanded="true" />
-                <element signature="e#2903#2933#0" expanded="true" />
-                <element signature="e#3221#3249#0" expanded="true" />
-                <element signature="e#5179#5201#0" expanded="true" />
-                <element signature="e#6183#6205#0" expanded="true" />
-                <element signature="e#6467#6484#0" expanded="true" />
-                <element signature="e#6702#6719#0" expanded="true" />
-                <element signature="e#7079#7112#0" expanded="true" />
-                <element signature="e#8207#8235#0" expanded="true" />
-                <element signature="e#8304#8366#0" expanded="true" />
-                <element signature="e#8392#8437#0" expanded="true" />
+                <element signature="e#1647#1648#0" expanded="true" />
+                <element signature="e#1694#1695#0" expanded="true" />
+                <element signature="e#2936#2966#0" expanded="true" />
+                <element signature="e#3254#3282#0" expanded="true" />
+                <element signature="e#5212#5234#0" expanded="true" />
+                <element signature="e#6216#6238#0" expanded="true" />
+                <element signature="e#6500#6517#0" expanded="true" />
+                <element signature="e#6735#6752#0" expanded="true" />
+                <element signature="e#7112#7145#0" expanded="true" />
+                <element signature="e#8240#8268#0" expanded="true" />
+                <element signature="e#8337#8399#0" expanded="true" />
+                <element signature="e#8425#8470#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="fragment_post_list.xml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_post_list.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-1.5517242">
-              <caret line="3" column="40" selection-start-line="3" selection-start-column="40" selection-end-line="3" selection-end-column="40" />
-              <folding />
-            </state>
-          </provider>
-          <provider editor-type-id="android-designer">
-            <state />
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="colors.xml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/res/values/colors.xml">
+      <file leaf-file-name="AboutFragment.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/maogm/wanquribao/AboutFragment.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="4" column="42" selection-start-line="4" selection-start-column="42" selection-end-line="4" selection-end-column="42" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="strings.xml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/res/values/strings.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-4.4444447">
-              <caret line="8" column="0" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Constant.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/maogm/wanquribao/Constant.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="11" column="53" selection-start-line="11" selection-start-column="53" selection-end-line="11" selection-end-column="53" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="IssueWrapper.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/maogm/wanquribao/Module/IssueWrapper.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="13" column="1" selection-start-line="13" selection-start-column="1" selection-end-line="13" selection-end-column="1" />
+              <caret line="72" column="62" selection-start-line="72" selection-start-column="62" selection-end-line="72" selection-end-column="62" />
               <folding>
                 <element signature="imports" expanded="true" />
+                <element signature="e#1677#1899#0" expanded="true" />
+                <element signature="e#1898#1899#0" expanded="true" />
+                <element signature="e#2106#2332#0" expanded="true" />
+                <element signature="e#2331#2332#0" expanded="true" />
+                <element signature="e#3028#3058#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -219,16 +214,38 @@
       <file leaf-file-name="MainActivity.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/maogm/wanquribao/MainActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-25.74074">
-              <caret line="210" column="0" selection-start-line="210" selection-start-column="0" selection-end-line="219" selection-end-column="34" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="171" column="38" selection-start-line="171" selection-start-column="38" selection-end-line="171" selection-end-column="38" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#7327#7355#0" expanded="true" />
-                <element signature="e#7424#7457#0" expanded="true" />
-                <element signature="e#7483#7511#0" expanded="true" />
-                <element signature="e#7537#7582#0" expanded="true" />
-                <element signature="e#8139#8182#0" expanded="true" />
+                <element signature="e#7962#8005#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="WebViewActivity.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/maogm/wanquribao/WebViewActivity.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.7187223">
+              <caret line="68" column="26" selection-start-line="68" selection-start-column="26" selection-end-line="68" selection-end-column="26" />
+              <folding>
+                <element signature="e#1311#1474#0" expanded="true" />
+                <element signature="e#1473#1474#0" expanded="true" />
+                <element signature="e#1533#1701#0" expanded="true" />
+                <element signature="e#1700#1701#0" expanded="true" />
+                <element signature="e#3418#3461#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="WebView.java" pinned="false" current-in-tab="false">
+        <entry file="file://$USER_HOME$/lib/android/sdk/sources/android-21/android/webkit/WebView.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-21.296297">
+              <caret line="77" column="40" selection-start-line="77" selection-start-column="34" selection-end-line="77" selection-end-column="40" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -236,9 +253,10 @@
       <file leaf-file-name="NavigationDrawerFragment.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/maogm/wanquribao/NavigationDrawerFragment.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-19.074074">
-              <caret line="233" column="33" selection-start-line="233" selection-start-column="33" selection-end-line="233" selection-end-column="33" />
+            <state vertical-scroll-proportion="-20.74074">
+              <caret line="115" column="0" selection-start-line="115" selection-start-column="0" selection-end-line="115" selection-end-column="0" />
               <folding>
+                <element signature="imports" expanded="true" />
                 <element signature="e#10150#10167#0" expanded="true" />
               </folding>
             </state>
@@ -251,9 +269,9 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="layoutResourceFile_vertical" />
-        <option value="resourceFile" />
         <option value="Class" />
         <option value="Interface" />
+        <option value="resourceFile" />
       </list>
     </option>
   </component>
@@ -1599,9 +1617,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/app/src/main/res/drawable/listitem_selected.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/drawable/listitem.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/values/styles.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/maogm/wanquribao/ContentFetcher.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/maogm/wanquribao/IssuesFetcher.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/maogm/wanquribao/ContentParser.java" />
@@ -1624,7 +1639,6 @@
         <option value="$PROJECT_DIR$/app/src/main/res/drawable/shape_circle.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_web_view.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/drawable/shape_button_outline.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/maogm/wanquribao/WebViewActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/maogm/wanquribao/Module/PostModel.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/maogm/wanquribao/IssueListFragment.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/values/dimens.xml" />
@@ -1642,14 +1656,18 @@
         <option value="$PROJECT_DIR$/app/src/main/java/com/maogm/wanquribao/Constant.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/maogm/wanquribao/Listener/OnIssueSelectedListener.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/maogm/wanquribao/Module/Issue.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/maogm/wanquribao/NavigationDrawerFragment.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/fragment_post_list.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/values/colors.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/maogm/wanquribao/RandomPostFragment.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/maogm/wanquribao/NavigationDrawerFragment.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/maogm/wanquribao/IssuesFragment.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/maogm/wanquribao/MainActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/values/strings.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/xml/about.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/maogm/wanquribao/AboutFragment.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/maogm/wanquribao/Utils/Constant.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/maogm/wanquribao/IssueFragment.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/maogm/wanquribao/RandomPostFragment.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/maogm/wanquribao/IssuesFragment.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/maogm/wanquribao/WebViewActivity.java" />
       </list>
     </option>
   </component>
@@ -1793,6 +1811,36 @@
               <option name="myItemId" value="res" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="xml" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="WanquRibao" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="WanquRibao" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="res" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
           </PATH>
           <PATH>
             <PATH_ELEMENT>
@@ -1850,37 +1898,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="layout" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="WanquRibao" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="WanquRibao" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="res" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="drawable" />
+              <option name="myItemId" value="menu" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -2355,7 +2373,7 @@
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.28805396" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.28805396" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32846716" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
@@ -2379,83 +2397,11 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="40" />
+      <option name="time" value="46" />
     </breakpoint-manager>
-    <watches-manager>
-      <configuration name="app">
-        <watch expression="String.format(Locale.getDefault(), pattern, wrapper.date, wrapper.number)" language="JAVA" custom="" />
-      </configuration>
-    </watches-manager>
+    <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$USER_HOME$/lib/android/sdk/sources/android-21/android/os/BaseBundle.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.33314317">
-          <caret line="916" column="18" selection-start-line="916" selection-start-column="18" selection-end-line="916" selection-end-column="18" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_web_view.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.45">
-          <caret line="21" column="40" selection-start-line="21" selection-start-column="40" selection-end-line="21" selection-end-column="40" />
-          <folding />
-        </state>
-      </provider>
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/lib/android/sdk/sources/android-21/java/lang/Object.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="337" column="29" selection-start-line="337" selection-start-column="29" selection-end-line="337" selection-end-column="29" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.google.code.gson/gson/2.3.1/563dcb685903c96ce8abbd03adf7fa49e19aa8b4/gson-2.3.1-sources.jar!/com/google/gson/annotations/SerializedName.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.48916408">
-          <caret line="67" column="18" selection-start-line="67" selection-start-column="18" selection-end-line="67" selection-end-column="18" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$PROJECT_DIR$/app/build/intermediates/exploded-aar/com.github.satyan/sugar/1.3/jars/classes.jar!/com/orm/dsl/Ignore.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.040983606">
-          <caret line="7" column="7" selection-start-line="7" selection-start-column="7" selection-end-line="7" selection-end-column="7" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.mcxiaoke.volley/library/1.0.17/27eba5b8491214f575d42a883b60dc91d7e8ab08/library-1.0.17-sources.jar!/com/android/volley/Response.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.6654836">
-          <caret line="74" column="15" selection-start-line="74" selection-start-column="15" selection-end-line="74" selection-end-column="15" />
-          <folding>
-            <element signature="class#ErrorListener#0;class#Response#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/shape_circle.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="4" column="8" selection-start-line="4" selection-start-column="8" selection-end-line="4" selection-end-column="8" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/maogm/wanquribao/Module/IssueResult.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="7" column="23" selection-start-line="7" selection-start-column="11" selection-end-line="7" selection-end-column="23" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/maogm/wanquribao/Module/PostModel.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -2477,32 +2423,6 @@
     <entry file="android-dummy:///Users/maoguangming/code/WanquRibao/app/Translations Editor">
       <provider selected="true" editor-type-id="string-resource-editor">
         <state />
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/lib/android/sdk/sources/android-21/android/app/Activity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="4630" column="0" selection-start-line="4630" selection-start-column="0" selection-end-line="4630" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/maogm/wanquribao/WebViewActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="50" column="27" selection-start-line="50" selection-start-column="19" selection-end-line="50" selection-end-column="27" />
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/maogm/wanquribao/Listener/OnShareListener.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="8" column="0" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
-          <folding />
-        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
@@ -2682,14 +2602,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/maogm/wanquribao/Constant.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="11" column="53" selection-start-line="11" selection-start-column="53" selection-end-line="11" selection-end-column="53" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$USER_HOME$/lib/android/sdk/sources/android-21/android/widget/AbsListView.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.2034632">
@@ -2746,25 +2658,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_post_list.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-1.5517242">
-          <caret line="3" column="40" selection-start-line="3" selection-start-column="40" selection-end-line="3" selection-end-column="40" />
-          <folding />
-        </state>
-      </provider>
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/values/colors.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="4" column="42" selection-start-line="4" selection-start-column="42" selection-end-line="4" selection-end-column="42" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$USER_HOME$/lib/android/sdk/sources/android-21/android/view/MenuItem.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.6921029">
@@ -2773,112 +2666,254 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/maogm/wanquribao/NavigationDrawerFragment.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/maogm/wanquribao/RandomPostFragment.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-19.074074">
-          <caret line="233" column="33" selection-start-line="233" selection-start-column="33" selection-end-line="233" selection-end-column="33" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="22" column="38" selection-start-line="22" selection-start-column="38" selection-end-line="22" selection-end-column="38" />
           <folding>
-            <element signature="e#10150#10167#0" expanded="true" />
+            <element signature="e#1647#1648#0" expanded="true" />
+            <element signature="e#1694#1695#0" expanded="true" />
+            <element signature="e#2936#2966#0" expanded="true" />
+            <element signature="e#3254#3282#0" expanded="true" />
+            <element signature="e#5212#5234#0" expanded="true" />
+            <element signature="e#6216#6238#0" expanded="true" />
+            <element signature="e#6500#6517#0" expanded="true" />
+            <element signature="e#6735#6752#0" expanded="true" />
+            <element signature="e#7112#7145#0" expanded="true" />
+            <element signature="e#8240#8268#0" expanded="true" />
+            <element signature="e#8337#8399#0" expanded="true" />
+            <element signature="e#8425#8470#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/maogm/wanquribao/MainActivity.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/menu/main.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-25.74074">
-          <caret line="210" column="0" selection-start-line="210" selection-start-column="0" selection-end-line="219" selection-end-column="34" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/menu/global.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/lib/android/sdk/sources/android-21/android/app/Activity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.3327418">
+          <caret line="5042" column="30" selection-start-line="5042" selection-start-column="30" selection-end-line="5042" selection-end-column="30" />
           <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#7327#7355#0" expanded="true" />
-            <element signature="e#7424#7457#0" expanded="true" />
-            <element signature="e#7483#7511#0" expanded="true" />
-            <element signature="e#7537#7582#0" expanded="true" />
-            <element signature="e#8139#8182#0" expanded="true" />
+            <element signature="e#212704#212705#0" expanded="false" />
+            <element signature="e#212733#212734#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/values/strings.xml">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/maogm/wanquribao/Listener/OnShareListener.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-4.4444447">
+        <state vertical-scroll-proportion="0.0">
           <caret line="8" column="0" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/maogm/wanquribao/IssueFragment.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/maogm/wanquribao/NavigationDrawerFragment.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-19.444445">
-          <caret line="203" column="0" selection-start-line="203" selection-start-column="0" selection-end-line="220" selection-end-column="5" />
+        <state vertical-scroll-proportion="-20.74074">
+          <caret line="115" column="0" selection-start-line="115" selection-start-column="0" selection-end-line="115" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#1913#1914#0" expanded="true" />
-            <element signature="e#1951#1952#0" expanded="true" />
-            <element signature="e#4092#4132#0" expanded="true" />
-            <element signature="e#4279#4420#0" expanded="true" />
-            <element signature="e#4419#4420#0" expanded="true" />
-            <element signature="e#5548#5565#0" expanded="true" />
-            <element signature="e#6065#6082#0" expanded="true" />
-            <element signature="e#6520#6542#0" expanded="true" />
-            <element signature="e#6878#6895#0" expanded="true" />
-            <element signature="e#7401#7429#0" expanded="true" />
-            <element signature="e#7498#7560#0" expanded="true" />
-            <element signature="e#7586#7631#0" expanded="true" />
-            <element signature="e#8374#8407#0" expanded="true" />
-            <element signature="e#12178#12208#0" expanded="true" />
-            <element signature="e#12498#12526#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/maogm/wanquribao/RandomPostFragment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.37444544">
-          <caret line="201" column="37" selection-start-line="201" selection-start-column="37" selection-end-line="201" selection-end-column="37" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#1614#1615#0" expanded="true" />
-            <element signature="e#1661#1662#0" expanded="true" />
-            <element signature="e#2903#2933#0" expanded="true" />
-            <element signature="e#3221#3249#0" expanded="true" />
-            <element signature="e#5179#5201#0" expanded="true" />
-            <element signature="e#6183#6205#0" expanded="true" />
-            <element signature="e#6467#6484#0" expanded="true" />
-            <element signature="e#6702#6719#0" expanded="true" />
-            <element signature="e#7079#7112#0" expanded="true" />
-            <element signature="e#8207#8235#0" expanded="true" />
-            <element signature="e#8304#8366#0" expanded="true" />
-            <element signature="e#8392#8437#0" expanded="true" />
+            <element signature="e#10150#10167#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/maogm/wanquribao/IssuesFragment.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.7784343">
-          <caret line="242" column="28" selection-start-line="242" selection-start-column="28" selection-end-line="242" selection-end-column="28" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="59" column="0" selection-start-line="59" selection-start-column="0" selection-end-line="59" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#1330#1331#0" expanded="true" />
-            <element signature="e#1373#1374#0" expanded="true" />
-            <element signature="e#1479#1480#0" expanded="true" />
-            <element signature="e#1529#1530#0" expanded="true" />
-            <element signature="e#3064#3524#0" expanded="true" />
-            <element signature="e#3523#3524#0" expanded="true" />
-            <element signature="e#3717#3933#0" expanded="true" />
-            <element signature="e#3932#3933#0" expanded="true" />
-            <element signature="e#4033#4071#0" expanded="true" />
-            <element signature="e#4337#4478#0" expanded="true" />
-            <element signature="e#4477#4478#0" expanded="true" />
-            <element signature="e#5492#5514#0" expanded="true" />
-            <element signature="e#5833#5850#0" expanded="true" />
-            <element signature="e#6636#6637#0" expanded="true" />
-            <element signature="e#6701#6702#0" expanded="true" />
-            <element signature="e#6766#6767#0" expanded="true" />
-            <element signature="e#6838#6839#0" expanded="true" />
-            <element signature="e#6903#6904#0" expanded="true" />
-            <element signature="e#6942#6943#0" expanded="true" />
-            <element signature="e#7782#7841#0" expanded="true" />
+            <element signature="e#1392#1393#0" expanded="true" />
+            <element signature="e#1435#1436#0" expanded="true" />
+            <element signature="e#1704#1705#0" expanded="true" />
+            <element signature="e#1754#1755#0" expanded="true" />
+            <element signature="e#3289#3749#0" expanded="true" />
+            <element signature="e#3748#3749#0" expanded="true" />
+            <element signature="e#3942#4158#0" expanded="true" />
+            <element signature="e#4157#4158#0" expanded="true" />
+            <element signature="e#4258#4296#0" expanded="true" />
+            <element signature="e#4562#4703#0" expanded="true" />
+            <element signature="e#4702#4703#0" expanded="true" />
+            <element signature="e#5717#5739#0" expanded="true" />
+            <element signature="e#6058#6075#0" expanded="true" />
+            <element signature="e#6861#6862#0" expanded="true" />
+            <element signature="e#6926#6927#0" expanded="true" />
+            <element signature="e#6991#6992#0" expanded="true" />
+            <element signature="e#7063#7064#0" expanded="true" />
+            <element signature="e#7128#7129#0" expanded="true" />
+            <element signature="e#7167#7168#0" expanded="true" />
+            <element signature="e#8007#8066#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/lib/android/sdk/sources/android-21/android/content/Intent.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.33272728">
+          <caret line="877" column="38" selection-start-line="877" selection-start-column="25" selection-end-line="877" selection-end-column="38" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/lib/android/sdk/sources/android-21/android/preference/PreferenceFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.3327418">
+          <caret line="259" column="21" selection-start-line="259" selection-start-column="21" selection-end-line="259" selection-end-column="21" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/lib/android/sdk/sources/android-21/android/preference/PreferenceManager.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.3327418">
+          <caret line="350" column="29" selection-start-line="350" selection-start-column="29" selection-end-line="350" selection-end-column="29" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/lib/android/sdk/sources/android-21/android/preference/Preference.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="157" column="21" selection-start-line="157" selection-start-column="21" selection-end-line="157" selection-end-column="21" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/values/strings.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-16.851852">
+          <caret line="59" column="48" selection-start-line="59" selection-start-column="48" selection-end-line="59" selection-end-column="48" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/xml/about.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.6233383">
+          <caret line="57" column="19" selection-start-line="57" selection-start-column="19" selection-end-line="57" selection-end-column="19" />
+          <folding>
+            <element signature="e#1696#1715#0" expanded="true" />
+            <element signature="e#1801#1816#0" expanded="true" />
+            <element signature="e#1845#1871#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/values/colors.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.053238686">
+          <caret line="4" column="42" selection-start-line="4" selection-start-column="42" selection-end-line="4" selection-end-column="42" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_post_list.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.043310877">
+          <caret line="3" column="40" selection-start-line="3" selection-start-column="40" selection-end-line="3" selection-end-column="40" />
+          <folding />
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/maogm/wanquribao/Utils/Constant.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.13690816">
+          <caret line="16" column="41" selection-start-line="16" selection-start-column="41" selection-end-line="16" selection-end-column="41" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/maogm/wanquribao/AboutFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="72" column="62" selection-start-line="72" selection-start-column="62" selection-end-line="72" selection-end-column="62" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#1677#1899#0" expanded="true" />
+            <element signature="e#1898#1899#0" expanded="true" />
+            <element signature="e#2106#2332#0" expanded="true" />
+            <element signature="e#2331#2332#0" expanded="true" />
+            <element signature="e#3028#3058#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/maogm/wanquribao/MainActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="171" column="38" selection-start-line="171" selection-start-column="38" selection-end-line="171" selection-end-column="38" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#7962#8005#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/maogm/wanquribao/IssueFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-57.25926">
+          <caret line="378" column="60" selection-start-line="378" selection-start-column="60" selection-end-line="378" selection-end-column="60" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#1946#1947#0" expanded="true" />
+            <element signature="e#1984#1985#0" expanded="true" />
+            <element signature="e#3672#3895#0" expanded="true" />
+            <element signature="e#3894#3895#0" expanded="true" />
+            <element signature="e#4125#4165#0" expanded="true" />
+            <element signature="e#4312#4453#0" expanded="true" />
+            <element signature="e#4452#4453#0" expanded="true" />
+            <element signature="e#5581#5598#0" expanded="true" />
+            <element signature="e#6098#6115#0" expanded="true" />
+            <element signature="e#6553#6575#0" expanded="true" />
+            <element signature="e#6911#6928#0" expanded="true" />
+            <element signature="e#7434#7462#0" expanded="true" />
+            <element signature="e#7531#7593#0" expanded="true" />
+            <element signature="e#7619#7664#0" expanded="true" />
+            <element signature="e#8407#8440#0" expanded="true" />
+            <element signature="e#9573#9603#0" expanded="true" />
+            <element signature="e#12412#12442#0" expanded="true" />
+            <element signature="e#12732#12760#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/lib/android/sdk/sources/android-21/android/webkit/WebView.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-21.296297">
+          <caret line="77" column="40" selection-start-line="77" selection-start-column="34" selection-end-line="77" selection-end-column="40" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/maogm/wanquribao/WebViewActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.7187223">
+          <caret line="68" column="26" selection-start-line="68" selection-start-column="26" selection-end-line="68" selection-end-column="26" />
+          <folding>
+            <element signature="e#1311#1474#0" expanded="true" />
+            <element signature="e#1473#1474#0" expanded="true" />
+            <element signature="e#1533#1701#0" expanded="true" />
+            <element signature="e#1700#1701#0" expanded="true" />
+            <element signature="e#3418#3461#0" expanded="true" />
           </folding>
         </state>
       </provider>

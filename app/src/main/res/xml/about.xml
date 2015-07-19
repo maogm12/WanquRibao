@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory
+        android:key="web"
+        android:title="@string/web">
+
+        <Preference
+            android:key="official_site"
+            android:title="@string/official_site"
+            android:summary="@string/official_site_link" />
+
+        <Preference
+            android:key="about_wanqu"
+            android:title="@string/about_wanqu"
+            android:summary="@string/about_wanqu_link" />
+
+        <Preference
+            android:key="wanqu_email"
+            android:title="@string/wanqu_email"
+            android:summary="@string/wanqu_email_value"/>
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:key="social"
+        android:title="@string/social">
+
+        <Preference
+            android:key="weibo"
+            android:title="@string/weibo"
+            android:summary="@string/weibo_account" />
+
+        <Preference
+            android:key="weichat"
+            android:title="@string/weichat"
+            android:summary="@string/weichat_account" />
+
+        <Preference
+            android:key="twitter"
+            android:title="@string/twitter"
+            android:summary="@string/twitter_account" />
+
+        <Preference
+            android:key="facebook"
+            android:title="@string/facebook"
+            android:summary="@string/facebook_account" />
+    </PreferenceCategory>
+
+
+    <PreferenceCategory
+        android:key="about_me"
+        android:title="@string/about_me">
+
+        <Preference
+            android:key="author"
+            android:title="@string/author"
+            android:summary="@string/blog_link" />
+
+        <Preference
+            android:key="my_weibo"
+            android:title="@string/weibo"
+            android:summary="@string/my_weibo_account" />
+
+        <Preference
+            android:key="my_email"
+            android:title="@string/my_email"
+            android:summary="@string/my_email_value" />
+
+    </PreferenceCategory>
+</PreferenceScreen>

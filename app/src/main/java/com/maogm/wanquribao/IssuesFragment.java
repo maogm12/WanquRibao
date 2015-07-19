@@ -1,8 +1,9 @@
 package com.maogm.wanquribao;
 
 
+import android.app.Activity;
+import android.app.Fragment;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -19,6 +20,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.maogm.wanquribao.Module.Issue;
 import com.maogm.wanquribao.Module.IssuesResult;
+import com.maogm.wanquribao.Utils.Constant;
 import com.maogm.wanquribao.Utils.NetworkUtil;
 
 import java.util.HashMap;
@@ -47,6 +49,13 @@ public class IssuesFragment extends Fragment implements Response.Listener<Issues
     }
 
     public IssuesFragment() {
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+
+        ((MainActivity)activity).setShareItemVisible(false);
     }
 
     @Override

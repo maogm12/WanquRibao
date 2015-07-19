@@ -1,8 +1,8 @@
 package com.maogm.wanquribao;
 
+import android.app.FragmentManager;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
@@ -15,6 +15,7 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
 import com.maogm.wanquribao.Listener.OnShareListener;
+import com.maogm.wanquribao.Utils.Constant;
 
 
 public class MainActivity extends ActionBarActivity
@@ -25,17 +26,16 @@ public class MainActivity extends ActionBarActivity
      */
     private NavigationDrawerFragment mNavigationDrawerFragment;
 
-    /**
-     * Used to store the last screen title. For use in {@link #restoreActionBar()}.
-     */
-    private CharSequence mTitle;
+    private CharSequence title;
 
     private ShareActionProvider mShareActionProvider;
+    private Intent shareIntent;
     private Intent defaultShareIntent;
 
-    RequestQueue newRequestQueue;
-
     private MenuItem shareItem;
+    private boolean canShare = true;
+
+    RequestQueue newRequestQueue;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +44,6 @@ public class MainActivity extends ActionBarActivity
 
         mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
-        mTitle = getTitle();
 
         // Set up the drawer.
         mNavigationDrawerFragment.setUp(
@@ -58,58 +57,43 @@ public class MainActivity extends ActionBarActivity
     @Override
     public void onNavigationDrawerItemSelected(int position) {
         // update the main content by replacing fragments
-        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentManager fragmentManager = getFragmentManager();
         switch (position) {
             case 0:
                 // latest issue
-                clearBackStack();
                 IssueFragment issueFragment = IssueFragment.newInstance();
                 issueFragment.setOnShareListner(this);
                 fragmentManager.beginTransaction()
                         .replace(R.id.container, issueFragment)
                         .commit();
-                if (shareItem != null) {
-                    shareItem.setVisible(true);
-                }
+                setShareItemVisible(true);
                 break;
             case 1:
-                clearBackStack();
+                // past issues
                 IssuesFragment issuesFragment = IssuesFragment.newInstance();
                 issuesFragment.setOnIssueSelectedListener(this);
                 fragmentManager.beginTransaction()
                         .replace(R.id.container, issuesFragment)
                         .commit();
-                if (shareItem != null) {
-                    shareItem.setVisible(false);
-                }
+                setShareItemVisible(false);
                 break;
             case 2:
-                // random post
-                clearBackStack();
+                // random post]
                 RandomPostFragment randomPostFragment = new RandomPostFragment();
                 randomPostFragment.setOnShareListener(this);
                 fragmentManager.beginTransaction()
                         .replace(R.id.container, randomPostFragment)
                         .commit();
-                if (shareItem != null) {
-                    shareItem.setVisible(true);
-                }
+                setShareItemVisible(true);
                 break;
             case 3:
                 // about
-                clearBackStack();
-                if (shareItem != null) {
-                    shareItem.setVisible(true);
-                }
+                AboutFragment aboutFragment = new AboutFragment();
+                fragmentManager.beginTransaction()
+                        .replace(R.id.container, aboutFragment)
+                        .commit();
+                setShareItemVisible(true);
                 break;
-        }
-    }
-
-    private void clearBackStack() {
-        FragmentManager manager = getSupportFragmentManager();
-        if (manager.getBackStackEntryCount() > 0) {
-            FragmentManager.BackStackEntry first = manager.getBackStackEntryAt(0);
-            manager.popBackStack(first.getId(), FragmentManager.POP_BACK_STACK_INCLUSIVE);
         }
     }
 
@@ -122,13 +106,21 @@ public class MainActivity extends ActionBarActivity
             number = -1;
         }
 
-        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentManager fragmentManager = getFragmentManager();
         IssueFragment issueFragment = IssueFragment.newInstance(number);
         issueFragment.setOnShareListner(this);
         fragmentManager.beginTransaction()
                 .replace(R.id.container, issueFragment)
                 .addToBackStack(null)
                 .commit();
+        setShareItemVisible(true);
+    }
+
+    public void setShareItemVisible(boolean canShare) {
+        this.canShare = canShare;
+        if (shareItem != null) {
+            shareItem.setVisible(canShare);
+        }
     }
 
     public void AddRequest(Request request) {
@@ -143,16 +135,16 @@ public class MainActivity extends ActionBarActivity
         ActionBar actionBar = getSupportActionBar();
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
         actionBar.setDisplayShowTitleEnabled(true);
+        this.title = title;
         actionBar.setTitle(title);
     }
 
-    public void restoreActionBar() {
+    public void restoreTitle() {
         ActionBar actionBar = getSupportActionBar();
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
         actionBar.setDisplayShowTitleEnabled(true);
-        actionBar.setTitle(mTitle);
+        actionBar.setTitle(title);
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -161,14 +153,15 @@ public class MainActivity extends ActionBarActivity
             // if the drawer is not showing. Otherwise, let the drawer
             // decide what to show in the action bar.
             getMenuInflater().inflate(R.menu.main, menu);
-            restoreActionBar();
+            restoreTitle();
 
             // Locate MenuItem with ShareActionProvider
             shareItem = menu.findItem(R.id.action_share);
+            setShareItemVisible(canShare);
 
             // Fetch and store ShareActionProvider
             mShareActionProvider = (ShareActionProvider) MenuItemCompat.getActionProvider(shareItem);
-            setShareIntent(getDefaultShareIntent());
+            setShareIntent(shareIntent);
 
             return true;
         }
@@ -178,14 +171,18 @@ public class MainActivity extends ActionBarActivity
 
     // Call to update the share intent
     public void setShareIntent(Intent shareIntent) {
+        this.shareIntent = shareIntent;
+
         if (mShareActionProvider != null) {
             mShareActionProvider.setShareIntent(shareIntent);
         }
     }
 
     public void restoreShareIntent() {
+        this.shareIntent = getDefaultShareIntent();
+
         if (mShareActionProvider != null) {
-            mShareActionProvider.setShareIntent(getDefaultShareIntent());
+            mShareActionProvider.setShareIntent(shareIntent);
         }
     }
 
