@@ -97,7 +97,7 @@ public class RandomPostFragment extends Fragment implements Response.Listener<Is
                             .append(": ").append(Constant.playUrl)
                             .append(") ").append(link);
                     String body = sb.toString();
-                    shareListener.shareText(subject, body);
+                    shareListener.onShareText(subject, body);
                 }
             }
         });

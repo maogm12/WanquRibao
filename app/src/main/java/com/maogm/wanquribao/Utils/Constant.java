@@ -17,6 +17,10 @@ public class Constant {
     public static final String KEY_SHARE_SUBJECT = "subject";
     public static final String KEY_SHARE_BODY = "body";
 
+    public static final String KEY_SAVED_POSTS = "saved_posts";
+    public static final String KEY_DATE = "date";
+    public static final String KEY_NUMBER = "number";
+
     public static final String playUrl = "";
     public static final String KEY_OFFICIAL_SITE = "official_site";
     public static final String KEY_ABOUT_WANQU = "about_wanqu";

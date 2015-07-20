@@ -4,5 +4,7 @@ package com.maogm.wanquribao.Listener;
  *
  */
 public interface OnShareListener {
-    void shareText(String subject, String body);
+    void onShareText(String subject, String body);
+    void onGlobalShareChanged(String subject, String body);
+    void onRestoreGlobalShare();
 }

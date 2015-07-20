@@ -62,7 +62,6 @@ public class MainActivity extends ActionBarActivity
             case 0:
                 // latest issue
                 IssueFragment issueFragment = IssueFragment.newInstance();
-                issueFragment.setOnShareListner(this);
                 fragmentManager.beginTransaction()
                         .replace(R.id.container, issueFragment)
                         .commit();
@@ -108,7 +107,6 @@ public class MainActivity extends ActionBarActivity
 
         FragmentManager fragmentManager = getFragmentManager();
         IssueFragment issueFragment = IssueFragment.newInstance(number);
-        issueFragment.setOnShareListner(this);
         setShareItemVisible(true);
         fragmentManager.beginTransaction()
                 .replace(R.id.container, issueFragment)
@@ -131,7 +129,7 @@ public class MainActivity extends ActionBarActivity
         newRequestQueue.add(request);
     }
 
-    public void updateTitle(String title) {
+    public void updateTitle(CharSequence title) {
         ActionBar actionBar = getSupportActionBar();
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
         actionBar.setDisplayShowTitleEnabled(true);
@@ -143,6 +141,9 @@ public class MainActivity extends ActionBarActivity
         ActionBar actionBar = getSupportActionBar();
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
         actionBar.setDisplayShowTitleEnabled(true);
+        if (title == null) {
+            title = getString(R.string.app_name);
+        }
         actionBar.setTitle(title);
     }
 
@@ -217,7 +218,7 @@ public class MainActivity extends ActionBarActivity
         return defaultShareIntent;
     }
 
-    public void shareText(String subject, String body) {
+    public void onShareText(String subject, String body) {
         Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
         sharingIntent.setType("text/plain");
         sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, subject);
@@ -225,4 +226,22 @@ public class MainActivity extends ActionBarActivity
         startActivity(Intent.createChooser(sharingIntent, getResources().getString(R.string.share_me)));
     }
 
+    @Override
+    public void onGlobalShareChanged(String subject, String body) {
+        if (subject == null || body == null) {
+            onRestoreGlobalShare();
+            return;
+        }
+
+        Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
+        sharingIntent.setType("text/plain");
+        sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, subject);
+        sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, body);
+        setShareIntent(sharingIntent);
+    }
+
+    @Override
+    public void onRestoreGlobalShare() {
+        setShareIntent(getDefaultShareIntent());
+    }
 }

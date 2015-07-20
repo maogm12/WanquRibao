@@ -1,8 +1,10 @@
 package com.maogm.wanquribao;
 
+import android.app.Activity;
 import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -21,6 +23,7 @@ import com.maogm.wanquribao.Listener.OnShareListener;
 import com.maogm.wanquribao.Module.IssueResult;
 import com.maogm.wanquribao.Module.Post;
 import com.maogm.wanquribao.Module.PostModel;
+import com.maogm.wanquribao.Module.PostWrapper;
 import com.maogm.wanquribao.Utils.Constant;
 import com.maogm.wanquribao.Utils.NetworkUtil;
 
@@ -28,6 +31,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -40,6 +44,7 @@ public class IssueFragment extends Fragment implements Response.Listener<IssueRe
 
     private static final String ISSUE_NUMBER = "issue_number";
 
+    private String date;
     private int number = -1;
     private List<Post> posts;
     private ListView listPost;
@@ -67,11 +72,20 @@ public class IssueFragment extends Fragment implements Response.Listener<IssueRe
     }
 
     @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        if (activity instanceof OnShareListener) {
+            shareListener = (OnShareListener) activity;
+        } else {
+            throw new IllegalArgumentException("activity must implements OnShareListener");
+        }
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_post_list, container, false);
     }
-
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
@@ -79,11 +93,6 @@ public class IssueFragment extends Fragment implements Response.Listener<IssueRe
         listPost = (ListView) view.findViewById(R.id.post_list);
         // swipeView
         swipeView = (SwipeRefreshLayout) view.findViewById(R.id.swipe);
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
 
         postAdapter = new PostAdapter();
         listPost.setAdapter(postAdapter);
@@ -124,14 +133,25 @@ public class IssueFragment extends Fragment implements Response.Listener<IssueRe
             }
         });
 
+        // recreate
+        if (savedInstanceState != null) {
+            date = savedInstanceState.getString(Constant.KEY_DATE);
+            number = savedInstanceState.getInt(Constant.KEY_NUMBER);
+            setActionBar();
+
+            // posts
+            onPostsRequest(savedInstanceState.<Post>getParcelableArrayList(Constant.KEY_SAVED_POSTS));
+            return;
+        }
+
         // get the issue number to request
         number = getArguments().getInt(ISSUE_NUMBER);
-        requestIssue();
 
         // set title
         if (number == -1) {
-            ((MainActivity) getActivity()).updateTitle(getString(R.string.title_section_latest));
+            updateTitle(null, -1);
         }
+        requestIssue();
     }
 
     private void requestIssue() {
@@ -167,7 +187,7 @@ public class IssueFragment extends Fragment implements Response.Listener<IssueRe
             // get from local storage
             Log.d(TAG, "network not connected, request from local db");
             if (number < 0) {
-                Iterator<PostModel> biggestId = PostModel.findAsIterator(PostModel.class, null, (String[])null, (String)null, "number desc", (String)null);
+                Iterator<PostModel> biggestId = PostModel.findAsIterator(PostModel.class, null, null, null, "number desc", null);
                 if (!biggestId.hasNext()) {
                     Log.d(TAG, "no post");
                     Toast.makeText(getActivity(), R.string.no_issue, Toast.LENGTH_SHORT).show();
@@ -196,12 +216,9 @@ public class IssueFragment extends Fragment implements Response.Listener<IssueRe
                 });
             } else {
                 // update title
-                String date = postModels.get(0).date;
-                int number = postModels.get(0).number;
-                updateTitle(date, number);
-
-                // share intent
-                ((MainActivity)getActivity()).setShareIntent(getShareIntent(date, number));
+                date = postModels.get(0).date;
+                number = postModels.get(0).number;
+                setActionBar();
 
                 // update posts
                 List<Post> posts = new ArrayList<>();
@@ -228,30 +245,57 @@ public class IssueFragment extends Fragment implements Response.Listener<IssueRe
             return;
         }
 
+        date = response.data.date;
+        number = response.data.number;
+        Log.d(TAG, "get response data => date: " + date + ", number: " + number);
+
+        setActionBar();
         onPostsRequest(response.data.posts);
-        updateTitle(response.data.date, response.data.number);
-        savePosts(response);
-        ((MainActivity)getActivity()).setShareIntent(getShareIntent(response.data.date, response.data.number));
+        savePosts(response.data);
     }
 
-    private Intent getShareIntent(String date, int number) {
-        if (date == null) {
+    /**
+     * Set title and global share content
+     */
+    private void setActionBar() {
+        // update title
+        updateTitle(date, number);
+
+        // set share intent
+        String body = getShareBody(date, number);
+        if (shareListener == null) {
+            Log.e(TAG, "No OnShareListener is set");
+            return;
+        }
+
+        if (body == null) {
+            shareListener.onRestoreGlobalShare();
+        } else {
+            shareListener.onGlobalShareChanged(getString(R.string.share_post),
+                    getShareBody(date, number));
+        }
+    }
+
+    /**
+     * Get share content for current issue
+     * @param date      Issue date
+     * @param number    Issue number
+     * @return  Share body of the issue
+     */
+    private String getShareBody(String date, int number) {
+        if (date == null || number < 0) {
             return null;
         }
 
-        Intent intent = new Intent();
-        intent.setAction(Intent.ACTION_SEND);
-        intent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.share_me));
-        StringBuilder sb = new StringBuilder();
-        sb.append(getString(R.string.title_pattern_long, date, number))
-                .append(getString(R.string.via_app, Constant.playUrl))
-                .append(Constant.wanquRootUrl).append(Constant.issuesUrl)
-                .append("/").append(number);
-        intent.putExtra(Intent.EXTRA_TEXT, sb.toString());
-        intent.setType("text/plain");
-        return intent;
+        return getString(R.string.title_pattern_long, date, number) +
+                getString(R.string.via_app, Constant.playUrl) +
+                Constant.wanquRootUrl + Constant.issuesUrl + "/" + number;
     }
 
+    /**
+     * Called when new posts are got, either from network or local database
+     * @param posts New posts
+     */
     private void onPostsRequest(List<Post> posts) {
         if (posts == null) {
             return;
@@ -271,10 +315,23 @@ public class IssueFragment extends Fragment implements Response.Listener<IssueRe
         Log.d(TAG, "posts refreshed");
     }
 
+    @Override
+        public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        Log.d(TAG, "save posts, date and number");
+
+        // save posts
+        outState.putParcelableArrayList(Constant.KEY_SAVED_POSTS, (ArrayList<? extends Parcelable>) posts);
+
+        // save date and number of the issue
+        outState.putString(Constant.KEY_DATE, date);
+        outState.putInt(Constant.KEY_NUMBER, number);
+    }
+
     private void updateTitle(String date, int number) {
-        String title;
+        CharSequence title;
         if (date == null || number < 0) {
-            title = getString(R.string.app_name);
+            title = getString(R.string.title_section_latest);
         } else {
             title = getString(R.string.title_pattern, date, number);
         }
@@ -282,20 +339,20 @@ public class IssueFragment extends Fragment implements Response.Listener<IssueRe
         ((MainActivity)getActivity()).updateTitle(title);
     }
 
-    private void savePosts(final IssueResult response) {
-        if (response == null) {
+    private void savePosts(final PostWrapper issue) {
+        if (issue == null) {
             return;
         }
 
         new Thread(new Runnable() {
             @Override
             public void run() {
-                for (int i = 0; i < response.data.posts.size(); ++i) {
-                    Post post = response.data.posts.get(i);
+                for (int i = 0; i < issue.posts.size(); ++i) {
+                    Post post = issue.posts.get(i);
                     if (!PostModel.find(PostModel.class, "post_id = ?", String.valueOf(post.id)).isEmpty()) {
                         continue;
                     }
-                    PostModel model = new PostModel(post, response.data.date, response.data.number);
+                    PostModel model = new PostModel(post, issue.date, issue.number);
                     model.save();
                 }
             }
@@ -373,7 +430,7 @@ public class IssueFragment extends Fragment implements Response.Listener<IssueRe
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-            ViewHolder holder = null;
+            ViewHolder holder;
             if (convertView == null) {
                 holder = new ViewHolder();
                 LayoutInflater inflater = LayoutInflater.from(getActivity());
@@ -406,16 +463,14 @@ public class IssueFragment extends Fragment implements Response.Listener<IssueRe
                         if (shareListener == null) {
                             return;
                         }
-
                         String subject = getString(R.string.share_post);
                         String link = Constant.wanquRootUrl + "/p/" + String.valueOf(post.issueId);
-                        StringBuffer sb = new StringBuffer();
-                        sb.append("【").append(post.title).append("】")
-                                .append("(via ").append(getString(R.string.app_name))
-                                .append(": ").append(Constant.playUrl)
-                                .append(") ").append(link);
-                        String body = sb.toString();
-                        shareListener.shareText(subject, body);
+                        String body = String.format(Locale.getDefault(),
+                                "【%s】%s %s",
+                                getString(R.string.app_name),
+                                getString(R.string.via_app, Constant.playUrl),
+                                link);
+                        shareListener.onShareText(subject, body);
                     }
                 });
 
