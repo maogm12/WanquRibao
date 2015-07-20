@@ -51,6 +51,11 @@
         android:title="@string/about_me">
 
         <Preference
+            android:key="app_name"
+            android:title="@string/app_name"
+            android:summary="@string/me_desc"/>
+
+        <Preference
             android:key="author"
             android:title="@string/author"
             android:summary="@string/blog_link" />

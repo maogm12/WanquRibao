@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">湾区日报非官方</string>
+    <string name="app_name">湾区日报野生版</string>
     <string name="app_desc">关注创业、互联网、技术。每天精 5 条英文链接。</string>
 
     <string name="title_section_latest">最新一期</string>
@@ -56,9 +56,10 @@
     <string name="facebook_account">湾区日报</string>
 
     <string name="about_me">关于本软件</string>
+    <string name="me_desc">本软件为非官方版本~~</string>
     <string name="author">本人</string>
     <string name="blog_link">maogm.com</string>
-    <string name="my_weibo_account">游冥客</string>
+    <string name="my_weibo_account">\@游冥客</string>
     <string name="my_email">我的邮箱</string>
     <string name="my_email_value">maogm12@gmail.com</string>
 

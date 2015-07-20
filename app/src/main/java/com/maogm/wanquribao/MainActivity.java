@@ -11,9 +11,6 @@ import android.support.v7.widget.ShareActionProvider;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.toolbox.Volley;
 import com.maogm.wanquribao.Listener.OnShareListener;
 import com.maogm.wanquribao.Utils.Constant;
 
@@ -35,23 +32,29 @@ public class MainActivity extends ActionBarActivity
     private MenuItem shareItem;
     private boolean canShare = true;
 
-    RequestQueue newRequestQueue;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         mNavigationDrawerFragment = (NavigationDrawerFragment)
-                getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
+                getFragmentManager().findFragmentById(R.id.navigation_drawer);
 
         // Set up the drawer.
         mNavigationDrawerFragment.setUp(
                 R.id.navigation_drawer,
                 (DrawerLayout) findViewById(R.id.drawer_layout));
+    }
 
-        // queue
-        newRequestQueue = Volley.newRequestQueue(this);
+    @Override
+    public void onBackPressed() {
+        FragmentManager fragmentManager = getFragmentManager();
+        if (fragmentManager.getBackStackEntryCount() > 0) {
+            fragmentManager.popBackStack();
+            return;
+        }
+
+        super.onBackPressed();
     }
 
     @Override
@@ -65,7 +68,6 @@ public class MainActivity extends ActionBarActivity
                 fragmentManager.beginTransaction()
                         .replace(R.id.container, issueFragment)
                         .commit();
-                setShareItemVisible(true);
                 break;
             case 1:
                 // past issues
@@ -74,7 +76,6 @@ public class MainActivity extends ActionBarActivity
                 fragmentManager.beginTransaction()
                         .replace(R.id.container, issuesFragment)
                         .commit();
-                setShareItemVisible(false);
                 break;
             case 2:
                 // random post
@@ -83,7 +84,6 @@ public class MainActivity extends ActionBarActivity
                 fragmentManager.beginTransaction()
                         .replace(R.id.container, randomPostFragment)
                         .commit();
-                setShareItemVisible(true);
                 break;
             case 3:
                 // about
@@ -91,7 +91,6 @@ public class MainActivity extends ActionBarActivity
                 fragmentManager.beginTransaction()
                         .replace(R.id.container, aboutFragment)
                         .commit();
-                setShareItemVisible(true);
                 break;
         }
     }
@@ -107,26 +106,10 @@ public class MainActivity extends ActionBarActivity
 
         FragmentManager fragmentManager = getFragmentManager();
         IssueFragment issueFragment = IssueFragment.newInstance(number);
-        setShareItemVisible(true);
         fragmentManager.beginTransaction()
                 .replace(R.id.container, issueFragment)
                 .addToBackStack(null)
                 .commit();
-    }
-
-    public void setShareItemVisible(boolean canShare) {
-        this.canShare = canShare;
-        if (shareItem != null) {
-            shareItem.setVisible(canShare);
-        }
-    }
-
-    public void AddRequest(Request request) {
-        if (request == null) {
-            return;
-        }
-
-        newRequestQueue.add(request);
     }
 
     public void updateTitle(CharSequence title) {
@@ -158,7 +141,7 @@ public class MainActivity extends ActionBarActivity
 
             // Locate MenuItem with ShareActionProvider
             shareItem = menu.findItem(R.id.action_share);
-            setShareItemVisible(canShare);
+            onGlobalShareEnabled(canShare);
 
             // Fetch and store ShareActionProvider
             mShareActionProvider = (ShareActionProvider) MenuItemCompat.getActionProvider(shareItem);
@@ -227,7 +210,7 @@ public class MainActivity extends ActionBarActivity
     }
 
     @Override
-    public void onGlobalShareChanged(String subject, String body) {
+    public void onGlobalShareContentChanged(String subject, String body) {
         if (subject == null || body == null) {
             onRestoreGlobalShare();
             return;
@@ -243,5 +226,13 @@ public class MainActivity extends ActionBarActivity
     @Override
     public void onRestoreGlobalShare() {
         setShareIntent(getDefaultShareIntent());
+    }
+
+    @Override
+    public void onGlobalShareEnabled(boolean enable) {
+        if (shareItem != null) {
+            shareItem.setVisible(enable);
+        }
+        canShare = enable;
     }
 }

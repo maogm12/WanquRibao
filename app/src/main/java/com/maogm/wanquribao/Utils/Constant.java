@@ -6,11 +6,13 @@ package com.maogm.wanquribao.Utils;
  */
 public class Constant {
     public static final String wanquRootUrl = "http://wanqu.co";
-    //    public static final String baseUrl = "http://192.168.1.105:8034"
+//    public static final String baseUrl = "http://192.168.1.105:8034";
     public static final String baseUrl = "http://api.wanqu.co/api/v1";
     public static final String issueUrl = "/issue";
     public static final String randomPostUrl = "/posts/random";
     public static final String issuesUrl = "/issues";
+
+    public static final String playUrl = "";
 
     public static final String KEY_HTML = "html";
     public static final String KEY_URL = "url";
@@ -20,8 +22,9 @@ public class Constant {
     public static final String KEY_SAVED_POSTS = "saved_posts";
     public static final String KEY_DATE = "date";
     public static final String KEY_NUMBER = "number";
+    public static final String KEY_ISSUES = "issues";
+    public static final String KEY_RANDOM_POST = "random_post";
 
-    public static final String playUrl = "";
     public static final String KEY_OFFICIAL_SITE = "official_site";
     public static final String KEY_ABOUT_WANQU = "about_wanqu";
     public static final String KEY_WANQU_EMAIL = "wanqu_email";

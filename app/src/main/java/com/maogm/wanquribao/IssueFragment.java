@@ -17,8 +17,10 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.Volley;
 import com.maogm.wanquribao.Listener.OnShareListener;
 import com.maogm.wanquribao.Module.IssueResult;
 import com.maogm.wanquribao.Module.Post;
@@ -53,6 +55,9 @@ public class IssueFragment extends Fragment implements Response.Listener<IssueRe
 
     private OnShareListener shareListener;
 
+    // request queue
+    private RequestQueue postQueue;
+
     /**
      * Returns a new instance of this fragment for the given issue number.
      */
@@ -76,9 +81,12 @@ public class IssueFragment extends Fragment implements Response.Listener<IssueRe
         super.onAttach(activity);
         if (activity instanceof OnShareListener) {
             shareListener = (OnShareListener) activity;
+            shareListener.onGlobalShareEnabled(true);
         } else {
-            throw new IllegalArgumentException("activity must implements OnShareListener");
+            throw new IllegalArgumentException("activity must implement OnShareListener");
         }
+
+        postQueue = Volley.newRequestQueue(activity);
     }
 
     @Override
@@ -155,7 +163,7 @@ public class IssueFragment extends Fragment implements Response.Listener<IssueRe
     }
 
     private void requestIssue() {
-        if (swipeView == null || swipeView.isRefreshing()) {
+        if (swipeView == null || swipeView.isRefreshing() || !isAdded()) {
             // refreshing
             return;
         }
@@ -182,7 +190,7 @@ public class IssueFragment extends Fragment implements Response.Listener<IssueRe
             Map<String, String> headers = new HashMap<>();
             GsonRequest<IssueResult> requester = new GsonRequest<>(path, IssueResult.class,
                     headers, this, this);
-            ((MainActivity) getActivity()).AddRequest(requester);
+            postQueue.add(requester);
         } else {
             // get from local storage
             Log.d(TAG, "network not connected, request from local db");
@@ -233,7 +241,9 @@ public class IssueFragment extends Fragment implements Response.Listener<IssueRe
     @Override
     public void onErrorResponse(VolleyError error) {
         swipeView.setRefreshing(false);
-        Toast.makeText(getActivity(), R.string.network_error, Toast.LENGTH_SHORT).show();
+        if (isAdded()) {
+            Toast.makeText(getActivity(), R.string.network_error, Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override
@@ -241,7 +251,9 @@ public class IssueFragment extends Fragment implements Response.Listener<IssueRe
         swipeView.setRefreshing(false);
         if (response == null || response.code == 2 || response.data == null || response.data.posts.isEmpty()) {
             Log.e(TAG, "no posts got");
-            Toast.makeText(getActivity(), R.string.no_issue, Toast.LENGTH_SHORT).show();
+            if (isAdded()) {
+                Toast.makeText(getActivity(), R.string.no_issue, Toast.LENGTH_SHORT).show();
+            }
             return;
         }
 
@@ -271,7 +283,7 @@ public class IssueFragment extends Fragment implements Response.Listener<IssueRe
         if (body == null) {
             shareListener.onRestoreGlobalShare();
         } else {
-            shareListener.onGlobalShareChanged(getString(R.string.share_post),
+            shareListener.onGlobalShareContentChanged(getString(R.string.share_post),
                     getShareBody(date, number));
         }
     }
@@ -329,6 +341,10 @@ public class IssueFragment extends Fragment implements Response.Listener<IssueRe
     }
 
     private void updateTitle(String date, int number) {
+        if (!isAdded()) {
+            return;
+        }
+
         CharSequence title;
         if (date == null || number < 0) {
             title = getString(R.string.title_section_latest);
@@ -368,7 +384,7 @@ public class IssueFragment extends Fragment implements Response.Listener<IssueRe
     }
 
     public void openUrl(String url, String subject, String body) {
-        if (url == null) {
+        if (url == null || !isAdded()) {
             return;
         }
 
@@ -387,7 +403,7 @@ public class IssueFragment extends Fragment implements Response.Listener<IssueRe
     }
 
     public void openHtml(String html, String subject, String body) {
-        if (html == null) {
+        if (html == null || !isAdded()) {
             return;
         }
 
@@ -430,6 +446,10 @@ public class IssueFragment extends Fragment implements Response.Listener<IssueRe
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
+            if (!isAdded()) {
+                return null;
+            }
+
             ViewHolder holder;
             if (convertView == null) {
                 holder = new ViewHolder();

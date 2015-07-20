@@ -12,8 +12,10 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.Volley;
 import com.maogm.wanquribao.Listener.OnShareListener;
 import com.maogm.wanquribao.Module.IssueResult;
 import com.maogm.wanquribao.Module.Post;
@@ -46,6 +48,12 @@ public class RandomPostFragment extends Fragment implements Response.Listener<Is
     // OnShareLinstener, used to share stuff
     private OnShareListener shareListener;
 
+    // request queue
+    private RequestQueue postQueue;
+
+    private String date;
+    private int number;
+
     /**
      * Use this factory method to create a new instance of this fragment.
      */
@@ -55,6 +63,20 @@ public class RandomPostFragment extends Fragment implements Response.Listener<Is
     }
 
     public RandomPostFragment() {
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+
+        if (activity instanceof OnShareListener) {
+            shareListener = (OnShareListener) activity;
+            shareListener.onGlobalShareEnabled(true);
+        } else {
+            throw new IllegalArgumentException("activity must implement OnShareListener");
+        }
+
+        postQueue = Volley.newRequestQueue(activity);
     }
 
     @Override
@@ -78,6 +100,12 @@ public class RandomPostFragment extends Fragment implements Response.Listener<Is
         btnOriginal = (Button) view.findViewById(R.id.btn_original);
         btnEasyRead = (Button) view.findViewById(R.id.btn_easy_read);
         btnRandom = (Button) view.findViewById(R.id.btn_random);
+
+        if (savedInstanceState != null) {
+            fetchedPost = savedInstanceState.getParcelable(Constant.KEY_RANDOM_POST);
+            date = savedInstanceState.getString(Constant.KEY_DATE);
+            number = savedInstanceState.getInt(Constant.KEY_NUMBER);
+        }
     }
 
     @Override
@@ -145,8 +173,20 @@ public class RandomPostFragment extends Fragment implements Response.Listener<Is
             ((MainActivity) getActivity()).updateTitle(getString(R.string.title_section_random));
         }
 
-        // fetched a random post
-        fetchRandomPost();
+        if (fetchedPost == null) {
+            // fetched a random post
+            fetchRandomPost();
+        } else {
+            onPostFetched(fetchedPost);
+        }
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putParcelable(Constant.KEY_RANDOM_POST, fetchedPost);
+        outState.putString(Constant.KEY_DATE, date);
+        outState.putLong(Constant.KEY_NUMBER, number);
     }
 
     private void fetchRandomPost() {
@@ -179,11 +219,9 @@ public class RandomPostFragment extends Fragment implements Response.Listener<Is
                 Log.d(TAG, "parse post");
 
                 PostModel model = all.next();
-
-                // update title
-                updateTitle(model.date, model.number);
-                // set intern
-                ((MainActivity)getActivity()).setShareIntent(getShareIntent(model.date, model.number));
+                date = model.date;
+                number = model.number;
+                setActionBar();
 
                 onPostFetched(model.getPost());
             } else {
@@ -196,7 +234,7 @@ public class RandomPostFragment extends Fragment implements Response.Listener<Is
             Map<String, String> headers = new HashMap<>();
             GsonRequest<IssueResult> requester = new GsonRequest<>(path, IssueResult.class,
                     headers, this, this);
-            ((MainActivity) activity).AddRequest(requester);
+            postQueue.add(requester);
         }
     }
 
@@ -208,26 +246,43 @@ public class RandomPostFragment extends Fragment implements Response.Listener<Is
 
     @Override
     public void onResponse(IssueResult response) {
-        if (response == null || response.code == 2 || response.data == null) {
+        if (response == null || response.code == 2 || response.data == null || !isAdded()) {
             Log.d(TAG, "no post got");
             Toast.makeText(getActivity(), R.string.no_issue, Toast.LENGTH_SHORT).show();
             return;
         }
 
-        updateTitle(response.data.date, response.data.number);
+        // set date and number
+        date = response.data.date;
+        number = response.data.number;
+        setActionBar();
 
         savePosts(response.data);
         if (response.data.posts.isEmpty()) {
+            Log.d(TAG, "no post got");
             Toast.makeText(getActivity(), R.string.no_issue, Toast.LENGTH_SHORT).show();
         } else {
             onPostFetched(response.data.posts.get(0));
         }
+    }
 
-        // set intern
-        ((MainActivity)getActivity()).setShareIntent(getShareIntent(response.data.date, response.data.number));
+    private void setActionBar() {
+        if (!isAdded()) {
+            return;
+        }
+
+        updateTitle(date, number);
+        if (shareListener != null) {
+            shareListener.onGlobalShareContentChanged(getString(R.string.share_post),
+                    getShareBody(date, number));
+        }
     }
 
     private void updateTitle(String date, int number) {
+        if (!isAdded()) {
+            return;
+        }
+
         String title;
         if (date == null) {
             title = getString(R.string.title_section_random);
@@ -236,6 +291,16 @@ public class RandomPostFragment extends Fragment implements Response.Listener<Is
         }
 
         ((MainActivity)getActivity()).updateTitle(title);
+    }
+
+    private String getShareBody(String date, int number) {
+        if (date == null || !isAdded()) {
+            return null;
+        }
+
+        return getString(R.string.title_pattern_long, date, number) +
+                getString(R.string.via_app, Constant.playUrl) +
+                Constant.wanquRootUrl + Constant.issuesUrl + "/" + number;
     }
 
     private void savePosts(final PostWrapper data) {
@@ -269,24 +334,6 @@ public class RandomPostFragment extends Fragment implements Response.Listener<Is
         tvSummary.setText(post.summary);
     }
 
-    private Intent getShareIntent(String date, int number) {
-        if (date == null) {
-            return null;
-        }
-
-        Intent intent = new Intent();
-        intent.setAction(Intent.ACTION_SEND);
-        intent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.share_me));
-        StringBuilder sb = new StringBuilder();
-        sb.append(getString(R.string.title_pattern_long, date, number))
-                .append(getString(R.string.via_app, Constant.playUrl))
-                .append(Constant.wanquRootUrl).append(Constant.issuesUrl)
-                .append("/").append(number);
-        intent.putExtra(Intent.EXTRA_TEXT, sb.toString());
-        intent.setType("text/plain");
-        return intent;
-    }
-
     /**
      * set a OnShareLinstener for the fragment
      * @param listener the OnShareListener
@@ -296,7 +343,7 @@ public class RandomPostFragment extends Fragment implements Response.Listener<Is
     }
 
     public void openUrl(String url, String subject, String body) {
-        if (url == null) {
+        if (url == null || !isAdded()) {
             return;
         }
 

@@ -4,6 +4,7 @@ package com.maogm.wanquribao;
 import android.app.Activity;
 import android.app.Fragment;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -16,13 +17,17 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.Volley;
+import com.maogm.wanquribao.Listener.OnShareListener;
 import com.maogm.wanquribao.Module.Issue;
 import com.maogm.wanquribao.Module.IssuesResult;
 import com.maogm.wanquribao.Utils.Constant;
 import com.maogm.wanquribao.Utils.NetworkUtil;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -43,6 +48,10 @@ public class IssuesFragment extends Fragment implements Response.Listener<Issues
     private SwipeRefreshLayout swipeView;
 
     private OnIssueSelectedListener issueSelectedListener;
+    private OnShareListener shareListener;
+
+    // request queue
+    private RequestQueue issueQueue;
 
     public static IssuesFragment newInstance() {
         return new IssuesFragment();
@@ -55,7 +64,20 @@ public class IssuesFragment extends Fragment implements Response.Listener<Issues
     public void onAttach(Activity activity) {
         super.onAttach(activity);
 
-        ((MainActivity)activity).setShareItemVisible(false);
+        if (activity instanceof OnShareListener) {
+            shareListener = (OnShareListener) activity;
+            shareListener.onGlobalShareEnabled(false);
+        } else {
+            throw new IllegalArgumentException("activity must implement OnShareListener");
+        }
+
+        if (activity instanceof OnIssueSelectedListener) {
+            issueSelectedListener = (OnIssueSelectedListener) activity;
+        } else {
+            throw new IllegalArgumentException("ativity must implement OnIssueSelectedListener");
+        }
+
+        issueQueue = Volley.newRequestQueue(activity);
     }
 
     @Override
@@ -124,12 +146,33 @@ public class IssuesFragment extends Fragment implements Response.Listener<Issues
                 requestIssues();
             }
         });
-        requestIssues();
 
         // set title
         if (isAdded()) {
             ((MainActivity) getActivity()).updateTitle(getString(R.string.title_section_past));
         }
+
+        if (savedInstanceState != null) {
+            onIssuesRequested(savedInstanceState.<Issue>getParcelableArrayList(Constant.KEY_ISSUES));
+        }
+
+        requestIssues();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (shareListener != null) {
+            shareListener.onGlobalShareEnabled(false);
+        }
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        Log.d(TAG, "issues saved to state");
+        outState.putParcelableArrayList(Constant.KEY_ISSUES, (ArrayList<? extends Parcelable>) issues);
     }
 
     public void setOnIssueSelectedListener(OnIssueSelectedListener listener) {
@@ -157,7 +200,7 @@ public class IssuesFragment extends Fragment implements Response.Listener<Issues
             Map<String, String> headers = new HashMap<>();
             GsonRequest<IssuesResult> requester = new GsonRequest<>(path, IssuesResult.class,
                     headers, this, this);
-            ((MainActivity)getActivity()).AddRequest(requester);
+            issueQueue.add(requester);
         } else {
             // get from local storage
             Log.d(TAG, "network not connected, request from local db");
@@ -202,7 +245,7 @@ public class IssuesFragment extends Fragment implements Response.Listener<Issues
             }
         });
 
-        if (issues.isEmpty()) {
+        if (issues.isEmpty() && isAdded()) {
             Toast.makeText(getActivity(), R.string.no_issue, Toast.LENGTH_SHORT).show();
         }
 
@@ -246,7 +289,7 @@ public class IssuesFragment extends Fragment implements Response.Listener<Issues
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-            ViewHolder holder = null;
+            ViewHolder holder;
             if (convertView == null) {
                 holder = new ViewHolder();
                 LayoutInflater inflater = LayoutInflater.from(getActivity());
