@@ -73,6 +73,6 @@
         <Preference
             android:key="version"
             android:title="@string/current_version"
-            android:summary="@string/version" />
+            android:summary="@string/day_born" />
     </PreferenceCategory>
 </PreferenceScreen>

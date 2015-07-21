@@ -2,6 +2,8 @@ package com.maogm.wanquribao;
 
 
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
@@ -53,7 +55,17 @@ public class AboutFragment extends PreferenceFragment {
 
         // version, 5 clicks to enable debug
         Preference pref = findPreference(Constant.KEY_VERSION);
-        if (pref != null) {
+        if (pref != null && isAdded()) {
+            PackageInfo pInfo;
+            try {
+                pInfo = getActivity().getPackageManager().getPackageInfo(getActivity().getPackageName(), 0);
+                LogUtil.d(TAG, "got version Name: " + pInfo.versionName);
+                pref.setSummary(pInfo.versionName);
+            } catch (PackageManager.NameNotFoundException e) {
+                LogUtil.e(TAG, "can not get package info");
+                e.printStackTrace();
+            }
+
             pref.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
                 @Override
                 public boolean onPreferenceClick(Preference preference) {

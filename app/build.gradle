@@ -8,8 +8,8 @@ android {
         applicationId "com.maogm.wanquribao"
         minSdkVersion 16
         targetSdkVersion 21
-        versionCode 3
-        versionName "2015.07.21"
+        versionCode 4
+        versionName "2015.07.22"
     }
     buildTypes {
         release {
