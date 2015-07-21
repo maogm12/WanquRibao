@@ -163,7 +163,7 @@ public class IssueFragment extends Fragment implements Response.Listener<IssueRe
     }
 
     private void requestIssue() {
-        if (swipeView == null || swipeView.isRefreshing() || !isAdded()) {
+        if (swipeView == null || !isAdded()) {
             // refreshing
             return;
         }

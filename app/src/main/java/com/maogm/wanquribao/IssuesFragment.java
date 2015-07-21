@@ -180,7 +180,7 @@ public class IssuesFragment extends Fragment implements Response.Listener<Issues
     }
 
     private void requestIssues() {
-        if (swipeView == null || swipeView.isRefreshing()) {
+        if (swipeView == null || !isAdded()) {
             return;
         }
 
