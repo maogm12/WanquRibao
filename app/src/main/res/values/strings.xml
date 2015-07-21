@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">湾区日报野生版</string>
+    <string name="app_name">野生湾区日报</string>
     <string name="app_desc">关注创业、互联网、技术。每天精 5 条英文链接。</string>
 
     <string name="title_section_latest">最新一期</string>
@@ -62,7 +62,8 @@
     <string name="my_weibo_account">\@游冥客</string>
     <string name="my_email">我的邮箱</string>
     <string name="my_email_value">maogm12@gmail.com</string>
-
     <string name="send_email">发送邮件</string>
+    <string name="current_version">当前版本</string>
+    <string name="version">2015.07.21</string>
 
 </resources>
