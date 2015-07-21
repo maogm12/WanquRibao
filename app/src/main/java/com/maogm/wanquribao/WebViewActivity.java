@@ -3,8 +3,9 @@ package com.maogm.wanquribao;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.webkit.WebChromeClient;
@@ -13,6 +14,7 @@ import android.webkit.WebViewClient;
 import android.widget.ImageButton;
 
 import com.maogm.wanquribao.Utils.Constant;
+import com.maogm.wanquribao.Utils.LogUtil;
 
 public class WebViewActivity extends Activity {
     private static final String TAG = "WebViewActivity";
@@ -40,7 +42,7 @@ public class WebViewActivity extends Activity {
         }
 
         progressBar = (AnimatingProgressBar) findViewById(R.id.progress);
-        // progressBar.getProgressDrawable().setColorFilter(Color.RED, PorterDuff.Mode.SRC_IN);
+        progressBar.getProgressDrawable().setColorFilter(Color.RED, PorterDuff.Mode.SRC_IN);
 
         webView = (WebView) findViewById(R.id.fullscreen_content);
         webView.setWebChromeClient(new WebChromeClient());
@@ -49,7 +51,12 @@ public class WebViewActivity extends Activity {
             public void onPageFinished(WebView view, String url) {
                 super.onPageFinished(view, url);
                 progressBar.setProgress(100);
-                progressBar.setVisibility(View.INVISIBLE);
+                progressBar.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        progressBar.setVisibility(View.INVISIBLE);
+                    }
+                }, 500);
             }
         });
         webView.getSettings().setJavaScriptEnabled(true);
@@ -70,11 +77,8 @@ public class WebViewActivity extends Activity {
             @Override
             public void onClick(View v) {
                 if (shareBody == null) {
-                    StringBuilder sb = new StringBuilder();
-                    sb.append(getString(R.string.recommend_app))
-                            .append(getString(R.string.app_desc))
-                            .append(getString(R.string.via_app, Constant.playUrl));
-                    shareBody = sb.toString();
+                    shareBody = getString(R.string.recommend_app) + getString(R.string.app_desc) +
+                            getString(R.string.via_app, Constant.playUrl);
                 }
                 shareText(shareSubject, shareBody);
             }
@@ -84,8 +88,7 @@ public class WebViewActivity extends Activity {
     @Override
     protected void onResume() {
         super.onResume();
-
-        progressBar.setProgress(90);
+        progressBar.setProgress(80);
 
         // load data
         Bundle bundle = getIntent().getExtras();
@@ -106,7 +109,7 @@ public class WebViewActivity extends Activity {
             return;
         }
 
-        Log.e(TAG, "no data and not url provided");
+        LogUtil.e(TAG, "no data and not url provided");
     }
 
     public void setContent(String html) {
@@ -115,11 +118,11 @@ public class WebViewActivity extends Activity {
         }
 
         if (webView == null) {
-            Log.e(TAG, "can not find the webview");
+            LogUtil.e(TAG, "can not find the webview");
             return;
         }
 
-        Log.i(TAG, "load data from html");
+        LogUtil.i(TAG, "load data from html");
         webView.stopLoading();
         webView.loadData(html, "text/html", "utf-8");
     }
@@ -130,11 +133,11 @@ public class WebViewActivity extends Activity {
         }
 
         if (webView == null) {
-            Log.e(TAG, "can not find the webview");
+            LogUtil.e(TAG, "can not find the webview");
             return;
         }
 
-        Log.i(TAG, "load data from url" + url);
+        LogUtil.i(TAG, "load data from url" + url);
         webView.stopLoading();
         webView.loadUrl(url);
     }

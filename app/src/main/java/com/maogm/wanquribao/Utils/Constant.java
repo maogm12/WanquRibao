@@ -12,7 +12,7 @@ public class Constant {
     public static final String randomPostUrl = "/posts/random";
     public static final String issuesUrl = "/issues";
 
-    public static final String playUrl = "";
+    public static final String playUrl = "https://play.google.com/store/apps/details?id=com.maogm.wanquribao";
 
     public static final String KEY_HTML = "html";
     public static final String KEY_URL = "url";
@@ -35,6 +35,7 @@ public class Constant {
     public static final String KEY_AUTHOR = "author";
     public static final String KEY_MY_EMAIL = "my_email";
     public static final String KEY_MY_WEIBO = "my_weibo";
+    public static final String KEY_VERSION = "version";
 
     public static final String LINK_OFFICIAL_SITE = "http://wanqu.co";
     public static final String LINK_ABOUT_WANQU = "http://wanqu.co/about";

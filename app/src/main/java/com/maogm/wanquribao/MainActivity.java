@@ -13,10 +13,13 @@ import android.view.MenuItem;
 
 import com.maogm.wanquribao.Listener.OnShareListener;
 import com.maogm.wanquribao.Utils.Constant;
+import com.maogm.wanquribao.Utils.LogUtil;
 
 
 public class MainActivity extends ActionBarActivity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks, OnShareListener, IssuesFragment.OnIssueSelectedListener {
+
+    private static final String TAG = "MainActivity";
 
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
@@ -103,6 +106,8 @@ public class MainActivity extends ActionBarActivity
         if (number < 0) {
             number = -1;
         }
+
+        LogUtil.d(TAG, "open issue number: " + number);
 
         FragmentManager fragmentManager = getFragmentManager();
         IssueFragment issueFragment = IssueFragment.newInstance(number);
@@ -192,16 +197,15 @@ public class MainActivity extends ActionBarActivity
         defaultShareIntent = new Intent();
         defaultShareIntent.setAction(Intent.ACTION_SEND);
         defaultShareIntent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.share_me));
-        StringBuilder sb = new StringBuilder();
-        sb.append(getString(R.string.recommend_app))
-                .append(getString(R.string.app_desc))
-                .append(getString(R.string.via_app, Constant.playUrl));
-        defaultShareIntent.putExtra(Intent.EXTRA_TEXT, sb.toString());
+        defaultShareIntent.putExtra(Intent.EXTRA_TEXT, getString(R.string.recommend_app) +
+                getString(R.string.app_desc) + getString(R.string.via_app, Constant.playUrl));
         defaultShareIntent.setType("text/plain");
         return defaultShareIntent;
     }
 
     public void onShareText(String subject, String body) {
+        LogUtil.d(TAG, "share text, subject: " + subject + " body: " + body);
+
         Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
         sharingIntent.setType("text/plain");
         sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, subject);
@@ -212,9 +216,12 @@ public class MainActivity extends ActionBarActivity
     @Override
     public void onGlobalShareContentChanged(String subject, String body) {
         if (subject == null || body == null) {
+            LogUtil.d(TAG, "global share changed to default");
             onRestoreGlobalShare();
             return;
         }
+
+        LogUtil.d(TAG, "global share changed to: subject: " + subject + " body: " + body);
 
         Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
         sharingIntent.setType("text/plain");

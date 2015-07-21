@@ -6,14 +6,18 @@ import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.view.View;
+import android.widget.Toast;
 
 import com.maogm.wanquribao.Utils.Constant;
+import com.maogm.wanquribao.Utils.LogUtil;
 
 /**
  * About page
  * @author Guangming Mao
  */
 public class AboutFragment extends PreferenceFragment {
+    private static final String TAG = "AboutFragment";
+    private int clickTimes = 0;
 
     public AboutFragment() {
     }
@@ -32,6 +36,7 @@ public class AboutFragment extends PreferenceFragment {
     @Override
     public void onStart() {
         super.onStart();
+        clickTimes = 0;
 
         // bind link or email to preference
         bindPreferenceWithUrl(Constant.KEY_OFFICIAL_SITE, Constant.LINK_OFFICIAL_SITE);
@@ -46,14 +51,42 @@ public class AboutFragment extends PreferenceFragment {
         bindPreferenceWithEmail(Constant.KEY_WANQU_EMAIL, Constant.WANQU_EMAIL);
         bindPreferenceWithEmail(Constant.KEY_MY_EMAIL, Constant.MY_EMAIL);
 
+        // version, 5 clicks to enable debug
+        Preference pref = findPreference(Constant.KEY_VERSION);
+        if (pref != null) {
+            pref.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+                @Override
+                public boolean onPreferenceClick(Preference preference) {
+                    clickTimes += 1;
+                    if (clickTimes >= 5) {
+                        LogUtil.DEBUG = !LogUtil.DEBUG;
+                        clickTimes = 0;
+                        String msg = LogUtil.DEBUG ? "Enable debug" : "Disable debug";
+                        LogUtil.d(TAG, msg);
+                        if (!isAdded()) {
+                            return false;
+                        }
+
+                        Toast.makeText(getActivity(), msg, Toast.LENGTH_SHORT).show();
+                    }
+                    return false;
+                }
+            });
+        }
+
         // update title
         if (isAdded()) {
-            ((MainActivity)getActivity()).updateTitle(getString( R.string.title_section_about));
+            ((MainActivity)getActivity()).updateTitle(getString(R.string.title_section_about));
         }
     }
 
     private void bindPreferenceWithUrl(String key, String url) {
+        LogUtil.d(TAG, "Click key: " + key + " to open " + url);
         Preference pref = findPreference(key);
+        if (pref == null) {
+            LogUtil.e(TAG, "Preference with key: " + key + " no exists");
+            return;
+        }
         final String theUrl = url;
         pref.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
@@ -77,7 +110,7 @@ public class AboutFragment extends PreferenceFragment {
     }
 
     private void openUrl(String url) {
-        if (url == null) {
+        if (url == null || !isAdded()) {
             return;
         }
 
@@ -85,17 +118,14 @@ public class AboutFragment extends PreferenceFragment {
         Bundle bundle = new Bundle();
         bundle.putString(Constant.KEY_URL, url);
         bundle.putString(Constant.KEY_SHARE_SUBJECT, getString(R.string.share_me));
-        StringBuffer sb = new StringBuffer();
-        sb.append(getString(R.string.recommend_app))
-                .append(getString(R.string.app_desc))
-                .append(getString(R.string.via_app, Constant.playUrl));
-        bundle.putString(Constant.KEY_SHARE_BODY, sb.toString());
+        bundle.putString(Constant.KEY_SHARE_BODY, getString(R.string.recommend_app) +
+                getString(R.string.app_desc) + getString(R.string.via_app, Constant.playUrl));
         webViewIntent.putExtras(bundle);
         startActivity(webViewIntent);
     }
 
     private void openEmail(String email) {
-        if (email  == null) {
+        if (email  == null || !isAdded()) {
             return;
         }
 

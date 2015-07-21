@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +21,7 @@ import com.maogm.wanquribao.Module.Post;
 import com.maogm.wanquribao.Module.PostModel;
 import com.maogm.wanquribao.Module.PostWrapper;
 import com.maogm.wanquribao.Utils.Constant;
+import com.maogm.wanquribao.Utils.LogUtil;
 import com.maogm.wanquribao.Utils.NetworkUtil;
 
 import java.util.HashMap;
@@ -63,6 +63,7 @@ public class RandomPostFragment extends Fragment implements Response.Listener<Is
     }
 
     public RandomPostFragment() {
+        LogUtil.d(TAG, "new RandomPostFragment");
     }
 
     @Override
@@ -77,6 +78,8 @@ public class RandomPostFragment extends Fragment implements Response.Listener<Is
         }
 
         postQueue = Volley.newRequestQueue(activity);
+
+        LogUtil.d(TAG, "onAttach");
     }
 
     @Override
@@ -116,15 +119,10 @@ public class RandomPostFragment extends Fragment implements Response.Listener<Is
         btnShare.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (fetchedPost != null) {
+                if (fetchedPost != null && isAdded()) {
                     String subject = getString(R.string.share_post);
                     String link = Constant.wanquRootUrl + "/p/" + String.valueOf(fetchedPost.issueId);
-                    StringBuffer sb = new StringBuffer();
-                    sb.append("【").append(fetchedPost.title).append("】")
-                            .append("(via ").append(getString(R.string.app_name))
-                            .append(": ").append(Constant.playUrl)
-                            .append(") ").append(link);
-                    String body = sb.toString();
+                    String body = "【" + fetchedPost.title + "】" + getString(R.string.via_app, Constant.playUrl) + link;
                     shareListener.onShareText(subject, body);
                 }
             }
@@ -184,6 +182,9 @@ public class RandomPostFragment extends Fragment implements Response.Listener<Is
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
+
+        LogUtil.d(TAG, "save instance state");
+
         outState.putParcelable(Constant.KEY_RANDOM_POST, fetchedPost);
         outState.putString(Constant.KEY_DATE, date);
         outState.putLong(Constant.KEY_NUMBER, number);
@@ -201,7 +202,7 @@ public class RandomPostFragment extends Fragment implements Response.Listener<Is
             long saveSize = PostModel.count(PostModel.class, null, null);
             // NO local saved post
             if (saveSize == 0) {
-                Log.d(TAG, "no issue");
+                LogUtil.d(TAG, "no issue");
                 Toast.makeText(activity, R.string.network_error, Toast.LENGTH_SHORT).show();
                 return;
             }
@@ -216,7 +217,7 @@ public class RandomPostFragment extends Fragment implements Response.Listener<Is
             }
 
             if (all.hasNext()) {
-                Log.d(TAG, "parse post");
+                LogUtil.d(TAG, "parse post");
 
                 PostModel model = all.next();
                 date = model.date;
@@ -225,12 +226,12 @@ public class RandomPostFragment extends Fragment implements Response.Listener<Is
 
                 onPostFetched(model.getPost());
             } else {
-                Log.d(TAG, "no issue");
+                LogUtil.d(TAG, "no issue");
                 Toast.makeText(activity, R.string.network_error, Toast.LENGTH_SHORT).show();
             }
         } else {
             String path = Constant.baseUrl + Constant.randomPostUrl;
-            Log.d(TAG, "necword connected, quest pat: " + path);
+            LogUtil.d(TAG, "necword connected, quest pat: " + path);
             Map<String, String> headers = new HashMap<>();
             GsonRequest<IssueResult> requester = new GsonRequest<>(path, IssueResult.class,
                     headers, this, this);
@@ -240,14 +241,14 @@ public class RandomPostFragment extends Fragment implements Response.Listener<Is
 
     @Override
     public void onErrorResponse(VolleyError error) {
-        Log.e(TAG, error.getMessage());
+        LogUtil.e(TAG, "request error: " + error.getMessage());
         Toast.makeText(getActivity(), R.string.network_error, Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void onResponse(IssueResult response) {
         if (response == null || response.code == 2 || response.data == null || !isAdded()) {
-            Log.d(TAG, "no post got");
+            LogUtil.d(TAG, "no post got");
             Toast.makeText(getActivity(), R.string.no_issue, Toast.LENGTH_SHORT).show();
             return;
         }
@@ -259,7 +260,7 @@ public class RandomPostFragment extends Fragment implements Response.Listener<Is
 
         savePosts(response.data);
         if (response.data.posts.isEmpty()) {
-            Log.d(TAG, "no post got");
+            LogUtil.d(TAG, "no post got");
             Toast.makeText(getActivity(), R.string.no_issue, Toast.LENGTH_SHORT).show();
         } else {
             onPostFetched(response.data.posts.get(0));
@@ -347,6 +348,8 @@ public class RandomPostFragment extends Fragment implements Response.Listener<Is
             return;
         }
 
+        LogUtil.d(TAG, "openUrl, url: " + url + " subject: " + subject + " body: " + body);
+
         Intent webViewIntent = new Intent(getActivity(), WebViewActivity.class);
         Bundle bundle = new Bundle();
         bundle.putString(Constant.KEY_URL, url);
@@ -356,7 +359,7 @@ public class RandomPostFragment extends Fragment implements Response.Listener<Is
         }
         bundle.putString(Constant.KEY_SHARE_SUBJECT, subject);
         if (body != null) {
-            bundle.putString(Constant.KEY_SHARE_BODY, body + getString(R.string.via_app, Constant.playUrl) + url);
+            bundle.putString(Constant.KEY_SHARE_BODY, body);
         }
 
         webViewIntent.putExtras(bundle);
@@ -367,6 +370,8 @@ public class RandomPostFragment extends Fragment implements Response.Listener<Is
         if (html == null) {
             return;
         }
+
+        LogUtil.d(TAG, "openHtml, subject: " + subject + " body: " + body);
 
         Intent webViewIntent = new Intent(getActivity(), WebViewActivity.class);
         Bundle bundle = new Bundle();

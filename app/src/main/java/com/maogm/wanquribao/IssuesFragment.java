@@ -6,7 +6,6 @@ import android.app.Fragment;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,6 +24,7 @@ import com.maogm.wanquribao.Listener.OnShareListener;
 import com.maogm.wanquribao.Module.Issue;
 import com.maogm.wanquribao.Module.IssuesResult;
 import com.maogm.wanquribao.Utils.Constant;
+import com.maogm.wanquribao.Utils.LogUtil;
 import com.maogm.wanquribao.Utils.NetworkUtil;
 
 import java.util.ArrayList;
@@ -58,6 +58,7 @@ public class IssuesFragment extends Fragment implements Response.Listener<Issues
     }
 
     public IssuesFragment() {
+        LogUtil.d(TAG, "new IssueFrament");
     }
 
     @Override
@@ -78,6 +79,8 @@ public class IssuesFragment extends Fragment implements Response.Listener<Issues
         }
 
         issueQueue = Volley.newRequestQueue(activity);
+
+        LogUtil.d(TAG, "onAttach");
     }
 
     @Override
@@ -128,7 +131,7 @@ public class IssuesFragment extends Fragment implements Response.Listener<Issues
         listIssue.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Log.d(TAG, "clicked issue at position: " + String.valueOf(position));
+                LogUtil.d(TAG, "clicked issue at position: " + String.valueOf(position));
                 if (issueSelectedListener != null) {
                     Issue issue = issues.get(position);
                     issueSelectedListener.openIssue(issue.number);
@@ -142,7 +145,7 @@ public class IssuesFragment extends Fragment implements Response.Listener<Issues
         swipeView.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                Log.d("Swipe", "Refresh past issues");
+                LogUtil.d("Swipe", "Refresh past issues");
                 requestIssues();
             }
         });
@@ -171,7 +174,7 @@ public class IssuesFragment extends Fragment implements Response.Listener<Issues
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
 
-        Log.d(TAG, "issues saved to state");
+        LogUtil.d(TAG, "issues saved to state");
         outState.putParcelableArrayList(Constant.KEY_ISSUES, (ArrayList<? extends Parcelable>) issues);
     }
 
@@ -195,7 +198,7 @@ public class IssuesFragment extends Fragment implements Response.Listener<Issues
         // connected to internet
         if (NetworkUtil.getConnectivityStatus(getActivity()) != NetworkUtil.TYPE_NOT_CONNECTED) {
             String path = Constant.baseUrl + Constant.issuesUrl;
-            Log.d(TAG, "network connected, request link: " + path);
+            LogUtil.d(TAG, "network connected, request link: " + path);
 
             Map<String, String> headers = new HashMap<>();
             GsonRequest<IssuesResult> requester = new GsonRequest<>(path, IssuesResult.class,
@@ -203,7 +206,7 @@ public class IssuesFragment extends Fragment implements Response.Listener<Issues
             issueQueue.add(requester);
         } else {
             // get from local storage
-            Log.d(TAG, "network not connected, request from local db");
+            LogUtil.d(TAG, "network not connected, request from local db");
             List<Issue> issues = Issue.find(Issue.class, null, null, null, "number desc", null);
             onIssuesRequested(issues);
         }
@@ -212,7 +215,7 @@ public class IssuesFragment extends Fragment implements Response.Listener<Issues
     @Override
     public void onErrorResponse(VolleyError error) {
         swipeView.setRefreshing(false);
-        Log.e(TAG, "request error: " + error.getMessage());
+        LogUtil.e(TAG, "request error: " + error.getMessage());
         if (getActivity() != null) {
             Toast.makeText(getActivity(), R.string.network_error, Toast.LENGTH_SHORT).show();
         }
@@ -222,7 +225,7 @@ public class IssuesFragment extends Fragment implements Response.Listener<Issues
     public void onResponse(IssuesResult response) {
         swipeView.setRefreshing(false);
         if (response.code == 2 || response.data == null || response.data.issues.isEmpty()) {
-            Log.e(TAG, "no issues got");
+            LogUtil.e(TAG, "no issues got");
             if (isAdded()) {
                 Toast.makeText(getActivity(), R.string.no_issue, Toast.LENGTH_SHORT).show();
             }
@@ -261,11 +264,12 @@ public class IssuesFragment extends Fragment implements Response.Listener<Issues
                 for (int i = 0; i < issues.size(); ++i) {
                     Issue issue = issues.get(i);
                     if (!Issue.find(Issue.class, "number = ?", String.valueOf(issue.number)).isEmpty()) {
+                        LogUtil.d(TAG, "issue with number: " + issue.number + " already exist");
                         continue;
                     }
                     issue.save();
                 }
-                Log.d(TAG, "issued saved");
+                LogUtil.d(TAG, "issued saved");
             }
         }).run();
     }

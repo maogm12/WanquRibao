@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,6 +26,7 @@ import com.maogm.wanquribao.Module.Post;
 import com.maogm.wanquribao.Module.PostModel;
 import com.maogm.wanquribao.Module.PostWrapper;
 import com.maogm.wanquribao.Utils.Constant;
+import com.maogm.wanquribao.Utils.LogUtil;
 import com.maogm.wanquribao.Utils.NetworkUtil;
 
 import java.util.ArrayList;
@@ -74,6 +74,7 @@ public class IssueFragment extends Fragment implements Response.Listener<IssueRe
     }
 
     public IssueFragment() {
+        LogUtil.d(TAG, "new issueFragment");
     }
 
     @Override
@@ -87,6 +88,8 @@ public class IssueFragment extends Fragment implements Response.Listener<IssueRe
         }
 
         postQueue = Volley.newRequestQueue(activity);
+
+        LogUtil.d(TAG, "onAttach");
     }
 
     @Override
@@ -136,13 +139,14 @@ public class IssueFragment extends Fragment implements Response.Listener<IssueRe
         swipeView.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                Log.d("Swipe", "Refreshing number " + number);
+                LogUtil.d("Swipe", "Refreshing number " + number);
                 requestIssue();
             }
         });
 
         // recreate
         if (savedInstanceState != null) {
+            LogUtil.d(TAG, "create from savedInstanceState");
             date = savedInstanceState.getString(Constant.KEY_DATE);
             number = savedInstanceState.getInt(Constant.KEY_NUMBER);
             setActionBar();
@@ -186,18 +190,18 @@ public class IssueFragment extends Fragment implements Response.Listener<IssueRe
                 path += "/" + String.valueOf(number);
             }
 
-            Log.d(TAG, "netword connected, request link: " + path);
+            LogUtil.d(TAG, "netword connected, request link: " + path);
             Map<String, String> headers = new HashMap<>();
             GsonRequest<IssueResult> requester = new GsonRequest<>(path, IssueResult.class,
                     headers, this, this);
             postQueue.add(requester);
         } else {
             // get from local storage
-            Log.d(TAG, "network not connected, request from local db");
+            LogUtil.d(TAG, "network not connected, request from local db");
             if (number < 0) {
                 Iterator<PostModel> biggestId = PostModel.findAsIterator(PostModel.class, null, null, null, "number desc", null);
                 if (!biggestId.hasNext()) {
-                    Log.d(TAG, "no post");
+                    LogUtil.d(TAG, "no post");
                     Toast.makeText(getActivity(), R.string.no_issue, Toast.LENGTH_SHORT).show();
                     swipeView.post(new Runnable() {
                         @Override
@@ -208,13 +212,13 @@ public class IssueFragment extends Fragment implements Response.Listener<IssueRe
                     return;
                 } else {
                     number = biggestId.next().number;
-                    Log.d(TAG, "the biggest postId is " + number);
+                    LogUtil.d(TAG, "the biggest postId is " + number);
                 }
             }
 
             List<PostModel> postModels = PostModel.find(PostModel.class, "number = ?", String.valueOf(number));
             if (postModels.isEmpty()) {
-                Log.d(TAG, "no such post [number: " + number + "]");
+                LogUtil.d(TAG, "no such post [number: " + number + "]");
                 Toast.makeText(getActivity(), R.string.no_issue, Toast.LENGTH_SHORT).show();
                 swipeView.post(new Runnable() {
                     @Override
@@ -242,6 +246,7 @@ public class IssueFragment extends Fragment implements Response.Listener<IssueRe
     public void onErrorResponse(VolleyError error) {
         swipeView.setRefreshing(false);
         if (isAdded()) {
+            LogUtil.e(TAG, "error when request issue: " + error.getMessage());
             Toast.makeText(getActivity(), R.string.network_error, Toast.LENGTH_SHORT).show();
         }
     }
@@ -250,7 +255,7 @@ public class IssueFragment extends Fragment implements Response.Listener<IssueRe
     public void onResponse(IssueResult response) {
         swipeView.setRefreshing(false);
         if (response == null || response.code == 2 || response.data == null || response.data.posts.isEmpty()) {
-            Log.e(TAG, "no posts got");
+            LogUtil.e(TAG, "no posts got");
             if (isAdded()) {
                 Toast.makeText(getActivity(), R.string.no_issue, Toast.LENGTH_SHORT).show();
             }
@@ -259,7 +264,7 @@ public class IssueFragment extends Fragment implements Response.Listener<IssueRe
 
         date = response.data.date;
         number = response.data.number;
-        Log.d(TAG, "get response data => date: " + date + ", number: " + number);
+        LogUtil.d(TAG, "get response data => date: " + date + ", number: " + number);
 
         setActionBar();
         onPostsRequest(response.data.posts);
@@ -276,7 +281,7 @@ public class IssueFragment extends Fragment implements Response.Listener<IssueRe
         // set share intent
         String body = getShareBody(date, number);
         if (shareListener == null) {
-            Log.e(TAG, "No OnShareListener is set");
+            LogUtil.e(TAG, "No OnShareListener is set");
             return;
         }
 
@@ -324,13 +329,13 @@ public class IssueFragment extends Fragment implements Response.Listener<IssueRe
         if (postAdapter != null) {
             postAdapter.notifyDataSetChanged();
         }
-        Log.d(TAG, "posts refreshed");
+        LogUtil.d(TAG, "posts refreshed");
     }
 
     @Override
-        public void onSaveInstanceState(Bundle outState) {
+    public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        Log.d(TAG, "save posts, date and number");
+        LogUtil.d(TAG, "save posts, date: " + date + " number: " + number);
 
         // save posts
         outState.putParcelableArrayList(Constant.KEY_SAVED_POSTS, (ArrayList<? extends Parcelable>) posts);
@@ -352,7 +357,8 @@ public class IssueFragment extends Fragment implements Response.Listener<IssueRe
             title = getString(R.string.title_pattern, date, number);
         }
 
-        ((MainActivity)getActivity()).updateTitle(title);
+        LogUtil.d(TAG, "set title to " + title);
+        ((MainActivity) getActivity()).updateTitle(title);
     }
 
     private void savePosts(final PostWrapper issue) {
@@ -366,6 +372,7 @@ public class IssueFragment extends Fragment implements Response.Listener<IssueRe
                 for (int i = 0; i < issue.posts.size(); ++i) {
                     Post post = issue.posts.get(i);
                     if (!PostModel.find(PostModel.class, "post_id = ?", String.valueOf(post.id)).isEmpty()) {
+                        LogUtil.d(TAG, "post with id: " + post.id + " already exists");
                         continue;
                     }
                     PostModel model = new PostModel(post, issue.date, issue.number);
@@ -388,6 +395,8 @@ public class IssueFragment extends Fragment implements Response.Listener<IssueRe
             return;
         }
 
+        LogUtil.d(TAG, "openUrl, url: " + url + " subject: " + subject + " body: " + body);
+
         Intent webViewIntent = new Intent(getActivity(), WebViewActivity.class);
         Bundle bundle = new Bundle();
         bundle.putString(Constant.KEY_URL, url);
@@ -406,6 +415,8 @@ public class IssueFragment extends Fragment implements Response.Listener<IssueRe
         if (html == null || !isAdded()) {
             return;
         }
+
+        LogUtil.d(TAG, "openHtml, subject: " + subject + " body: " + body);
 
         Intent webViewIntent = new Intent(getActivity(), WebViewActivity.class);
         Bundle bundle = new Bundle();
