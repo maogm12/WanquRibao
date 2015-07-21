@@ -153,11 +153,10 @@
       <file leaf-file-name="about.xml" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/res/xml/about.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.5565217">
-              <caret line="72" column="19" selection-start-line="72" selection-start-column="19" selection-end-line="72" selection-end-column="19" />
+            <state vertical-scroll-proportion="0.6869565">
+              <caret line="74" column="43" selection-start-line="74" selection-start-column="43" selection-end-line="74" selection-end-column="43" />
               <folding>
                 <element signature="e#1653#1671#0" expanded="true" />
-                <element signature="e#2262#2287#0" expanded="true" />
                 <element signature="e#2316#2333#0" expanded="true" />
               </folding>
             </state>
@@ -2764,11 +2763,10 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/xml/about.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5565217">
-          <caret line="72" column="19" selection-start-line="72" selection-start-column="19" selection-end-line="72" selection-end-column="19" />
+        <state vertical-scroll-proportion="0.6869565">
+          <caret line="74" column="43" selection-start-line="74" selection-start-column="43" selection-end-line="74" selection-end-column="43" />
           <folding>
             <element signature="e#1653#1671#0" expanded="true" />
-            <element signature="e#2262#2287#0" expanded="true" />
             <element signature="e#2316#2333#0" expanded="true" />
           </folding>
         </state>
