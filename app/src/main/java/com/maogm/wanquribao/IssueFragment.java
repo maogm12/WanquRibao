@@ -93,6 +93,12 @@ public class IssueFragment extends Fragment implements Response.Listener<IssueRe
     }
 
     @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        postAdapter = new PostAdapter();
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_post_list, container, false);
@@ -105,7 +111,6 @@ public class IssueFragment extends Fragment implements Response.Listener<IssueRe
         // swipeView
         swipeView = (SwipeRefreshLayout) view.findViewById(R.id.swipe);
 
-        postAdapter = new PostAdapter();
         listPost.setAdapter(postAdapter);
         listPost.setOnScrollListener(new AbsListView.OnScrollListener() {
             @Override

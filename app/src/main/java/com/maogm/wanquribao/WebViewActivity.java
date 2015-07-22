@@ -6,12 +6,13 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.View;
 import android.view.WindowManager;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
-import android.webkit.WebViewClient;
 import android.widget.ImageButton;
+import android.widget.ProgressBar;
 
 import com.maogm.wanquribao.Utils.Constant;
 import com.maogm.wanquribao.Utils.LogUtil;
@@ -19,47 +20,89 @@ import com.maogm.wanquribao.Utils.LogUtil;
 public class WebViewActivity extends Activity {
     private static final String TAG = "WebViewActivity";
 
-    private AnimatingProgressBar progressBar;
-
+    private ProgressBar progressBar;
     private WebView webView;
+    private SwipeRefreshLayout swipeView;
+
+    private String html;
+    private String url;
     private String shareSubject;
     private String shareBody;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // load data
+        Bundle bundle = getIntent().getExtras();
+        shareSubject = bundle.getString(Constant.KEY_SHARE_SUBJECT);
+        shareBody = bundle.getString(Constant.KEY_SHARE_BODY);
+        html = bundle.getString(Constant.KEY_HTML);
+        url = bundle.getString(Constant.KEY_URL);
+
         setContentView(R.layout.activity_web_view);
 
         // make it fullscreen
         getWindow().setFlags(
                 WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
-
         // hide action bar
         ActionBar actionBar = getActionBar();
         if (actionBar != null) {
             actionBar.hide();
         }
 
-        progressBar = (AnimatingProgressBar) findViewById(R.id.progress);
-        progressBar.getProgressDrawable().setColorFilter(Color.RED, PorterDuff.Mode.SRC_IN);
+        // progress bar
+        progressBar = (ProgressBar) findViewById(R.id.progress);
+        if (isLoadOnline()) {
+            // change color
+            progressBar.getProgressDrawable().setColorFilter(Color.RED, PorterDuff.Mode.SRC_IN);
+        } else {
+            progressBar.setVisibility(View.INVISIBLE);
+        }
 
         webView = (WebView) findViewById(R.id.fullscreen_content);
-        webView.setWebChromeClient(new WebChromeClient());
-        webView.setWebViewClient(new WebViewClient() {
+        webView.setWebChromeClient(new WebChromeClient() {
             @Override
-            public void onPageFinished(WebView view, String url) {
-                super.onPageFinished(view, url);
-                progressBar.setProgress(100);
-                progressBar.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        progressBar.setVisibility(View.INVISIBLE);
-                    }
-                }, 500);
+            public void onProgressChanged(WebView view, int newProgress) {
+                super.onProgressChanged(view, newProgress);
+
+                // load from local
+                if (isLoadLocal()) {
+                    return;
+                }
+
+                // hide the swipe view
+                if (newProgress > 50 && swipeView.isRefreshing()) {
+                    swipeView.setRefreshing(false);
+                }
+
+                // update progress bar
+                if (newProgress == 100) {
+                    progressBar.setVisibility(View.INVISIBLE);
+                } else {
+                    progressBar.setProgress(newProgress);
+                }
             }
         });
         webView.getSettings().setJavaScriptEnabled(true);
+        webView.getSettings().setSupportZoom(true);
+
+        // swipte to refresh
+        swipeView = (SwipeRefreshLayout) findViewById(R.id.swipe);
+        swipeView.setColorSchemeResources(R.color.main);
+        if (html == null || url != null) {
+            swipeView.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+                @Override
+                public void onRefresh() {
+                    swipeView.setRefreshing(true);
+                    webView.stopLoading();
+                    webView.reload();
+                    progressBar.setProgress(0);
+                    progressBar.setVisibility(View.VISIBLE);
+                }
+            });
+        }
 
         ImageButton ibtnShare = (ImageButton) findViewById(R.id.btn_share);
         ImageButton ibtnExit = (ImageButton) findViewById(R.id.btn_exit);
@@ -85,25 +128,23 @@ public class WebViewActivity extends Activity {
         });
     }
 
+    private boolean isLoadLocal() {
+        return html != null;
+    }
+
+    private boolean isLoadOnline() {
+        return html == null && url != null;
+    }
+
     @Override
     protected void onResume() {
         super.onResume();
-        progressBar.setProgress(80);
 
-        // load data
-        Bundle bundle = getIntent().getExtras();
-
-        // share
-        shareSubject = bundle.getString(Constant.KEY_SHARE_SUBJECT);
-        shareBody = bundle.getString(Constant.KEY_SHARE_BODY);
-
-        String html = bundle.getString(Constant.KEY_HTML);
         if (html != null) {
             setContent(html);
             return;
         }
 
-        String url = bundle.getString(Constant.KEY_URL);
         if (url != null) {
             setUrl(url);
             return;

@@ -86,6 +86,9 @@ public class IssuesFragment extends Fragment implements Response.Listener<Issues
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // adapter
+        issueAdapter = new IssueAdapter();
     }
 
     @Override
@@ -98,7 +101,6 @@ public class IssuesFragment extends Fragment implements Response.Listener<Issues
     public void onViewCreated(View view, Bundle savedInstanceState) {
         // list
         listIssue = (ListView) view.findViewById(R.id.issue_list);
-        issueAdapter = new IssueAdapter();
         listIssue.setAdapter(issueAdapter);
         listIssue.setOnScrollListener(new AbsListView.OnScrollListener() {
             @Override
@@ -158,8 +160,6 @@ public class IssuesFragment extends Fragment implements Response.Listener<Issues
         if (savedInstanceState != null) {
             onIssuesRequested(savedInstanceState.<Issue>getParcelableArrayList(Constant.KEY_ISSUES));
         }
-
-        requestIssues();
     }
 
     @Override
@@ -167,6 +167,11 @@ public class IssuesFragment extends Fragment implements Response.Listener<Issues
         super.onResume();
         if (shareListener != null) {
             shareListener.onGlobalShareEnabled(false);
+        }
+
+        // no issues
+        if (issues == null) {
+            requestIssues();
         }
     }
 
@@ -241,12 +246,9 @@ public class IssuesFragment extends Fragment implements Response.Listener<Issues
         }
 
         // stop the animation
-        swipeView.post(new Runnable() {
-            @Override
-            public void run() {
-                swipeView.setRefreshing(false);
-            }
-        });
+        if (swipeView.isRefreshing()) {
+            swipeView.setRefreshing(false);
+        }
 
         if (issues.isEmpty() && isAdded()) {
             Toast.makeText(getActivity(), R.string.no_issue, Toast.LENGTH_SHORT).show();
@@ -293,6 +295,10 @@ public class IssuesFragment extends Fragment implements Response.Listener<Issues
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
+            if (!isAdded()) {
+                return null;
+            }
+
             ViewHolder holder;
             if (convertView == null) {
                 holder = new ViewHolder();

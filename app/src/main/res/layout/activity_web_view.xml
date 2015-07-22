@@ -5,17 +5,18 @@
     android:background="#0099cc"
     tools:context="com.maogm.wanquribao.WebViewActivity">
 
-    <!-- The primary full-screen view. This can be replaced with whatever view
-         is needed to present your content, e.g. VideoView, SurfaceView,
-         TextureView, etc. -->
-    <WebView
-        android:id="@+id/fullscreen_content"
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swipe"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center" />
+        android:layout_height="match_parent">
+        <WebView
+            android:id="@+id/fullscreen_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center" />
+    </android.support.v4.widget.SwipeRefreshLayout>
 
-
-    <com.maogm.wanquribao.AnimatingProgressBar
+    <ProgressBar
         style="?android:attr/progressBarStyleHorizontal"
         android:id="@+id/progress"
         android:layout_width="match_parent"
