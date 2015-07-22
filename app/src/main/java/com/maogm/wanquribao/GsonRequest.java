@@ -10,6 +10,7 @@ import com.android.volley.Response.Listener;
 import com.android.volley.toolbox.HttpHeaderParser;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
+import com.maogm.wanquribao.Utils.LogUtil;
 
 import java.io.UnsupportedEncodingException;
 import java.util.Map;
@@ -18,6 +19,8 @@ import java.util.Map;
  * @author Guangming Mao
  */
 public class GsonRequest<T> extends Request<T> {
+    private static final String TAG = "GsonRequest";
+
     private final Gson gson = new Gson();
     private final Class<T> clazz;
     private final Map<String, String> headers;
@@ -54,6 +57,11 @@ public class GsonRequest<T> extends Request<T> {
             String json = new String(
                     response.data,
                     HttpHeaderParser.parseCharset(response.headers));
+
+            LogUtil.d(TAG, "charset: " + HttpHeaderParser.parseCharset(response.headers) +
+                    " data size: " + response.data.length +
+                    "\njson got =========> \n" + json + "\n=========> end of json");
+
             return Response.success(
                     gson.fromJson(json, clazz),
                     HttpHeaderParser.parseCacheHeaders(response));
