@@ -66,4 +66,12 @@
     <string name="current_version">当前版本</string>
     <string name="day_born">2015.07.21</string>
 
+
+    <string name="drawer_item1">最新一期</string>
+    <string name="drawer_item2">往期文章</string>
+    <string name="drawer_item3">随机文章</string>
+
+    <string name="drawer_version_title">其他</string>
+    <string name="drawer_version_item1">关于</string>
+
 </resources>

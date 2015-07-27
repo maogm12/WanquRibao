@@ -24,45 +24,28 @@
         android:layout_marginTop="-6dp"
         android:layout_gravity="top" />
 
-    <!-- This FrameLayout insets its children based on system windows using
-         android:fitsSystemWindows. -->
-    <FrameLayout
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom|right"
-        android:fitsSystemWindows="true">
+        android:layout_gravity="right|bottom"
+        android:padding="10dp">
 
-        <LinearLayout
-            android:id="@+id/fullscreen_content_controls"
-            style="?metaButtonBarStyle"
-            android:layout_width="match_parent"
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/btn_share"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="15dp"
-            android:layout_gravity="bottom|center_horizontal"
-            android:orientation="horizontal"
-            tools:ignore="UselessParent">
+            android:layout_marginRight="16dp"
+            android:clickable="true"
+            android:src="@drawable/icon_share_white" />
 
-            <ImageButton
-                android:id="@+id/btn_share"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_marginRight="20dp"
-                android:scaleType="fitXY"
-                android:padding="5dp"
-                android:background="@drawable/shape_circle"
-                android:src="@drawable/icon_share_white" />
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/btn_exit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:src="@drawable/icon_exit_white"/>
 
-            <ImageButton
-                android:id="@+id/btn_exit"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_marginRight="10dp"
-                android:scaleType="fitXY"
-                android:padding="5dp"
-                android:background="@drawable/shape_circle"
-                android:src="@drawable/icon_exit_white" />
+    </LinearLayout>
 
-        </LinearLayout>
-    </FrameLayout>
 
 </FrameLayout>

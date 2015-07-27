@@ -6,12 +6,12 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.View;
 import android.view.WindowManager;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
-import android.widget.ImageButton;
 import android.widget.ProgressBar;
 
 import com.maogm.wanquribao.Utils.Constant;
@@ -104,8 +104,8 @@ public class WebViewActivity extends Activity {
             });
         }
 
-        ImageButton ibtnShare = (ImageButton) findViewById(R.id.btn_share);
-        ImageButton ibtnExit = (ImageButton) findViewById(R.id.btn_exit);
+        FloatingActionButton ibtnShare = (FloatingActionButton) findViewById(R.id.btn_share);
+        FloatingActionButton ibtnExit = (FloatingActionButton) findViewById(R.id.btn_exit);
 
         // exit
         ibtnExit.setOnClickListener(new View.OnClickListener() {
