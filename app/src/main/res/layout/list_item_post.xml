@@ -40,65 +40,30 @@
 
         <Button
             android:id="@+id/btn_share"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:layout_weight="1"
-            android:background="@android:color/transparent"
-            android:drawableLeft="@drawable/icon_share"
-            android:drawablePadding="2dp"
-            android:drawableStart="@drawable/icon_share"
-            android:paddingLeft="15dp"
-            android:paddingRight="11dp"
-            android:singleLine="true"
-            android:text="@string/btn_share"
-            android:textSize="15sp" />
+            style="@style/list_item_button"
+            android:drawableLeft="@drawable/ic_share"
+            android:drawableStart="@drawable/ic_share"
+            android:text="@string/btn_share"/>
 
         <Button
             android:id="@+id/btn_comment"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:layout_weight="1"
-            android:background="@android:color/transparent"
-            android:drawableLeft="@drawable/icon_more"
-            android:drawablePadding="2dp"
-            android:drawableStart="@drawable/icon_more"
-            android:paddingLeft="15dp"
-            android:paddingRight="11dp"
-            android:singleLine="true"
-            android:text="@string/btn_comment"
-            android:textSize="15sp" />
+            style="@style/list_item_button"
+            android:drawableLeft="@drawable/ic_more"
+            android:drawableStart="@drawable/ic_more"
+            android:text="@string/btn_comment"/>
 
         <Button
             android:id="@+id/btn_original"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:layout_weight="1"
-            android:background="@android:color/transparent"
-            android:drawableLeft="@drawable/icon_link"
-            android:drawablePadding="2dp"
-            android:drawableStart="@drawable/icon_link"
-            android:paddingLeft="15dp"
-            android:paddingRight="11dp"
-            android:singleLine="true"
-            android:text="@string/btn_original"
-            android:textSize="15sp" />
+            style="@style/list_item_button"
+            android:drawableLeft="@drawable/ic_link"
+            android:drawableStart="@drawable/ic_link"
+            android:text="@string/btn_original"/>
 
         <Button
             android:id="@+id/btn_easy_read"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:layout_weight="1"
-            android:drawableLeft="@drawable/icon_quoteleft"
-            android:drawablePadding="2dp"
-            android:drawableStart="@drawable/icon_quoteleft"
-            android:paddingLeft="15dp"
-            android:paddingRight="11dp"
-            android:singleLine="true"
-            android:text="@string/btn_easy_read"
-            android:textSize="15sp" />
+            style="@style/list_item_button"
+            android:drawableLeft="@drawable/ic_quoteleft"
+            android:drawableStart="@drawable/ic_quoteleft"
+            android:text="@string/btn_easy_read"/>
     </LinearLayout>
 </LinearLayout>
