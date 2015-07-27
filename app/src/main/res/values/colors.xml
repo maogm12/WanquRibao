@@ -4,4 +4,9 @@
     <color name="sub">#fff4d6</color>
     <color name="selected">#ae3910</color>
     <color name="black_overlay">#66000000</color>
+
+    <color name="color_primary">#da532c</color>
+    <color name="color_primary_dark">#da532c</color>
+    <color name="color_accent">#FF4081</color>
+    <color name="window_background">#FFF5F5F5</color>
 </resources>

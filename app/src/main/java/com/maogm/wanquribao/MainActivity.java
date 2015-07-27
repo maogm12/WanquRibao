@@ -3,28 +3,32 @@ package com.maogm.wanquribao;
 import android.app.FragmentManager;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.NavigationView;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.ShareActionProvider;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.maogm.wanquribao.Listener.OnShareListener;
 import com.maogm.wanquribao.Utils.Constant;
 import com.maogm.wanquribao.Utils.LogUtil;
 
 
-public class MainActivity extends ActionBarActivity
-        implements NavigationDrawerFragment.NavigationDrawerCallbacks, OnShareListener, IssuesFragment.OnIssueSelectedListener {
+public class MainActivity extends AppCompatActivity
+        implements OnShareListener, IssuesFragment.OnIssueSelectedListener {
 
     private static final String TAG = "MainActivity";
 
-    /**
+    /**F
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
      */
-    private NavigationDrawerFragment mNavigationDrawerFragment;
+    private DrawerLayout mDrawerLayout;
 
     private CharSequence title;
 
@@ -40,29 +44,56 @@ public class MainActivity extends ActionBarActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mNavigationDrawerFragment = (NavigationDrawerFragment)
-                getFragmentManager().findFragmentById(R.id.navigation_drawer);
-
-        // Set up the drawer.
-        mNavigationDrawerFragment.setUp(
-                R.id.navigation_drawer,
-                (DrawerLayout) findViewById(R.id.drawer_layout));
-    }
-
-    @Override
-    public void onBackPressed() {
-        FragmentManager fragmentManager = getFragmentManager();
-        if (fragmentManager.getBackStackEntryCount() > 0) {
-            fragmentManager.popBackStack();
-            return;
+        toolBarSetUp();
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        NavigationView navigationView =
+                (NavigationView) findViewById(R.id.nv_main_navigation);
+        if (navigationView != null) {
+            setupDrawerContent(navigationView);
         }
 
-        super.onBackPressed();
+        navigationDrawerSelected(0);
     }
 
-    @Override
-    public void onNavigationDrawerItemSelected(int position) {
-        // update the main content by replacing fragments
+    private void toolBarSetUp() {
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setHomeAsUpIndicator(R.drawable.ic_menu);
+        actionBar.setHomeButtonEnabled(true);
+        actionBar.setTitle(R.string.app_name);
+    }
+
+    private void setupDrawerContent(NavigationView navigationView) {
+        navigationView.setNavigationItemSelectedListener(
+                new NavigationView.OnNavigationItemSelectedListener() {
+                    @Override
+                    public boolean onNavigationItemSelected(MenuItem menuItem) {
+                        menuItem.setChecked(true);
+                        switch (menuItem.getItemId()) {
+                            case R.id.nav_home:
+                                navigationDrawerSelected(0);
+                                break;
+                            case R.id.nav_menu2:
+                                navigationDrawerSelected(1);
+                                break;
+                            case R.id.nav_menu3:
+                                navigationDrawerSelected(2);
+                                break;
+                            case R.id.nav_about:
+                                navigationDrawerSelected(3);
+                                break;
+                            default:
+                                break;
+                        }
+                        mDrawerLayout.closeDrawers();
+                        return true;
+                    }
+                });
+    }
+
+    private void navigationDrawerSelected(int position) {
         FragmentManager fragmentManager = getFragmentManager();
         switch (position) {
             case 0:
@@ -95,7 +126,20 @@ public class MainActivity extends ActionBarActivity
                         .replace(R.id.container, aboutFragment)
                         .commit();
                 break;
+            default:
+                break;
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        FragmentManager fragmentManager = getFragmentManager();
+        if (fragmentManager.getBackStackEntryCount() > 0) {
+            fragmentManager.popBackStack();
+            return;
+        }
+
+        ExitApp();
     }
 
     /**
@@ -137,7 +181,8 @@ public class MainActivity extends ActionBarActivity
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        if (!mNavigationDrawerFragment.isDrawerOpen()) {
+       // if (!mNavigationDrawerFragment.isDrawerOpen()) {
+        if (true) {
             // Only show items in the action bar relevant to this screen
             // if the drawer is not showing. Otherwise, let the drawer
             // decide what to show in the action bar.
@@ -154,7 +199,6 @@ public class MainActivity extends ActionBarActivity
 
             return true;
         }
-
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -182,7 +226,10 @@ public class MainActivity extends ActionBarActivity
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        if (id == R.id.action_share) {
+        if (id == android.R.id.home) {
+            mDrawerLayout.openDrawer(GravityCompat.START);
+            return true;
+        } else if (id == R.id.action_share) {
             return true;
         }
 
@@ -241,5 +288,19 @@ public class MainActivity extends ActionBarActivity
             shareItem.setVisible(enable);
         }
         canShare = enable;
+    }
+
+    private long exitTime = 0;
+    public void ExitApp()
+    {
+        if ((System.currentTimeMillis() - exitTime) > 2000)
+        {
+            Toast.makeText(this, "再按一次退出程序",  Toast.LENGTH_SHORT).show();
+            exitTime = System.currentTimeMillis();
+        } else
+        {
+            finish();
+        }
+
     }
 }

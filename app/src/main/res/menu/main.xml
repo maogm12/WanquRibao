@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools" tools:context=".MainActivity">
     <item android:id="@+id/action_share" android:title="@string/action_share"
         app:showAsAction="withText|ifRoom"
-        android:icon="@drawable/icon_share_white"
+        android:icon="@drawable/ic_share_white"
         app:actionProviderClass=
             "android.support.v7.widget.ShareActionProvider"/>
     <!--<item android:id="@+id/action_settings" android:title="@string/action_settings"-->
