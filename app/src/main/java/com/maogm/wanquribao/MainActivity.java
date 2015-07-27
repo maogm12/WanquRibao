@@ -12,12 +12,15 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.maogm.wanquribao.Listener.OnShareListener;
+import com.maogm.wanquribao.Listener.WebViewManager;
 import com.maogm.wanquribao.Utils.Constant;
 import com.maogm.wanquribao.Utils.LogUtil;
 
 
 public class MainActivity extends ActionBarActivity
-        implements NavigationDrawerFragment.NavigationDrawerCallbacks, OnShareListener, IssuesFragment.OnIssueSelectedListener {
+        implements NavigationDrawerFragment.NavigationDrawerCallbacks,
+        OnShareListener, IssuesFragment.OnIssueSelectedListener,
+        WebViewManager {
 
     private static final String TAG = "MainActivity";
 
@@ -67,9 +70,9 @@ public class MainActivity extends ActionBarActivity
         switch (position) {
             case 0:
                 // latest issue
-                IssueFragment issueFragment = IssueFragment.newInstance();
+                PostsFragment postsFragment = PostsFragment.newInstance();
                 fragmentManager.beginTransaction()
-                        .replace(R.id.container, issueFragment)
+                        .replace(R.id.container, postsFragment)
                         .commit();
                 break;
             case 1:
@@ -110,9 +113,9 @@ public class MainActivity extends ActionBarActivity
         LogUtil.d(TAG, "open issue number: " + number);
 
         FragmentManager fragmentManager = getFragmentManager();
-        IssueFragment issueFragment = IssueFragment.newInstance(number);
+        PostsFragment postsFragment = PostsFragment.newInstance(number);
         fragmentManager.beginTransaction()
-                .replace(R.id.container, issueFragment)
+                .replace(R.id.container, postsFragment)
                 .addToBackStack(null)
                 .commit();
     }
@@ -241,5 +244,50 @@ public class MainActivity extends ActionBarActivity
             shareItem.setVisible(enable);
         }
         canShare = enable;
+    }
+
+
+    @Override
+    public void openUrl(String url, String subject, String body) {
+        if (url == null) {
+            return;
+        }
+
+        LogUtil.d(TAG, "openUrl, url: " + url + " subject: " + subject + " body: " + body);
+
+        Intent webViewIntent = new Intent(this, WebViewActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putString(Constant.KEY_URL, url);
+        if (subject == null) {
+            subject = getString(R.string.share_link);
+        }
+        bundle.putString(Constant.KEY_SHARE_SUBJECT, subject);
+        if (body != null) {
+            bundle.putString(Constant.KEY_SHARE_BODY, body);
+        }
+        webViewIntent.putExtras(bundle);
+        startActivity(webViewIntent);
+    }
+
+    @Override
+    public void openHtml(String html, String subject, String body) {
+        if (html == null) {
+            return;
+        }
+
+        LogUtil.d(TAG, "openHtml, subject: " + subject + " body: " + body);
+
+        Intent webViewIntent = new Intent(this, WebViewActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putString(Constant.KEY_HTML, html);
+        if (subject == null) {
+            subject = getString(R.string.share_link);
+        }
+        bundle.putString(Constant.KEY_SHARE_SUBJECT, subject);
+        if (body != null) {
+            bundle.putString(Constant.KEY_SHARE_BODY, body);
+        }
+        webViewIntent.putExtras(bundle);
+        startActivity(webViewIntent);
     }
 }

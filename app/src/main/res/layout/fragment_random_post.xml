@@ -6,7 +6,7 @@
     android:padding="5dp"
     tools:context="com.maogm.wanquribao.RandomPostFragment">
 
-    <include layout="@layout/list_item_post" />
+    <include layout="@layout/card_post" />
 
     <Button
         android:id="@+id/btn_random"

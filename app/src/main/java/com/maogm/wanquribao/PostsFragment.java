@@ -2,24 +2,21 @@ package com.maogm.wanquribao;
 
 import android.app.Activity;
 import android.app.Fragment;
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AbsListView;
-import android.widget.BaseAdapter;
-import android.widget.Button;
-import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.Volley;
+import com.maogm.wanquribao.Adapter.PostAdapter;
 import com.maogm.wanquribao.Listener.OnShareListener;
 import com.maogm.wanquribao.Module.IssueResult;
 import com.maogm.wanquribao.Module.Post;
@@ -33,23 +30,22 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 
 /**
  * A fragment containing issue
  * @author Guangming Mao
  */
-public class IssueFragment extends Fragment implements Response.Listener<IssueResult>, Response.ErrorListener {
+public class PostsFragment extends Fragment implements Response.Listener<IssueResult>, Response.ErrorListener {
 
-    private static final String TAG = "IssueFragment";
+    private static final String TAG = "PostsFragment";
 
     private static final String ISSUE_NUMBER = "issue_number";
 
     private String date;
     private int number = -1;
     private List<Post> posts;
-    private ListView listPost;
+    private RecyclerView recyclerPost;
     private PostAdapter postAdapter;
     private SwipeRefreshLayout swipeView;
 
@@ -61,19 +57,19 @@ public class IssueFragment extends Fragment implements Response.Listener<IssueRe
     /**
      * Returns a new instance of this fragment for the given issue number.
      */
-    public static IssueFragment newInstance(int number) {
-        IssueFragment fragment = new IssueFragment();
+    public static PostsFragment newInstance(int number) {
+        PostsFragment fragment = new PostsFragment();
         Bundle args = new Bundle();
         args.putInt(ISSUE_NUMBER, number);
         fragment.setArguments(args);
         return fragment;
     }
 
-    public static IssueFragment newInstance() {
+    public static PostsFragment newInstance() {
         return newInstance(-1);
     }
 
-    public IssueFragment() {
+    public PostsFragment() {
         LogUtil.d(TAG, "new issueFragment");
     }
 
@@ -95,7 +91,9 @@ public class IssueFragment extends Fragment implements Response.Listener<IssueRe
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        postAdapter = new PostAdapter();
+        postAdapter = new PostAdapter(getActivity());
+        postAdapter.setOnShareListener((MainActivity)getActivity());
+        postAdapter.setWebViewManager((MainActivity)getActivity());
     }
 
     @Override
@@ -106,40 +104,9 @@ public class IssueFragment extends Fragment implements Response.Listener<IssueRe
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
-        // list
-        listPost = (ListView) view.findViewById(R.id.post_list);
         // swipeView
         swipeView = (SwipeRefreshLayout) view.findViewById(R.id.swipe);
 
-        listPost.setAdapter(postAdapter);
-        listPost.setOnScrollListener(new AbsListView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(AbsListView view, int scrollState) {
-            }
-
-            int mPosition = 0;
-            int mOffset = 0;
-
-            @Override
-            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-                if (swipeView == null) {
-                    return;
-                }
-
-                int position = listPost.getFirstVisiblePosition();
-                View v = listPost.getChildAt(position);
-                int offset = (v == null) ? 0 : v.getTop();
-
-                // disable swipe view when scrolled down
-                if (mPosition < position || mPosition == position && mOffset < offset) {
-                    swipeView.setEnabled(false);
-                } else {
-                    swipeView.setEnabled(true);
-                }
-            }
-        });
-
-        // swipeView
         swipeView.setColorSchemeResources(R.color.main);
         swipeView.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -148,6 +115,30 @@ public class IssueFragment extends Fragment implements Response.Listener<IssueRe
                 requestIssue();
             }
         });
+
+        // list
+        recyclerPost = (RecyclerView) view.findViewById(R.id.recycler_post);
+        recyclerPost.setLayoutManager(new LinearLayoutManager(getActivity()));
+
+        // disable swipe view when not in the top
+        recyclerPost.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+            }
+
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                int topRowVerticalPosition = (recyclerView == null || recyclerView.getChildCount() == 0) ?
+                        0 :
+                        recyclerView.getChildAt(0).getTop();
+                swipeView.setEnabled(topRowVerticalPosition >= 0);
+            }
+        });
+
+        // adapter
+        recyclerPost.setAdapter(postAdapter);
 
         // recreate
         if (savedInstanceState != null) {
@@ -332,6 +323,7 @@ public class IssueFragment extends Fragment implements Response.Listener<IssueRe
 
         this.posts = posts;
         if (postAdapter != null) {
+            postAdapter.setPosts(posts);
             postAdapter.notifyDataSetChanged();
         }
         LogUtil.d(TAG, "posts refreshed");
@@ -385,166 +377,5 @@ public class IssueFragment extends Fragment implements Response.Listener<IssueRe
                 }
             }
         }).run();
-    }
-
-    public void setOnShareListner(OnShareListener listener) {
-        if (listener == null) {
-            return;
-        }
-
-        shareListener = listener;
-    }
-
-    public void openUrl(String url, String subject, String body) {
-        if (url == null || !isAdded()) {
-            return;
-        }
-
-        LogUtil.d(TAG, "openUrl, url: " + url + " subject: " + subject + " body: " + body);
-
-        Intent webViewIntent = new Intent(getActivity(), WebViewActivity.class);
-        Bundle bundle = new Bundle();
-        bundle.putString(Constant.KEY_URL, url);
-        if (subject == null) {
-            subject = getString(R.string.share_link);
-        }
-        bundle.putString(Constant.KEY_SHARE_SUBJECT, subject);
-        if (body != null) {
-            bundle.putString(Constant.KEY_SHARE_BODY, body);
-        }
-        webViewIntent.putExtras(bundle);
-        startActivity(webViewIntent);
-    }
-
-    public void openHtml(String html, String subject, String body) {
-        if (html == null || !isAdded()) {
-            return;
-        }
-
-        LogUtil.d(TAG, "openHtml, subject: " + subject + " body: " + body);
-
-        Intent webViewIntent = new Intent(getActivity(), WebViewActivity.class);
-        Bundle bundle = new Bundle();
-        bundle.putString(Constant.KEY_HTML, html);
-        if (subject == null) {
-            subject = getString(R.string.share_link);
-        }
-        bundle.putString(Constant.KEY_SHARE_SUBJECT, subject);
-        if (body != null) {
-            bundle.putString(Constant.KEY_SHARE_BODY, body);
-        }
-        webViewIntent.putExtras(bundle);
-        startActivity(webViewIntent);
-    }
-
-    class PostAdapter extends BaseAdapter {
-
-        @Override
-        public int getCount() {
-            if (posts == null) {
-                return 0;
-            }
-            return posts.size();
-        }
-
-        @Override
-        public Object getItem(int position) {
-            if (posts == null) {
-                return null;
-            }
-            return posts.get(position);
-        }
-
-        @Override
-        public long getItemId(int position) {
-            return position;
-        }
-
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-            if (!isAdded()) {
-                return null;
-            }
-
-            ViewHolder holder;
-            if (convertView == null) {
-                holder = new ViewHolder();
-                LayoutInflater inflater = LayoutInflater.from(getActivity());
-                convertView = inflater.inflate(R.layout.list_item_post, null);
-
-                holder.tvTitle = (TextView) convertView.findViewById(R.id.tv_title);
-                holder.tvDomain = (TextView) convertView.findViewById(R.id.tv_domain);
-                holder.tvSummary = (TextView) convertView.findViewById(R.id.tv_summary);
-                holder.btnShare = (Button) convertView.findViewById(R.id.btn_share);
-                holder.btnComment = (Button) convertView.findViewById(R.id.btn_comment);
-                holder.btnOriginal = (Button) convertView.findViewById(R.id.btn_original);
-                holder.btnEasyRead = (Button) convertView.findViewById(R.id.btn_easy_read);
-                convertView.setTag(holder);
-            } else {
-                holder = (ViewHolder) convertView.getTag();
-            }
-
-            // set value
-            final Post post = (Post) getItem(position);
-
-            if (post != null) {
-                holder.tvTitle.setText(post.title);
-                holder.tvDomain.setText(post.urlDomain);
-                holder.tvSummary.setText(post.summary);
-
-                //  share
-                holder.btnShare.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if (shareListener == null) {
-                            return;
-                        }
-                        String subject = getString(R.string.share_post);
-                        String link = Constant.wanquRootUrl + "/p/" + String.valueOf(post.issueId);
-                        String body = String.format(Locale.getDefault(),
-                                "【%s】%s %s",
-                                getString(R.string.app_name),
-                                getString(R.string.via_app, Constant.playUrl),
-                                link);
-                        shareListener.onShareText(subject, body);
-                    }
-                });
-
-                // comment
-                holder.btnComment.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        openUrl(Constant.wanquRootUrl + "/" + post.slug, null, post.getShareBody(getActivity()));
-                    }
-                });
-
-                // original
-                holder.btnOriginal.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        openUrl(post.url, null, post.getShareBody(getActivity()));
-                    }
-                });
-
-                // easy easy
-                holder.btnEasyRead.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        openHtml(post.readableArticle, null, post.getShareBody(getActivity()));
-                    }
-                });
-            }
-            return convertView;
-        }
-
-        private class ViewHolder {
-            TextView tvTitle;
-            TextView tvDomain;
-            TextView tvSummary;
-            Button btnShare;
-            Button btnComment;
-            Button btnOriginal;
-            Button btnEasyRead;
-        }
     }
 }

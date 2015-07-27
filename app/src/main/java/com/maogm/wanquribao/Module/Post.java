@@ -8,6 +8,7 @@ import com.google.gson.annotations.SerializedName;
 import com.maogm.wanquribao.R;
 import com.maogm.wanquribao.Utils.Constant;
 import com.maogm.wanquribao.Utils.StringUtil;
+import com.orm.dsl.Ignore;
 
 import java.util.List;
 
@@ -33,6 +34,9 @@ public class Post implements Parcelable {
     public String slug;
     @SerializedName("readable_article")
     public String readableArticle;
+
+    @Ignore
+    private String shareBody;
 
     public Post() {
     }
@@ -78,7 +82,13 @@ public class Post implements Parcelable {
     }
 
     public String getShareBody(Context context) {
-        return readableTitle + context.getString(R.string.via_app, Constant.playUrl) + url;
+        if (shareBody == null) {
+            shareBody = readableTitle +
+                    context.getString(R.string.via_app, Constant.playUrl) +
+                    url;
+        }
+
+        return shareBody;
     }
 
     @Override
