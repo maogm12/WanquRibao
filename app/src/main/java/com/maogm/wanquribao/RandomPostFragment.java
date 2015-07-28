@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -38,10 +39,10 @@ public class RandomPostFragment extends Fragment implements Response.Listener<Is
     private TextView tvTitle;
     private TextView tvUrlDomain;
     private TextView tvSummary;
-    private Button btnShare;
-    private Button btnComment;
-    private Button btnOriginal;
-    private Button btnEasyRead;
+    private ImageButton btnShare;
+    private ImageButton btnComment;
+    private ImageButton btnOriginal;
+    private ImageButton btnTags;
 
     private Button btnRandom;
 
@@ -98,10 +99,10 @@ public class RandomPostFragment extends Fragment implements Response.Listener<Is
         tvTitle = (TextView) view.findViewById(R.id.tv_title);
         tvUrlDomain = (TextView) view.findViewById(R.id.tv_domain);
         tvSummary = (TextView) view.findViewById(R.id.tv_summary);
-        btnShare = (Button) view.findViewById(R.id.btn_share);
-        btnComment = (Button) view.findViewById(R.id.btn_comment);
-        btnOriginal = (Button) view.findViewById(R.id.btn_original);
-        btnEasyRead = (Button) view.findViewById(R.id.btn_tags);
+        btnShare = (ImageButton) view.findViewById(R.id.btn_share);
+        btnComment = (ImageButton) view.findViewById(R.id.btn_comment);
+        btnOriginal = (ImageButton) view.findViewById(R.id.btn_original);
+        btnTags = (ImageButton) view.findViewById(R.id.btn_tags);
         btnRandom = (Button) view.findViewById(R.id.btn_random);
 
         if (savedInstanceState != null) {
@@ -149,7 +150,7 @@ public class RandomPostFragment extends Fragment implements Response.Listener<Is
         });
 
         // easy easy
-        btnEasyRead.setOnClickListener(new View.OnClickListener() {
+        btnTags.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (fetchedPost != null) {

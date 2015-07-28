@@ -15,7 +15,7 @@ android {
         applicationId "com.maogm.wanquribao"
         minSdkVersion 16
         targetSdkVersion 22
-        versionCode 5
+        versionCode 6
         versionName computeVersionName()
     }
 

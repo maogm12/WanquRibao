@@ -21,6 +21,7 @@ public class Constant {
     public static final String KEY_SHARE_SUBJECT = "subject";
     public static final String KEY_SHARE_BODY = "body";
 
+    public static final String KEY_TITLE = "title";
     public static final String KEY_QUERY_TYPE = "query_type";
     public static final String KEY_SAVED_POSTS = "saved_posts";
     public static final String KEY_DATE = "date";

@@ -187,16 +187,19 @@ public class PostsFragment extends Fragment implements Response.Listener<IssueRe
         }
 
         // get the issue number/tag to request
-        number = getArguments().getInt(ISSUE_NUMBER);
+        if (number <= 0) {
+            number = getArguments().getInt(ISSUE_NUMBER);
+        }
         tag = getArguments().getString(POST_TAG);
 
-        // come back
+        updateTitle();
+
+        // come back, not initialize the first time
         if (posts != null) {
             onPostsRequest(posts);
             return;
         }
 
-        updateTitle();
         switch (queryType) {
             case ISSUE_NUMBER:
                 requestPostsByNumber();
@@ -217,6 +220,9 @@ public class PostsFragment extends Fragment implements Response.Listener<IssueRe
                 return true;
             }
         });
+        if (swipeView.isRefreshing()) {
+            swipeView.setRefreshing(false);
+        }
     }
 
     private void requestPostsByUrl(String url) {
@@ -365,9 +371,11 @@ public class PostsFragment extends Fragment implements Response.Listener<IssueRe
             return;
         }
 
-        date = response.data.date;
-        number = response.data.number;
-        LogUtil.d(TAG, "get response data => date: " + date + ", number: " + number);
+        if (queryType == PostsQueryType.ISSUE_NUMBER) {
+            date = response.data.date;
+            number = response.data.number;
+            LogUtil.d(TAG, "get response data => date: " + date + ", number: " + number);
+        }
 
         setActionBar();
         onPostsRequest(response.data.posts);

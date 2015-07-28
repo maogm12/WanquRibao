@@ -16,6 +16,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -181,6 +182,21 @@ public class IssuesFragment extends Fragment implements Response.Listener<Issues
 
         LogUtil.d(TAG, "issues saved to state");
         outState.putParcelableArrayList(Constant.KEY_ISSUES, (ArrayList<? extends Parcelable>) issues);
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+
+        issueQueue.cancelAll(new RequestQueue.RequestFilter() {
+            @Override
+            public boolean apply(Request<?> request) {
+                return true;
+            }
+        });
+        if (swipeView.isRefreshing()) {
+            swipeView.setRefreshing(false);
+        }
     }
 
     public void setOnIssueSelectedListener(OnIssueSelectedListener listener) {
