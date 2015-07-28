@@ -1,13 +1,13 @@
 package com.maogm.wanquribao;
 
 import android.app.ActionBar;
-import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.WindowManager;
 import android.webkit.WebChromeClient;
@@ -17,7 +17,7 @@ import android.widget.ProgressBar;
 import com.maogm.wanquribao.Utils.Constant;
 import com.maogm.wanquribao.Utils.LogUtil;
 
-public class WebViewActivity extends Activity {
+public class WebViewActivity extends AppCompatActivity {
     private static final String TAG = "WebViewActivity";
 
     private ProgressBar progressBar;

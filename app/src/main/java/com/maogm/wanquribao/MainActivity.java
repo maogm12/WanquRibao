@@ -3,6 +3,7 @@ package com.maogm.wanquribao;
 import android.app.FragmentManager;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.MenuItemCompat;
@@ -16,13 +17,15 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.maogm.wanquribao.Listener.OnShareListener;
+import com.maogm.wanquribao.Listener.PostManager;
 import com.maogm.wanquribao.Listener.WebViewManager;
 import com.maogm.wanquribao.Utils.Constant;
 import com.maogm.wanquribao.Utils.LogUtil;
 
 
 public class MainActivity extends AppCompatActivity
-        implements OnShareListener, IssuesFragment.OnIssueSelectedListener, WebViewManager {
+        implements OnShareListener, IssuesFragment.OnIssueSelectedListener, WebViewManager,
+        PostManager {
 
     private static final String TAG = "MainActivity";
 
@@ -40,6 +43,8 @@ public class MainActivity extends AppCompatActivity
     private MenuItem shareItem;
     private boolean canShare = true;
 
+    private int currentTab = -1;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,7 +58,20 @@ public class MainActivity extends AppCompatActivity
             setupDrawerContent(navigationView);
         }
 
+        if (savedInstanceState != null) {
+            currentTab = savedInstanceState.getInt(Constant.KEY_CURRENT_TAB);
+            return;
+        }
+
         navigationDrawerSelected(0);
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
+        super.onSaveInstanceState(outState, outPersistentState);
+
+        LogUtil.d(TAG, "save current selected tab: " + String.valueOf(currentTab));
+        outState.putInt(Constant.KEY_CURRENT_TAB, currentTab);
     }
 
     private void toolBarSetUp() {
@@ -95,6 +113,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void navigationDrawerSelected(int position) {
+        currentTab = position;
         FragmentManager fragmentManager = getFragmentManager();
         switch (position) {
             case 0:
@@ -143,25 +162,6 @@ public class MainActivity extends AppCompatActivity
         ExitApp();
     }
 
-    /**
-     * Open a issue
-     * @param number issue number of the issue
-     */
-    public void openIssue(int number) {
-        if (number < 0) {
-            number = -1;
-        }
-
-        LogUtil.d(TAG, "open issue number: " + number);
-
-        FragmentManager fragmentManager = getFragmentManager();
-        PostsFragment postsFragment = PostsFragment.newInstance(number);
-        fragmentManager.beginTransaction()
-                .replace(R.id.container, postsFragment)
-                .addToBackStack(null)
-                .commit();
-    }
-
     public void updateTitle(CharSequence title) {
         ActionBar actionBar = getSupportActionBar();
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
@@ -182,25 +182,18 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-       // if (!mNavigationDrawerFragment.isDrawerOpen()) {
-        if (true) {
-            // Only show items in the action bar relevant to this screen
-            // if the drawer is not showing. Otherwise, let the drawer
-            // decide what to show in the action bar.
-            getMenuInflater().inflate(R.menu.main, menu);
-            restoreTitle();
+        getMenuInflater().inflate(R.menu.main, menu);
+        restoreTitle();
 
-            // Locate MenuItem with ShareActionProvider
-            shareItem = menu.findItem(R.id.action_share);
-            onGlobalShareEnabled(canShare);
+        // Locate MenuItem with ShareActionProvider
+        shareItem = menu.findItem(R.id.action_share);
+        onGlobalShareEnabled(canShare);
 
-            // Fetch and store ShareActionProvider
-            mShareActionProvider = (ShareActionProvider) MenuItemCompat.getActionProvider(shareItem);
-            setShareIntent(shareIntent);
+        // Fetch and store ShareActionProvider
+        mShareActionProvider = (ShareActionProvider) MenuItemCompat.getActionProvider(shareItem);
+        setShareIntent(shareIntent);
 
-            return true;
-        }
-        return super.onCreateOptionsMenu(menu);
+        return true;
     }
 
     // Call to update the share intent
@@ -343,5 +336,46 @@ public class MainActivity extends AppCompatActivity
         } else {
             finish();
         }
+    }
+
+    /**
+     * Open posts by number
+     * @param number number of issue
+     */
+    @Override
+    public void openPostsByIssueNumber(int number) {
+        if (number < 0) {
+            number = -1;
+        }
+
+        LogUtil.d(TAG, "open issue number: " + number);
+
+        FragmentManager fragmentManager = getFragmentManager();
+        PostsFragment postsFragment = PostsFragment.newInstance(number);
+        fragmentManager.beginTransaction()
+                .replace(R.id.container, postsFragment)
+                .addToBackStack(null)
+                .commit();
+    }
+
+    @Override
+    public void openPostsByTag(String tag) {
+        if (tag == null) {
+            return;
+        }
+
+        LogUtil.d(TAG, "open tag: " + tag);
+
+        FragmentManager fragmentManager = getFragmentManager();
+        PostsFragment postsFragment = PostsFragment.newInstance(tag);
+        fragmentManager.beginTransaction()
+                .replace(R.id.container, postsFragment)
+                .addToBackStack(null)
+                .commit();
+    }
+
+    @Override
+    public void openIssue(int number) {
+        openPostsByIssueNumber(number);
     }
 }

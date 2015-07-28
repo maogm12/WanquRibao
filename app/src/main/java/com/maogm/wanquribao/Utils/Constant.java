@@ -11,6 +11,8 @@ public class Constant {
     public static final String issueUrl = "/issue";
     public static final String randomPostUrl = "/posts/random";
     public static final String issuesUrl = "/issues";
+    public static final String tagsUrl = "/tags";
+    public static final String tagUrl = "/tag";
 
     public static final String playUrl = "https://play.google.com/store/apps/details?id=com.maogm.wanquribao";
 
@@ -19,11 +21,15 @@ public class Constant {
     public static final String KEY_SHARE_SUBJECT = "subject";
     public static final String KEY_SHARE_BODY = "body";
 
+    public static final String KEY_QUERY_TYPE = "query_type";
     public static final String KEY_SAVED_POSTS = "saved_posts";
     public static final String KEY_DATE = "date";
     public static final String KEY_NUMBER = "number";
+    public static final String KEY_TAG= "tag";
     public static final String KEY_ISSUES = "issues";
     public static final String KEY_RANDOM_POST = "random_post";
+
+    public static final String KEY_CURRENT_TAB = "current_tab";
 
     public static final String KEY_OFFICIAL_SITE = "official_site";
     public static final String KEY_ABOUT_WANQU = "about_wanqu";

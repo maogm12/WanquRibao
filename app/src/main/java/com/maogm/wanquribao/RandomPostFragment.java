@@ -101,7 +101,7 @@ public class RandomPostFragment extends Fragment implements Response.Listener<Is
         btnShare = (Button) view.findViewById(R.id.btn_share);
         btnComment = (Button) view.findViewById(R.id.btn_comment);
         btnOriginal = (Button) view.findViewById(R.id.btn_original);
-        btnEasyRead = (Button) view.findViewById(R.id.btn_easy_read);
+        btnEasyRead = (Button) view.findViewById(R.id.btn_tags);
         btnRandom = (Button) view.findViewById(R.id.btn_random);
 
         if (savedInstanceState != null) {

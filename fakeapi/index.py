@@ -3,8 +3,6 @@
 
 import json
 import restlite
-from urlparse import parse_qs
-import datetime
 
 @restlite.resource
 def issues():
@@ -30,11 +28,21 @@ def posts():
         return request.response(post, "application/json")
     return locals()
 
+@restlite.resource
+def tags():
+    def GET(request):
+        with open('./data/tags.json') as tagsFile:
+            tags = json.load(tagsFile)
+        return request.response(tags, "application/json")
+    return locals()
+
+
 # all the routes
 routes = [
     (r'GET /issues', issues),
     (r'GET /issue', issue),
-    (r'GET /posts', posts)
+    (r'GET /posts', posts),
+    (r'GET /tags', issue)
 ]
 
 #import sae

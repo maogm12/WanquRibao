@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -41,11 +42,20 @@ public class PostsFragment extends Fragment implements Response.Listener<IssueRe
     private static final String TAG = "PostsFragment";
 
     private static final String ISSUE_NUMBER = "issue_number";
+    private static final String POST_TAG = "post_tag";
+
+    /**
+     * Detemine which what we are querying
+     */
+    private enum PostsQueryType {
+        ISSUE_NUMBER, POST_TAG
+    }
+    private PostsQueryType queryType;
 
     private String date;
     private int number = -1;
+    private String tag = null;
     private List<Post> posts;
-    private RecyclerView recyclerPost;
     private PostAdapter postAdapter;
     private SwipeRefreshLayout swipeView;
 
@@ -62,6 +72,19 @@ public class PostsFragment extends Fragment implements Response.Listener<IssueRe
         Bundle args = new Bundle();
         args.putInt(ISSUE_NUMBER, number);
         fragment.setArguments(args);
+        fragment.queryType = PostsQueryType.ISSUE_NUMBER;
+        return fragment;
+    }
+
+    /**
+     * Returns a new instance of this fragment for the given tag.
+     */
+    public static PostsFragment newInstance(String tag) {
+        PostsFragment fragment = new PostsFragment();
+        Bundle args = new Bundle();
+        args.putString(POST_TAG, tag);
+        fragment.setArguments(args);
+        fragment.queryType = PostsQueryType.POST_TAG;
         return fragment;
     }
 
@@ -92,8 +115,9 @@ public class PostsFragment extends Fragment implements Response.Listener<IssueRe
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         postAdapter = new PostAdapter(getActivity());
-        postAdapter.setOnShareListener((MainActivity)getActivity());
-        postAdapter.setWebViewManager((MainActivity)getActivity());
+        postAdapter.setOnShareListener((MainActivity) getActivity());
+        postAdapter.setWebViewManager((MainActivity) getActivity());
+        postAdapter.setPostManager((MainActivity) getActivity());
     }
 
     @Override
@@ -111,13 +135,21 @@ public class PostsFragment extends Fragment implements Response.Listener<IssueRe
         swipeView.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                LogUtil.d("Swipe", "Refreshing number " + number);
-                requestIssue();
+                switch (queryType) {
+                    case ISSUE_NUMBER:
+                        LogUtil.d("Swipe", "Refreshing number " + number);
+                        requestPostsByNumber();
+                        break;
+                    case POST_TAG:
+                        LogUtil.d("Swipe", "Refreshing tag " + number);
+                        requestPostsByTag();
+                        break;
+                }
             }
         });
 
         // list
-        recyclerPost = (RecyclerView) view.findViewById(R.id.recycler_post);
+        RecyclerView recyclerPost = (RecyclerView) view.findViewById(R.id.recycler_post);
         recyclerPost.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         // disable swipe view when not in the top
@@ -143,8 +175,10 @@ public class PostsFragment extends Fragment implements Response.Listener<IssueRe
         // recreate
         if (savedInstanceState != null) {
             LogUtil.d(TAG, "create from savedInstanceState");
+            queryType = (PostsQueryType) savedInstanceState.getSerializable(Constant.KEY_QUERY_TYPE);
             date = savedInstanceState.getString(Constant.KEY_DATE);
             number = savedInstanceState.getInt(Constant.KEY_NUMBER);
+            tag = savedInstanceState.getString(Constant.KEY_TAG);
             setActionBar();
 
             // posts
@@ -152,19 +186,92 @@ public class PostsFragment extends Fragment implements Response.Listener<IssueRe
             return;
         }
 
-        // get the issue number to request
+        // get the issue number/tag to request
         number = getArguments().getInt(ISSUE_NUMBER);
+        tag = getArguments().getString(POST_TAG);
 
-        // set title
-        if (number == -1) {
-            updateTitle(null, -1);
+        // come back
+        if (posts != null) {
+            onPostsRequest(posts);
+            return;
         }
-        requestIssue();
+
+        updateTitle();
+        switch (queryType) {
+            case ISSUE_NUMBER:
+                requestPostsByNumber();
+                break;
+            case POST_TAG:
+                requestPostsByTag();
+                break;
+        }
     }
 
-    private void requestIssue() {
+    @Override
+    public void onDetach() {
+        super.onDetach();
+
+        postQueue.cancelAll(new RequestQueue.RequestFilter() {
+            @Override
+            public boolean apply(Request<?> request) {
+                return true;
+            }
+        });
+    }
+
+    private void requestPostsByUrl(String url) {
+        LogUtil.d(TAG, "netword connected, request link: " + url);
+        Map<String, String> headers = new HashMap<>();
+        GsonRequest<IssueResult> requester = new GsonRequest<>(url, IssueResult.class,
+                headers, this, this);
+        postQueue.add(requester);
+    }
+
+    private void requestPostsByTag() {
+        if (swipeView == null || !isAdded() || tag == null) {
+            return;
+        }
+
+        // call setRefreshing directly will not trigger the animation
+        swipeView.post(new Runnable() {
+            @Override
+            public void run() {
+                swipeView.setRefreshing(true);
+            }
+        });
+
+        // connected to internet
+        if (NetworkUtil.getConnectivityStatus(getActivity()) != NetworkUtil.TYPE_NOT_CONNECTED) {
+            // request issue
+            String url = Constant.baseUrl + Constant.tagsUrl + "/" + tag;
+            requestPostsByUrl(url);
+        } else {
+            // get from local storage
+            LogUtil.d(TAG, "network not connected, request from local db");
+
+            List<PostModel> postModels = PostModel.find(PostModel.class, "number LIKE ?", tag);
+            if (postModels.isEmpty()) {
+                LogUtil.d(TAG, "no such post [tag: " + tag + "]");
+                Toast.makeText(getActivity(), R.string.no_issue, Toast.LENGTH_SHORT).show();
+                swipeView.setRefreshing(false);
+            } else {
+                // update title
+                date = postModels.get(0).date;
+                number = postModels.get(0).number;
+                setActionBar();
+
+                // update posts
+                List<Post> posts = new ArrayList<>();
+                for (PostModel model: postModels) {
+                    posts.add(model.getPost());
+                }
+                onPostsRequest(posts);
+            }
+        }
+    }
+
+    private void requestPostsByNumber() {
         if (swipeView == null || !isAdded()) {
-            // refreshing
             return;
         }
 
@@ -272,10 +379,11 @@ public class PostsFragment extends Fragment implements Response.Listener<IssueRe
      */
     private void setActionBar() {
         // update title
-        updateTitle(date, number);
+        updateTitle();
 
         // set share intent
-        String body = getShareBody(date, number);
+        String body = getShareBody();
+
         if (shareListener == null) {
             LogUtil.e(TAG, "No OnShareListener is set");
             return;
@@ -284,25 +392,40 @@ public class PostsFragment extends Fragment implements Response.Listener<IssueRe
         if (body == null) {
             shareListener.onRestoreGlobalShare();
         } else {
-            shareListener.onGlobalShareContentChanged(getString(R.string.share_post),
-                    getShareBody(date, number));
+            shareListener.onGlobalShareContentChanged(getString(R.string.share_post), body);
         }
     }
 
     /**
      * Get share content for current issue
-     * @param date      Issue date
-     * @param number    Issue number
      * @return  Share body of the issue
      */
-    private String getShareBody(String date, int number) {
-        if (date == null || number < 0) {
+    private String getShareBody() {
+        if (!isAdded()) {
             return null;
         }
 
-        return getString(R.string.title_pattern_long, date, number) +
-                getString(R.string.via_app, Constant.playUrl) +
-                Constant.wanquRootUrl + Constant.issuesUrl + "/" + number;
+        switch (queryType) {
+            case ISSUE_NUMBER:
+                if (date == null || number < 0) {
+                    return null;
+                }
+
+                return getString(R.string.title_pattern_long, date, number) +
+                        getString(R.string.via_app, Constant.playUrl) +
+                        Constant.wanquRootUrl + Constant.issuesUrl + "/" + number;
+            case POST_TAG:
+
+                if (tag == null) {
+                    return null;
+                }
+
+                return getString(R.string.title_tag, tag) +
+                        getString(R.string.via_app, Constant.playUrl) +
+                        Constant.wanquRootUrl + Constant.tagUrl + "/" + tag;
+        }
+
+        return null;
     }
 
     /**
@@ -310,7 +433,7 @@ public class PostsFragment extends Fragment implements Response.Listener<IssueRe
      * @param posts New posts
      */
     private void onPostsRequest(List<Post> posts) {
-        if (posts == null) {
+        if (posts == null || this.posts == posts) {
             return;
         }
 
@@ -337,25 +460,53 @@ public class PostsFragment extends Fragment implements Response.Listener<IssueRe
         // save posts
         outState.putParcelableArrayList(Constant.KEY_SAVED_POSTS, (ArrayList<? extends Parcelable>) posts);
 
-        // save date and number of the issue
-        outState.putString(Constant.KEY_DATE, date);
-        outState.putInt(Constant.KEY_NUMBER, number);
+        // save query type
+        outState.putSerializable(Constant.KEY_QUERY_TYPE, queryType);
+
+        switch (queryType) {
+            case ISSUE_NUMBER:
+                // save date and number of the issue
+                outState.putString(Constant.KEY_DATE, date);
+                outState.putInt(Constant.KEY_NUMBER, number);
+                break;
+            case POST_TAG:
+                outState.putString(Constant.KEY_TAG, tag);
+                break;
+            default:
+                break;
+        }
+
     }
 
-    private void updateTitle(String date, int number) {
+    private void updateTitle() {
         if (!isAdded()) {
             return;
         }
 
-        CharSequence title;
-        if (date == null || number < 0) {
-            title = getString(R.string.title_section_latest);
-        } else {
-            title = getString(R.string.title_pattern, date, number);
+        CharSequence title = null;
+        switch (queryType) {
+            case ISSUE_NUMBER:
+                if (date == null || number < 0) {
+                    title = getString(R.string.title_section_latest);
+                } else {
+                    title = getString(R.string.title_pattern, date, number);
+                }
+
+                LogUtil.d(TAG, "set title to " + title);
+                break;
+            case POST_TAG:
+                if (tag == null) {
+                    title = getString(R.string.app_name);
+                } else {
+                    title = getString(R.string.title_tag, tag);
+                }
+
+                LogUtil.d(TAG, "set title to tag: " + title);
         }
 
-        LogUtil.d(TAG, "set title to " + title);
-        ((MainActivity) getActivity()).updateTitle(title);
+        if (title != null) {
+            ((MainActivity) getActivity()).updateTitle(title);
+        }
     }
 
     private void savePosts(final PostWrapper issue) {

@@ -1,6 +1,8 @@
 package com.maogm.wanquribao.Adapter;
 
 import android.content.Context;
+import android.content.DialogInterface;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -10,6 +12,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.maogm.wanquribao.Listener.OnShareListener;
+import com.maogm.wanquribao.Listener.PostManager;
 import com.maogm.wanquribao.Listener.WebViewManager;
 import com.maogm.wanquribao.Module.Post;
 import com.maogm.wanquribao.R;
@@ -32,6 +35,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
     private List<Post> posts;
     private OnShareListener shareListener;
     private WebViewManager webViewManager;
+    private PostManager postManager;
 
     public PostAdapter(Context context) {
         this.context = context;
@@ -45,6 +49,10 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
 
     public void setWebViewManager(WebViewManager manager) {
         webViewManager = manager;
+    }
+
+    public void setPostManager(PostManager manager) {
+        postManager = manager;
     }
 
     public void setPosts(List<Post> posts) {
@@ -64,10 +72,26 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
         }
 
         final Post post = posts.get(position);
+
+        // click card to easy read
+        holder.cardview.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (webViewManager == null) {
+                    LogUtil.e(TAG, "No WebViewmanager");
+                    return;
+                }
+
+                webViewManager.openHtml(
+                        post.readableArticle,
+                        null,
+                        post.getShareBody(context));
+            }
+        });
+
         holder.tvTitle.setText(post.title);
         holder.tvDomain.setText(post.urlDomain);
         holder.tvSummary.setText(post.summary);
-
         holder.btnShare.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -118,19 +142,29 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
             }
         });
 
-        // easy easy
-        holder.btnEasyRead.setOnClickListener(new View.OnClickListener() {
+        // tags
+        holder.btnTags.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (webViewManager == null) {
-                    LogUtil.e(TAG, "No WebViewmanager");
-                    return;
-                }
+                // get tags
+                final CharSequence[] tags = post.tags.toArray(new CharSequence[post.tags.size()]);
 
-                webViewManager.openHtml(
-                        post.readableArticle,
-                        null,
-                        post.getShareBody(context));
+                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                builder.setTitle(R.string.choose_tag);
+                builder.setItems(tags, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        LogUtil.d(TAG, "Search tag for: " + tags[which]);
+                        if (postManager == null) {
+                            return;
+                        }
+
+                        // open tag
+                        postManager.openPostsByTag((String) tags[which]);
+                    }
+                });
+                builder.setNegativeButton(R.string.cancel, null);
+                builder.show();
             }
         });
     }
@@ -149,7 +183,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
         ImageButton btnShare;
         ImageButton btnComment;
         ImageButton btnOriginal;
-        ImageButton btnEasyRead;
+        ImageButton btnTags;
 
         PostViewHolder(View itemView) {
             super(itemView);
@@ -161,7 +195,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
             btnShare = (ImageButton) itemView.findViewById(R.id.btn_share);
             btnComment = (ImageButton) itemView.findViewById(R.id.btn_comment);
             btnOriginal = (ImageButton) itemView.findViewById(R.id.btn_original);
-            btnEasyRead = (ImageButton) itemView.findViewById(R.id.btn_easy_read);
+            btnTags = (ImageButton) itemView.findViewById(R.id.btn_tags);
         }
     }
 }

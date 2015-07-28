@@ -28,7 +28,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="right|bottom"
-        android:padding="10dp">
+        android:padding="15dp"
+        android:clipChildren="false">
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/btn_share"
@@ -36,14 +37,14 @@
             android:layout_height="wrap_content"
             android:layout_marginRight="16dp"
             android:clickable="true"
-            android:src="@drawable/icon_share_white" />
+            android:src="@drawable/ic_action_share" />
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/btn_exit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:clickable="true"
-            android:src="@drawable/icon_exit_white"/>
+            android:src="@drawable/ic_action_exit"/>
 
     </LinearLayout>
 
