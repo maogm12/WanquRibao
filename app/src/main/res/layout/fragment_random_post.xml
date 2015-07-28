@@ -15,5 +15,6 @@
         android:layout_marginTop="10dp"
         android:background="@color/main"
         android:text="@string/random_post"
-        android:textColor="@android:color/white" />
+        android:textColor="@android:color/white"
+        android:layout_margin="5dp"/>
 </LinearLayout>

@@ -21,7 +21,7 @@ public class WebViewActivity extends AppCompatActivity {
     private static final String TAG = "WebViewActivity";
 
     private ProgressBar progressBar;
-    private WebView webView;
+    private ObservableWebView webView;
     private SwipeRefreshLayout swipeView;
 
     private String html;
@@ -61,7 +61,7 @@ public class WebViewActivity extends AppCompatActivity {
             progressBar.setVisibility(View.INVISIBLE);
         }
 
-        webView = (WebView) findViewById(R.id.fullscreen_content);
+        webView = (ObservableWebView) findViewById(R.id.fullscreen_content);
         webView.setWebChromeClient(new WebChromeClient() {
             @Override
             public void onProgressChanged(WebView view, int newProgress) {
@@ -87,6 +87,8 @@ public class WebViewActivity extends AppCompatActivity {
         });
         webView.getSettings().setJavaScriptEnabled(true);
         webView.getSettings().setSupportZoom(true);
+        webView.getSettings().setBuiltInZoomControls(true);
+        webView.getSettings().setDisplayZoomControls(false);
 
         // swipte to refresh
         swipeView = (SwipeRefreshLayout) findViewById(R.id.swipe);
@@ -104,11 +106,25 @@ public class WebViewActivity extends AppCompatActivity {
             });
         }
 
-        FloatingActionButton ibtnShare = (FloatingActionButton) findViewById(R.id.btn_share);
-        FloatingActionButton ibtnExit = (FloatingActionButton) findViewById(R.id.btn_exit);
+        final FloatingActionButton fabShare = (FloatingActionButton) findViewById(R.id.btn_share);
+        final FloatingActionButton fabExit = (FloatingActionButton) findViewById(R.id.btn_exit);
+
+        // set btn visible or not
+        webView.setOnScrollChangedCallback(new ObservableWebView.OnScrollChangedCallback() {
+            @Override
+            public void onScroll(int l, int t, int oldl, int oldt) {
+                if (t < oldt) {
+                    fabShare.show();
+                    fabExit.show();
+                } else {
+                    fabShare.hide();
+                    fabExit.hide();
+                }
+            }
+        });
 
         // exit
-        ibtnExit.setOnClickListener(new View.OnClickListener() {
+        fabExit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 WebViewActivity.this.finish();
@@ -116,7 +132,7 @@ public class WebViewActivity extends AppCompatActivity {
         });
 
         // share
-        ibtnShare.setOnClickListener(new View.OnClickListener() {
+        fabShare.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (shareBody == null) {
