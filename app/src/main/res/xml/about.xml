@@ -71,6 +71,11 @@
             android:summary="@string/my_email_value" />
 
         <Preference
+            android:key="project_address"
+            android:title="@string/project_address"
+            android:summary="@string/project_url" />
+
+        <Preference
             android:key="version"
             android:title="@string/current_version"
             android:summary="@string/day_born" />

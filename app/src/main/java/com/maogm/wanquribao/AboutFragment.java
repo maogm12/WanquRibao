@@ -49,6 +49,7 @@ public class AboutFragment extends PreferenceFragment {
         bindPreferenceWithUrl(Constant.KEY_FACEBOOK, Constant.LINK_FACEBOOK);
         bindPreferenceWithUrl(Constant.KEY_AUTHOR, Constant.LINK_AUTHOR);
         bindPreferenceWithUrl(Constant.KEY_MY_WEIBO, Constant.LINK_MY_WEIBO);
+        bindPreferenceWithUrl(Constant.KEY_PROJECT_ADDRESS, Constant.LINK_PROJECT_URL);
 
         bindPreferenceWithEmail(Constant.KEY_WANQU_EMAIL, Constant.WANQU_EMAIL);
         bindPreferenceWithEmail(Constant.KEY_MY_EMAIL, Constant.MY_EMAIL);

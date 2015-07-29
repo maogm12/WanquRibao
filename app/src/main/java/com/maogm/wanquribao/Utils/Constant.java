@@ -16,6 +16,7 @@ public class Constant {
 
     public static final String playUrl = "https://play.google.com/store/apps/details?id=com.maogm.wanquribao";
 
+    public static final String KEY_LOAD_TYPE = "load_type";
     public static final String KEY_HTML = "html";
     public static final String KEY_URL = "url";
     public static final String KEY_SHARE_SUBJECT = "subject";
@@ -42,6 +43,7 @@ public class Constant {
     public static final String KEY_AUTHOR = "author";
     public static final String KEY_MY_EMAIL = "my_email";
     public static final String KEY_MY_WEIBO = "my_weibo";
+    public static final String KEY_PROJECT_ADDRESS = "project_address";
     public static final String KEY_VERSION = "version";
 
     public static final String LINK_OFFICIAL_SITE = "http://wanqu.co";
@@ -54,4 +56,5 @@ public class Constant {
     public static final String LINK_AUTHOR = "http://maogm.com";
     public static final String MY_EMAIL = "maogm12@gmail.com";
     public static final String LINK_MY_WEIBO = "http://weibo.com/garnel";
+    public static final String LINK_PROJECT_URL = "https://github.com/Garnel/WanquRibao";
 }
