@@ -1,14 +1,21 @@
 package com.maogm.wanquribao;
 
 import android.app.FragmentManager;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.design.widget.NavigationView;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.ShareActionProvider;
 import android.support.v7.widget.Toolbar;
@@ -19,6 +26,7 @@ import android.widget.Toast;
 import com.maogm.wanquribao.Listener.OnShareListener;
 import com.maogm.wanquribao.Listener.PostManager;
 import com.maogm.wanquribao.Listener.WebViewManager;
+import com.maogm.wanquribao.Service.UpdaterService;
 import com.maogm.wanquribao.Utils.Constant;
 import com.maogm.wanquribao.Utils.LogUtil;
 
@@ -45,6 +53,34 @@ public class MainActivity extends AppCompatActivity
 
     private int currentTab = -1;
 
+    /**
+     * receive the update checker's message
+     */
+    private BroadcastReceiver updateCheckerMessageReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            // if update available
+            boolean updateAvailable = intent.getBooleanExtra(Constant.KEY_UPDATE_AVAILABLE, false);
+            LogUtil.d(TAG, "show update dialog");
+            if (updateAvailable) {
+                // tell user to update
+                LogUtil.d(TAG, "need update");
+                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                builder.setTitle(R.string.choose_tag);
+                builder.setMessage(R.string.go_to_market);
+                builder.setPositiveButton(R.string.confirm_update, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        LogUtil.d(TAG, "go to market to download");
+                        openDetailInMarket();
+                    }
+                });
+                builder.setNegativeButton(R.string.next_time, null);
+                builder.show();
+            }
+        }
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,6 +100,11 @@ public class MainActivity extends AppCompatActivity
         }
 
         navigationDrawerSelected(0);
+
+        // check for update
+        LocalBroadcastManager.getInstance(this).registerReceiver(updateCheckerMessageReceiver, new IntentFilter(Constant.NAME_INTENT_UPDATE_CHECKER));
+        Intent updateCheckIntent = new Intent(this, UpdaterService.class);
+        startService(updateCheckIntent);
     }
 
     @Override
@@ -378,4 +419,11 @@ public class MainActivity extends AppCompatActivity
     public void openIssue(int number) {
         openPostsByIssueNumber(number);
     }
+
+    private void openDetailInMarket() {
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.setData(Uri.parse("market://details?id=" + getPackageName()));
+        startActivity(intent);
+    }
+
 }

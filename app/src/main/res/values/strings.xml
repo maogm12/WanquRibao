@@ -83,4 +83,10 @@
     <string name="open_in_browser">在浏览器中打开</string>
     <string name="exit">退出</string>
     <string name="no_url">此页面木有链接 ~</string>
+
+    <string name="new_version_available">有新版本啦~~</string>
+    <string name="go_to_market">要去应用市场下载么?</string>
+    <string name="next_time">下次再说</string>
+    <string name="confirm_update">好哒，去升级</string>
+
 </resources>

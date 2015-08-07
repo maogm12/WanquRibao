@@ -26,6 +26,9 @@
             android:name="DOMAIN_PACKAGE_NAME"
             android:value="com.maogm" />
 
+        <service android:name=".Service.UpdaterService">
+        </service>
+
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
