@@ -66,7 +66,7 @@ public class MainActivity extends AppCompatActivity
                 // tell user to update
                 LogUtil.d(TAG, "need update");
                 AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-                builder.setTitle(R.string.choose_tag);
+                builder.setTitle(R.string.new_version_available);
                 builder.setMessage(R.string.go_to_market);
                 builder.setPositiveButton(R.string.confirm_update, new DialogInterface.OnClickListener() {
                     @Override

@@ -68,7 +68,7 @@ public class UpdaterService extends IntentService {
         if (lastCheckTimeStamp + 3 * millisecondsInADay > now) {
             LogUtil.d(TAG, "last time check is " + (now - lastCheckTimeStamp) + " ms ago");
             // check every 3 days
-            // return;
+            return;
         }
 
         LogUtil.d(TAG, "check for update");
@@ -91,7 +91,7 @@ public class UpdaterService extends IntentService {
             bufferedReader.close();
 
             // parse content to see if it is a new number
-            int newVersionCode = Integer.parseInt(content.toString());
+            int newVersionCode = Integer.parseInt(content.toString().trim());
             LogUtil.d(TAG, "new version code: " + newVersionCode);
             if (newVersionCode > currentVersionCode) {
                 updateAvailable = true;

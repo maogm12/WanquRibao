@@ -52,7 +52,7 @@ public class WebViewActivity extends AppCompatActivity {
     private int shortAnimationDuration;
 
     private static final String htmlPrefix =
-"<style> img, table { max-width: 100%; }</style>";
+"<style> img, table { max-width: 100%; height: auto; }</style>";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
